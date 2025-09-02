@@ -1,0 +1,24 @@
+{
+  "ver": "1.2.0",
+  "importer": "directory",
+  "imported": true,
+  "uuid": "f0e13eae-3a5d-4bdd-b654-b928d347dabf",
+  "files": [],
+  "subMetas": {},
+  "userData": {
+    "bundleFilterConfig": [
+      {
+        "range": "include",
+        "type": "url",
+        "patchOption": {
+          "patchType": "glob",
+          "value": "db://assets/game/colorGame/audio/**/*"
+        },
+        "assets": [
+          ""
+        ]
+      }
+    ],
+    "bundleName": "CGAudio"
+  }
+}

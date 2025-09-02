@@ -1,0 +1,39 @@
+{
+  "ver": "1.0.8",
+  "importer": "auto-atlas",
+  "imported": true,
+  "uuid": "10fb223b-2aa8-4459-b718-7ca4f8c1dc86",
+  "files": [
+    ".json"
+  ],
+  "subMetas": {},
+  "userData": {
+    "maxWidth": 1024,
+    "maxHeight": 1024,
+    "padding": 2,
+    "allowRotation": true,
+    "forceSquared": false,
+    "powerOfTwo": true,
+    "algorithm": "MaxRects",
+    "format": "png",
+    "quality": 80,
+    "contourBleed": true,
+    "paddingBleed": true,
+    "filterUnused": true,
+    "removeTextureInBundle": true,
+    "removeImageInBundle": true,
+    "removeSpriteAtlasInBundle": true,
+    "compressSettings": {
+      "useCompressTexture": true,
+      "presetId": "0cMqcQ4Q1MYr4SyaMVpC+9"
+    },
+    "textureSetting": {
+      "wrapModeS": "repeat",
+      "wrapModeT": "repeat",
+      "minfilter": "linear",
+      "magfilter": "linear",
+      "mipfilter": "none",
+      "anisotropy": 0
+    }
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "ver": "2.3.13",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "e36d6948-19d1-4fd4-a6ac-8fa0afeaef48",
+  "files": [
+    "__original-animation-0.cconb"
+  ],
+  "subMetas": {
+    "fe9c4": {
+      "importer": "gltf-mesh",
+      "uuid": "e36d6948-19d1-4fd4-a6ac-8fa0afeaef48@fe9c4",
+      "displayName": "",
+      "id": "fe9c4",
+      "name": "floorSplit.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 186
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "73b7f": {
+      "importer": "gltf-animation",
+      "uuid": "e36d6948-19d1-4fd4-a6ac-8fa0afeaef48@73b7f",
+      "displayName": "",
+      "id": "73b7f",
+      "name": "floorSplit.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 0,
+        "sample": 30,
+        "span": {
+          "from": 0.13333333333333333,
+          "to": 1
+        },
+        "events": [],
+        "speed": 1.2,
+        "embeddedPlayers": [],
+        "editorExtras": {
+          "embeddedPlayerGroups": []
+        },
+        "auxiliaryCurves": {}
+      },
+      "ver": "1.0.17",
+      "imported": true,
+      "files": [
+        ".cconb"
+      ],
+      "subMetas": {}
+    },
+    "bdc83": {
+      "importer": "gltf-animation",
+      "uuid": "e36d6948-19d1-4fd4-a6ac-8fa0afeaef48@bdc83",
+      "displayName": "",
+      "id": "bdc83",
+      "name": "floorIdle.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 2,
+        "speed": 1,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 0
+        },
+        "events": []
+      },
+      "ver": "1.0.17",
+      "imported": true,
+      "files": [
+        ".cconb"
+      ],
+      "subMetas": {}
+    },
+    "438fe": {
+      "importer": "gltf-skeleton",
+      "uuid": "e36d6948-19d1-4fd4-a6ac-8fa0afeaef48@438fe",
+      "displayName": "",
+      "id": "438fe",
+      "name": "UnnamedSkeleton.skeleton",
+      "userData": {
+        "gltfIndex": 0,
+        "jointsLength": 11
+      },
+      "ver": "1.0.1",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "1c288": {
+      "importer": "gltf-material",
+      "uuid": "e36d6948-19d1-4fd4-a6ac-8fa0afeaef48@1c288",
+      "displayName": "",
+      "id": "1c288",
+      "name": "floorSplit.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "096e7": {
+      "importer": "gltf-scene",
+      "uuid": "e36d6948-19d1-4fd4-a6ac-8fa0afeaef48@096e7",
+      "displayName": "",
+      "id": "096e7",
+      "name": "CR_floorSplitSkin.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "animationImportSettings": [
+      {
+        "name": "Take 001",
+        "duration": 1,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "floorSplit",
+            "from": 0.13333333333333333,
+            "to": 1,
+            "wrapMode": 0,
+            "previousId": "73b7f",
+            "speed": 1.2
+          },
+          {
+            "name": "floorIdle",
+            "from": 0,
+            "to": 0,
+            "wrapMode": 2,
+            "speed": 1,
+            "previousId": "bdc83"
+          }
+        ]
+      }
+    ],
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "e36d6948-19d1-4fd4-a6ac-8fa0afeaef48@fe9c4"
+      ],
+      "skeletons": [
+        "e36d6948-19d1-4fd4-a6ac-8fa0afeaef48@438fe"
+      ],
+      "textures": [],
+      "materials": [
+        "e36d6948-19d1-4fd4-a6ac-8fa0afeaef48@1c288"
+      ],
+      "scenes": [
+        "e36d6948-19d1-4fd4-a6ac-8fa0afeaef48@096e7"
+      ]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "cocosSlotGame",
+  "uuid": "fb72b8a4-04cc-49f5-ba33-4a2bd191d129",
+  "creator": {
+    "version": "3.8.4"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.17.20",
+    "crypto-js": "^4.2.0",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.2.2"
+  }
+}

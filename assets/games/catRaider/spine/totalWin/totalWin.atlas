@@ -1,0 +1,684 @@
+
+totalWin.png
+size: 2017,1540
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+01_pic/black
+  rotate: true
+  xy: 141, 28
+  size: 101, 180
+  orig: 101, 180
+  offset: 0, 0
+  index: -1
+01_pic/blueCat/BCeyeL
+  rotate: false
+  xy: 141, 6
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+01_pic/blueCat/BCeyeR
+  rotate: false
+  xy: 1238, 861
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+01_pic/blueCat/BCeyelidL
+  rotate: true
+  xy: 1990, 957
+  size: 32, 25
+  orig: 32, 25
+  offset: 0, 0
+  index: -1
+01_pic/blueCat/BCeyelidR
+  rotate: true
+  xy: 1988, 223
+  size: 32, 27
+  orig: 32, 27
+  offset: 0, 0
+  index: -1
+01_pic/blueCat/BCeyewhite
+  rotate: false
+  xy: 1792, 172
+  size: 89, 83
+  orig: 89, 83
+  offset: 0, 0
+  index: -1
+01_pic/blueCat/BChead
+  rotate: false
+  xy: 2, 2
+  size: 137, 127
+  orig: 137, 127
+  offset: 0, 0
+  index: -1
+01_pic/blueCat/BCpalmL
+  rotate: true
+  xy: 1959, 912
+  size: 37, 26
+  orig: 37, 26
+  offset: 0, 0
+  index: -1
+01_pic/blueCat/BCpalmR
+  rotate: true
+  xy: 1987, 914
+  size: 35, 28
+  orig: 35, 29
+  offset: 0, 0
+  index: -1
+01_pic/caveDown
+  rotate: true
+  xy: 1305, 1143
+  size: 395, 701
+  orig: 395, 701
+  offset: 0, 0
+  index: -1
+01_pic/caveTop
+  rotate: false
+  xy: 2, 783
+  size: 810, 755
+  orig: 810, 779
+  offset: 0, 15
+  index: -1
+01_pic/greenCat/GCarmR
+  rotate: true
+  xy: 1238, 883
+  size: 43, 65
+  orig: 49, 65
+  offset: 6, 0
+  index: -1
+01_pic/greenCat/GCbody
+  rotate: false
+  xy: 1607, 109
+  size: 86, 102
+  orig: 86, 102
+  offset: 0, 0
+  index: -1
+01_pic/greenCat/GCearL
+  rotate: true
+  xy: 1695, 98
+  size: 59, 84
+  orig: 59, 84
+  offset: 0, 0
+  index: -1
+01_pic/greenCat/GCearR
+  rotate: false
+  xy: 1688, 14
+  size: 58, 82
+  orig: 61, 82
+  offset: 3, 0
+  index: -1
+01_pic/greenCat/GCeyeL
+  rotate: false
+  xy: 1959, 878
+  size: 25, 32
+  orig: 25, 32
+  offset: 0, 0
+  index: -1
+01_pic/greenCat/GCeyeR
+  rotate: true
+  xy: 489, 26
+  size: 25, 32
+  orig: 25, 32
+  offset: 0, 0
+  index: -1
+01_pic/greenCat/GCeyewhite
+  rotate: true
+  xy: 1372, 52
+  size: 130, 103
+  orig: 130, 103
+  offset: 0, 0
+  index: -1
+01_pic/greenCat/GChead
+  rotate: false
+  xy: 1473, 213
+  size: 203, 176
+  orig: 203, 176
+  offset: 0, 0
+  index: -1
+01_pic/greenCat/GCmouth
+  rotate: true
+  xy: 1678, 328
+  size: 61, 49
+  orig: 61, 49
+  offset: 0, 0
+  index: -1
+01_pic/greenCat/GCpalmL
+  rotate: true
+  xy: 1959, 991
+  size: 48, 32
+  orig: 48, 32
+  offset: 0, 0
+  index: -1
+01_pic/redCat/RCarmL
+  rotate: false
+  xy: 1235, 57
+  size: 135, 125
+  orig: 140, 127
+  offset: 5, 0
+  index: -1
+01_pic/redCat/RCarmR
+  rotate: false
+  xy: 1940, 753
+  size: 62, 104
+  orig: 62, 104
+  offset: 0, 0
+  index: -1
+01_pic/redCat/RCbackpack
+  rotate: true
+  xy: 1883, 195
+  size: 60, 103
+  orig: 60, 103
+  offset: 0, 0
+  index: -1
+01_pic/redCat/RCbody
+  rotate: false
+  xy: 1041, 12
+  size: 97, 147
+  orig: 97, 147
+  offset: 0, 0
+  index: -1
+01_pic/redCat/RCearL
+  rotate: false
+  xy: 1140, 75
+  size: 93, 116
+  orig: 95, 116
+  offset: 0, 0
+  index: -1
+01_pic/redCat/RCearR
+  rotate: true
+  xy: 1477, 23
+  size: 88, 111
+  orig: 88, 111
+  offset: 0, 0
+  index: -1
+01_pic/redCat/RCeyeL
+  rotate: false
+  xy: 1959, 1090
+  size: 45, 51
+  orig: 45, 51
+  offset: 0, 0
+  index: -1
+01_pic/redCat/RCeyeR
+  rotate: true
+  xy: 1940, 707
+  size: 44, 52
+  orig: 44, 52
+  offset: 0, 0
+  index: -1
+01_pic/redCat/RCeyeS
+  rotate: false
+  xy: 839, 14
+  size: 200, 145
+  orig: 200, 145
+  offset: 0, 0
+  index: -1
+01_pic/redCat/RCeyewhite
+  rotate: false
+  xy: 323, 25
+  size: 164, 104
+  orig: 164, 104
+  offset: 0, 0
+  index: -1
+01_pic/redCat/RChead
+  rotate: false
+  xy: 839, 161
+  size: 272, 241
+  orig: 272, 241
+  offset: 0, 0
+  index: -1
+01_pic/redCat/RCmouth
+  rotate: true
+  xy: 1678, 268
+  size: 58, 38
+  orig: 58, 44
+  offset: 0, 0
+  index: -1
+01_pic/redCat/RCtail
+  rotate: false
+  xy: 1140, 14
+  size: 90, 59
+  orig: 104, 59
+  offset: 5, 0
+  index: -1
+01_pic/redCat/RCteeth
+  rotate: false
+  xy: 1959, 859
+  size: 36, 17
+  orig: 36, 17
+  offset: 0, 0
+  index: -1
+01_pic/rock
+  rotate: false
+  xy: 1305, 859
+  size: 652, 282
+  orig: 652, 287
+  offset: 0, 1
+  index: -1
+01_pic/rockLD
+  rotate: false
+  xy: 814, 928
+  size: 489, 610
+  orig: 529, 610
+  offset: 0, 0
+  index: -1
+01_pic/rockLU
+  rotate: true
+  xy: 1238, 391
+  size: 314, 489
+  orig: 314, 489
+  offset: 0, 0
+  index: -1
+01_pic/rockR
+  rotate: false
+  xy: 1729, 257
+  size: 265, 448
+  orig: 266, 451
+  offset: 1, 0
+  index: -1
+01_pic/rockRD
+  rotate: false
+  xy: 2, 131
+  size: 486, 650
+  orig: 495, 650
+  offset: 9, 0
+  index: -1
+01_pic/rockRU
+  rotate: false
+  xy: 839, 404
+  size: 397, 522
+  orig: 410, 522
+  offset: 13, 0
+  index: -1
+01_pic/rockUB
+  rotate: false
+  xy: 490, 53
+  size: 347, 728
+  orig: 347, 729
+  offset: 0, 1
+  index: -1
+01_pic/txEn
+  rotate: false
+  xy: 1238, 707
+  size: 700, 150
+  orig: 702, 152
+  offset: 1, 1
+  index: -1
+01_pic/yellowCat/YCarmL
+  rotate: false
+  xy: 1590, 13
+  size: 96, 94
+  orig: 96, 94
+  offset: 0, 0
+  index: -1
+01_pic/yellowCat/YCarmR
+  rotate: true
+  xy: 1959, 1041
+  size: 47, 41
+  orig: 47, 41
+  offset: 0, 0
+  index: -1
+01_pic/yellowCat/YCbody
+  rotate: false
+  xy: 1695, 159
+  size: 95, 96
+  orig: 95, 96
+  offset: 0, 0
+  index: -1
+01_pic/yellowCat/YCearL
+  rotate: false
+  xy: 1748, 26
+  size: 66, 70
+  orig: 66, 70
+  offset: 0, 0
+  index: -1
+01_pic/yellowCat/YCearR
+  rotate: false
+  xy: 1781, 98
+  size: 57, 59
+  orig: 57, 59
+  offset: 0, 0
+  index: -1
+01_pic/yellowCat/YCeyeL
+  rotate: false
+  xy: 1113, 161
+  size: 25, 30
+  orig: 25, 30
+  offset: 0, 0
+  index: -1
+01_pic/yellowCat/YCeyeR
+  rotate: true
+  xy: 523, 25
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: -1
+01_pic/yellowCat/YCeyewhite
+  rotate: false
+  xy: 1477, 113
+  size: 128, 98
+  orig: 128, 98
+  offset: 0, 0
+  index: -1
+01_pic/yellowCat/YChat
+  rotate: true
+  xy: 1113, 193
+  size: 209, 122
+  orig: 209, 122
+  offset: 0, 0
+  index: -1
+01_pic/yellowCat/YChead
+  rotate: false
+  xy: 1237, 184
+  size: 234, 205
+  orig: 234, 205
+  offset: 0, 0
+  index: -1
+01_pic/yellowCat/YCmouth
+  rotate: true
+  xy: 1959, 951
+  size: 38, 29
+  orig: 38, 29
+  offset: 0, 0
+  index: -1
+01_pic/yellowCat/YCteeth
+  rotate: false
+  xy: 814, 910
+  size: 23, 16
+  orig: 23, 16
+  offset: 0, 0
+  index: -1
+
+totalWin_fx.jpg
+size: 1996,1512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+02_fx/caveLight/caveLight_0000
+  rotate: false
+  xy: 1724, 1016
+  size: 267, 245
+  orig: 270, 265
+  offset: 3, 20
+  index: -1
+02_fx/caveLight/caveLight_0001
+  rotate: false
+  xy: 1723, 769
+  size: 267, 245
+  orig: 270, 265
+  offset: 3, 20
+  index: -1
+02_fx/caveLight/caveLight_0002
+  rotate: true
+  xy: 1248, 154
+  size: 267, 245
+  orig: 270, 265
+  offset: 3, 20
+  index: -1
+02_fx/caveLight/caveLight_0003
+  rotate: false
+  xy: 1724, 1263
+  size: 267, 246
+  orig: 270, 265
+  offset: 3, 19
+  index: -1
+02_fx/caveLight/caveLight_0004
+  rotate: true
+  xy: 1229, 967
+  size: 270, 243
+  orig: 270, 265
+  offset: 0, 22
+  index: -1
+02_fx/caveLight/caveLight_0005
+  rotate: true
+  xy: 1230, 1239
+  size: 270, 243
+  orig: 270, 265
+  offset: 0, 22
+  index: -1
+02_fx/caveLight/caveLight_0006
+  rotate: false
+  xy: 1724, 524
+  size: 266, 243
+  orig: 270, 265
+  offset: 4, 22
+  index: -1
+02_fx/caveLight/caveLight_0007
+  rotate: false
+  xy: 1724, 279
+  size: 266, 243
+  orig: 270, 265
+  offset: 4, 22
+  index: -1
+02_fx/caveLight/caveLight_0008
+  rotate: true
+  xy: 1478, 429
+  size: 266, 244
+  orig: 270, 265
+  offset: 4, 21
+  index: -1
+02_fx/caveLight/caveLight_0009
+  rotate: true
+  xy: 757, 88
+  size: 270, 244
+  orig: 270, 265
+  offset: 0, 21
+  index: -1
+02_fx/caveLight/caveLight_0010
+  rotate: true
+  xy: 486, 967
+  size: 270, 246
+  orig: 270, 265
+  offset: 0, 19
+  index: -1
+02_fx/caveLight/caveLight_0011
+  rotate: true
+  xy: 734, 967
+  size: 270, 246
+  orig: 270, 265
+  offset: 0, 19
+  index: -1
+02_fx/caveLight/caveLight_0012
+  rotate: true
+  xy: 965, 695
+  size: 270, 245
+  orig: 270, 265
+  offset: 0, 20
+  index: -1
+02_fx/caveLight/caveLight_0013
+  rotate: true
+  xy: 735, 1239
+  size: 270, 246
+  orig: 270, 265
+  offset: 0, 19
+  index: -1
+02_fx/caveLight/caveLight_0014
+  rotate: true
+  xy: 468, 579
+  size: 270, 247
+  orig: 270, 265
+  offset: 0, 18
+  index: -1
+02_fx/caveLight/caveLight_0015
+  rotate: true
+  xy: 508, 55
+  size: 270, 247
+  orig: 270, 265
+  offset: 0, 18
+  index: -1
+02_fx/caveLight/caveLight_0016
+  rotate: true
+  xy: 1003, 151
+  size: 270, 243
+  orig: 270, 265
+  offset: 0, 22
+  index: -1
+02_fx/caveLight/caveLight_0017
+  rotate: true
+  xy: 1233, 423
+  size: 270, 243
+  orig: 270, 265
+  offset: 0, 22
+  index: -1
+02_fx/caveLight/caveLight_0018
+  rotate: true
+  xy: 987, 423
+  size: 270, 244
+  orig: 270, 265
+  offset: 0, 21
+  index: -1
+02_fx/caveLight/caveLight_0019
+  rotate: true
+  xy: 717, 632
+  size: 270, 246
+  orig: 270, 265
+  offset: 0, 19
+  index: -1
+02_fx/caveLight/caveLight_0020
+  rotate: true
+  xy: 739, 360
+  size: 270, 246
+  orig: 270, 265
+  offset: 0, 19
+  index: -1
+02_fx/caveLight/caveLight_0021
+  rotate: true
+  xy: 486, 1239
+  size: 270, 247
+  orig: 270, 265
+  offset: 0, 18
+  index: -1
+02_fx/caveLight/caveLight_0022
+  rotate: true
+  xy: 1212, 695
+  size: 270, 244
+  orig: 270, 265
+  offset: 0, 21
+  index: -1
+02_fx/caveLight/caveLight_0023
+  rotate: true
+  xy: 982, 967
+  size: 270, 245
+  orig: 270, 265
+  offset: 0, 20
+  index: -1
+02_fx/caveLight/caveLight_0024
+  rotate: true
+  xy: 983, 1239
+  size: 270, 245
+  orig: 270, 265
+  offset: 0, 20
+  index: -1
+02_fx/caveLight/caveLight_0025
+  rotate: true
+  xy: 255, 42
+  size: 270, 251
+  orig: 270, 265
+  offset: 0, 14
+  index: -1
+02_fx/caveLight/caveLight_0026
+  rotate: false
+  xy: 468, 327
+  size: 269, 250
+  orig: 270, 265
+  offset: 1, 15
+  index: -1
+02_fx/caveLight/caveLight_0027
+  rotate: true
+  xy: 1458, 697
+  size: 268, 248
+  orig: 270, 265
+  offset: 2, 17
+  index: -1
+02_fx/caveLight/caveLight_0028
+  rotate: true
+  xy: 1474, 970
+  size: 267, 247
+  orig: 270, 265
+  offset: 3, 18
+  index: -1
+02_fx/caveLight/caveLight_0029
+  rotate: true
+  xy: 1475, 1242
+  size: 267, 247
+  orig: 270, 265
+  offset: 3, 18
+  index: -1
+02_fx/caveLightB
+  rotate: true
+  xy: 486, 862
+  size: 103, 143
+  orig: 110, 149
+  offset: 4, 6
+  index: -1
+02_fx/crystalGlowL
+  rotate: true
+  xy: 1003, 2
+  size: 147, 166
+  orig: 171, 189
+  offset: 0, 2
+  index: -1
+02_fx/crystalGlowLD
+  rotate: false
+  xy: 2, 3
+  size: 251, 309
+  orig: 265, 310
+  offset: 0, 0
+  index: -1
+02_fx/crystalGlowLU
+  rotate: true
+  xy: 631, 904
+  size: 61, 129
+  orig: 70, 152
+  offset: 0, 10
+  index: -1
+02_fx/crystalGlowR
+  rotate: false
+  xy: 1495, 48
+  size: 162, 201
+  orig: 182, 226
+  offset: 20, 1
+  index: -1
+02_fx/crystalGlowRD
+  rotate: false
+  xy: 1495, 251
+  size: 204, 176
+  orig: 222, 176
+  offset: 18, 0
+  index: -1
+02_fx/crystalGlowUL
+  rotate: false
+  xy: 255, 3
+  size: 72, 37
+  orig: 89, 44
+  offset: 7, 7
+  index: -1
+02_fx/crystalGlowUR
+  rotate: true
+  xy: 1171, 19
+  size: 130, 154
+  orig: 152, 161
+  offset: 10, 7
+  index: -1
+02_fx/fog
+  rotate: true
+  xy: 2, 314
+  size: 535, 334
+  orig: 540, 389
+  offset: 0, 0
+  index: -1
+02_fx/radiateLight
+  rotate: true
+  xy: 2, 851
+  size: 658, 482
+  orig: 672, 500
+  offset: 7, 10
+  index: -1
+02_fx/txRL
+  rotate: true
+  xy: 338, 315
+  size: 534, 128
+  orig: 568, 201
+  offset: 17, 41
+  index: -1

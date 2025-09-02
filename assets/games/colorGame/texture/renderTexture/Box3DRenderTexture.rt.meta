@@ -1,0 +1,40 @@
+{
+  "ver": "1.2.1",
+  "importer": "render-texture",
+  "imported": true,
+  "uuid": "c8aa43fb-755b-4891-935b-4060e610f4be",
+  "files": [
+    ".json"
+  ],
+  "subMetas": {
+    "f9941": {
+      "importer": "rt-sprite-frame",
+      "uuid": "c8aa43fb-755b-4891-935b-4060e610f4be@f9941",
+      "displayName": "Box3DRenderTexture",
+      "id": "f9941",
+      "name": "spriteFrame",
+      "userData": {
+        "imageUuidOrDatabaseUri": "c8aa43fb-755b-4891-935b-4060e610f4be",
+        "width": 1080,
+        "height": 1920
+      },
+      "ver": "1.0.0",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "width": 1080,
+    "height": 1920,
+    "anisotropy": 0,
+    "minfilter": "linear",
+    "magfilter": "linear",
+    "mipfilter": "none",
+    "wrapModeS": "clamp-to-edge",
+    "wrapModeT": "clamp-to-edge",
+    "redirect": "c8aa43fb-755b-4891-935b-4060e610f4be@f9941"
+  }
+}

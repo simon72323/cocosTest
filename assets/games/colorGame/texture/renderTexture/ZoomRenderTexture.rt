@@ -1,0 +1,9 @@
+{
+  "__type__": "cc.RenderTexture",
+  "content": {
+    "base": "2,2,1,1,0,0",
+    "w": 542,
+    "h": 306,
+    "n": "ZoomRenderTexture"
+  }
+}

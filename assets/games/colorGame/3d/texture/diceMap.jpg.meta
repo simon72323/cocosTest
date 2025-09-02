@@ -1,0 +1,46 @@
+{
+  "ver": "1.0.27",
+  "importer": "image",
+  "imported": true,
+  "uuid": "ba79b808-5c15-44f8-899f-73c28f7e2ce9",
+  "files": [
+    ".jpg",
+    ".json"
+  ],
+  "subMetas": {
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "ba79b808-5c15-44f8-899f-73c28f7e2ce9@6c48a",
+      "displayName": "diceMap",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "imageUuidOrDatabaseUri": "ba79b808-5c15-44f8-899f-73c28f7e2ce9",
+        "isUuid": true,
+        "visible": false,
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "nearest",
+        "anisotropy": 0
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "type": "texture",
+    "hasAlpha": false,
+    "fixAlphaTransparencyArtifacts": false,
+    "redirect": "ba79b808-5c15-44f8-899f-73c28f7e2ce9@6c48a",
+    "compressSettings": {
+      "useCompressTexture": true,
+      "presetId": "581cr2wcZO8KcCHGjtgtBf"
+    }
+  }
+}

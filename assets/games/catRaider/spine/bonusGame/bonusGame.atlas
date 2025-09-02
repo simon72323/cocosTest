@@ -1,0 +1,251 @@
+
+bonusGame.png
+size: 1896,1428
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+01_pic/5
+  rotate: false
+  xy: 2, 3
+  size: 274, 339
+  orig: 279, 341
+  offset: 3, 2
+  index: -1
+01_pic/RLightBG
+  rotate: false
+  xy: 1469, 999
+  size: 425, 425
+  orig: 429, 429
+  offset: 2, 2
+  index: -1
+01_pic/bonus
+  rotate: true
+  xy: 1141, 535
+  size: 889, 247
+  orig: 892, 248
+  offset: 1, 1
+  index: -1
+01_pic/cart
+  rotate: true
+  xy: 1469, 437
+  size: 560, 397
+  orig: 560, 397
+  offset: 0, 0
+  index: -1
+01_pic/cartEdge
+  rotate: false
+  xy: 488, 344
+  size: 555, 188
+  orig: 555, 188
+  offset: 0, 0
+  index: -1
+01_pic/cartShadow
+  rotate: true
+  xy: 1045, 3
+  size: 529, 153
+  orig: 532, 155
+  offset: 2, 1
+  index: -1
+01_pic/drops
+  rotate: false
+  xy: 278, 15
+  size: 511, 327
+  orig: 516, 332
+  offset: 3, 3
+  index: -1
+01_pic/free
+  rotate: true
+  xy: 1200, 20
+  size: 513, 267
+  orig: 518, 273
+  offset: 3, 3
+  index: -1
+01_pic/gemBD
+  rotate: true
+  xy: 1677, 24
+  size: 100, 98
+  orig: 100, 98
+  offset: 0, 0
+  index: -1
+01_pic/gemBU
+  rotate: false
+  xy: 1771, 210
+  size: 118, 117
+  orig: 118, 117
+  offset: 0, 0
+  index: -1
+01_pic/gemGL
+  rotate: true
+  xy: 1469, 310
+  size: 125, 150
+  orig: 125, 151
+  offset: 0, 1
+  index: -1
+01_pic/gemGR
+  rotate: false
+  xy: 1704, 130
+  size: 92, 78
+  orig: 92, 78
+  offset: 0, 0
+  index: -1
+01_pic/gemPBL
+  rotate: true
+  xy: 1390, 1181
+  size: 97, 70
+  orig: 97, 70
+  offset: 0, 0
+  index: -1
+01_pic/gemPBR
+  rotate: true
+  xy: 1621, 222
+  size: 87, 131
+  orig: 87, 131
+  offset: 0, 0
+  index: -1
+01_pic/gemPC
+  rotate: true
+  xy: 1469, 201
+  size: 107, 117
+  orig: 107, 117
+  offset: 0, 0
+  index: -1
+01_pic/gemPL
+  rotate: true
+  xy: 1771, 329
+  size: 106, 123
+  orig: 106, 123
+  offset: 0, 0
+  index: -1
+01_pic/gemPR
+  rotate: true
+  xy: 1390, 807
+  size: 98, 67
+  orig: 98, 67
+  offset: 0, 0
+  index: -1
+01_pic/gemPU
+  rotate: true
+  xy: 1390, 711
+  size: 94, 65
+  orig: 94, 65
+  offset: 0, 0
+  index: -1
+01_pic/gemRD
+  rotate: true
+  xy: 1469, 8
+  size: 108, 107
+  orig: 109, 107
+  offset: 1, 0
+  index: -1
+01_pic/gemRU
+  rotate: true
+  xy: 1469, 118
+  size: 81, 114
+  orig: 82, 115
+  offset: 1, 0
+  index: -1
+01_pic/gemYL
+  rotate: false
+  xy: 1578, 10
+  size: 97, 106
+  orig: 98, 108
+  offset: 1, 0
+  index: -1
+01_pic/gemYR
+  rotate: false
+  xy: 1390, 907
+  size: 69, 60
+  orig: 70, 63
+  offset: 1, 1
+  index: -1
+01_pic/ground
+  rotate: true
+  xy: 2, 344
+  size: 1080, 484
+  orig: 1080, 487
+  offset: 0, 2
+  index: -1
+01_pic/statue
+  rotate: true
+  xy: 791, 132
+  size: 210, 216
+  orig: 211, 218
+  offset: 1, 2
+  index: -1
+01_pic/wheelLB
+  rotate: true
+  xy: 1588, 126
+  size: 94, 114
+  orig: 94, 114
+  offset: 0, 0
+  index: -1
+01_pic/wheelLF
+  rotate: true
+  xy: 1621, 311
+  size: 124, 148
+  orig: 124, 150
+  offset: 0, 1
+  index: -1
+01_pic/wheelRB
+  rotate: false
+  xy: 791, 2
+  size: 89, 128
+  orig: 89, 128
+  offset: 0, 0
+  index: -1
+01_pic/wheelRF
+  rotate: false
+  xy: 882, 2
+  size: 89, 128
+  orig: 89, 128
+  offset: 0, 0
+  index: -1
+02_fx/RLight
+  rotate: true
+  xy: 488, 534
+  size: 890, 651
+  orig: 901, 695
+  offset: 11, 44
+  index: -1
+02_fx/RLightF
+  rotate: false
+  xy: 1798, 125
+  size: 87, 83
+  orig: 93, 89
+  offset: 3, 3
+  index: -1
+02_fx/gemBDshine
+  rotate: false
+  xy: 1390, 1353
+  size: 71, 71
+  orig: 71, 71
+  offset: 0, 0
+  index: -1
+02_fx/gemGLshine
+  rotate: false
+  xy: 1390, 969
+  size: 69, 66
+  orig: 69, 66
+  offset: 0, 0
+  index: -1
+02_fx/gemPLshine
+  rotate: false
+  xy: 1390, 1109
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+02_fx/gemYLshine
+  rotate: false
+  xy: 1390, 1037
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+02_fx/gemYRshine
+  rotate: false
+  xy: 1390, 1280
+  size: 71, 71
+  orig: 71, 71
+  offset: 0, 0
+  index: -1

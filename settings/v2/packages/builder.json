@@ -1,0 +1,49 @@
+{
+  "__version__": "1.3.8",
+  "textureCompressConfig": {
+    "userPreset": {
+      "0cMqcQ4Q1MYr4SyaMVpC+9": {
+        "name": "pngWebp",
+        "options": {
+          "web": {
+            "png": {
+              "quality": 80
+            },
+            "webp": {
+              "quality": 80
+            }
+          }
+        }
+      },
+      "581cr2wcZO8KcCHGjtgtBf": {
+        "name": "jpgWebp",
+        "options": {
+          "web": {
+            "jpg": {
+              "quality": 85
+            },
+            "webp": {
+              "quality": 80
+            }
+          }
+        }
+      },
+      "e5DVTOEOBIB5ynRrTPNoWL": {
+        "name": "png8",
+        "options": {
+          "web": {
+            "png": {
+              "quality": 80
+            }
+          }
+        }
+      },
+      "69CaX1ENJK5K+sg/g2NEyI": null
+    }
+  },
+  "splash-setting": {
+    "logo": {
+      "type": "default"
+    }
+  }
+}

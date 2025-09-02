@@ -1,0 +1,145 @@
+
+symItem.png
+size: 523,1030
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+sym53/ball
+  rotate: true
+  xy: 180, 16
+  size: 158, 150
+  orig: 160, 152
+  offset: 1, 1
+  index: -1
+sym53/mark
+  rotate: false
+  xy: 443, 959
+  size: 72, 69
+  orig: 75, 71
+  offset: 1, 1
+  index: -1
+sym53/ring
+  rotate: false
+  xy: 439, 308
+  size: 82, 54
+  orig: 84, 56
+  offset: 1, 1
+  index: -1
+sym53/rope
+  rotate: false
+  xy: 439, 203
+  size: 81, 48
+  orig: 83, 50
+  offset: 1, 1
+  index: -1
+  
+symItem_fx.jpg
+size: 2033,1543
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+sym53_fx/ani_spark_01
+  rotate: false
+  xy: 608, 354
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+sym53_fx/ani_spark_03
+  rotate: false
+  xy: 915, 745
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+sym53_fx/ani_spark_05
+  rotate: false
+  xy: 1067, 737
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+sym53_fx/ani_spark_07
+  rotate: false
+  xy: 915, 593
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+sym53_fx/ani_spark_09
+  rotate: false
+  xy: 1067, 585
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+sym53_fx/ani_spark_11
+  rotate: false
+  xy: 1219, 737
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+sym53_fx/ani_spark_13
+  rotate: false
+  xy: 1219, 585
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+sym53_fx/ani_spark_15
+  rotate: false
+  xy: 1371, 738
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+sym53_fx/ani_spark_17
+  rotate: false
+  xy: 1371, 586
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+sym53_fx/ani_spark_19
+  rotate: false
+  xy: 1523, 740
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+sym53_fx/ani_spark_21
+  rotate: false
+  xy: 1523, 588
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+sym53_fx/ani_spark_23
+  rotate: false
+  xy: 1675, 708
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+sym53_fx/ani_spark_25
+  rotate: false
+  xy: 1675, 556
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+sym53_fx/ani_spark_27
+  rotate: false
+  xy: 1827, 750
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+sym53_fx/ani_spark_29
+  rotate: false
+  xy: 1827, 598
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1

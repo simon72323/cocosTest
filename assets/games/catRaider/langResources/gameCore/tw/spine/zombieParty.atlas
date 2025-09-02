@@ -1,0 +1,935 @@
+
+zombieParty.png
+size: 2001,1730
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+01_pic/ZPBase_tw
+  rotate: true
+  xy: 2, 195
+  size: 884, 299
+  orig: 884, 299
+  offset: 0, 0
+  index: -1
+01_pic/background
+  rotate: false
+  xy: 680, 1235
+  size: 540, 493
+  orig: 540, 522
+  offset: 0, 29
+  index: -1
+01_pic/black
+  rotate: false
+  xy: 1179, 210
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+01_pic/c1_armL
+  rotate: false
+  xy: 971, 207
+  size: 206, 148
+  orig: 206, 148
+  offset: 0, 0
+  index: -1
+01_pic/c1_armR
+  rotate: true
+  xy: 1747, 778
+  size: 261, 173
+  orig: 261, 173
+  offset: 0, 0
+  index: -1
+01_pic/c1_body
+  rotate: true
+  xy: 2, 2
+  size: 191, 225
+  orig: 191, 225
+  offset: 0, 0
+  index: -1
+01_pic/c1_earL
+  rotate: false
+  xy: 971, 20
+  size: 153, 185
+  orig: 153, 185
+  offset: 0, 0
+  index: -1
+01_pic/c1_earR
+  rotate: false
+  xy: 1712, 441
+  size: 168, 187
+  orig: 168, 187
+  offset: 0, 0
+  index: -1
+01_pic/c1_eyeL
+  rotate: false
+  xy: 1368, 2
+  size: 62, 74
+  orig: 62, 74
+  offset: 0, 0
+  index: -1
+01_pic/c1_eyeR
+  rotate: false
+  xy: 229, 7
+  size: 62, 73
+  orig: 62, 74
+  offset: 0, 1
+  index: -1
+01_pic/c1_eyeWhite
+  rotate: true
+  xy: 1763, 1041
+  size: 284, 188
+  orig: 284, 188
+  offset: 0, 0
+  index: -1
+01_pic/c1_head
+  rotate: false
+  xy: 1222, 1316
+  size: 494, 412
+  orig: 494, 412
+  offset: 0, 0
+  index: -1
+01_pic/c1_hip
+  rotate: false
+  xy: 1848, 156
+  size: 120, 56
+  orig: 120, 56
+  offset: 0, 0
+  index: -1
+01_pic/c1_legL
+  rotate: true
+  xy: 1368, 78
+  size: 144, 93
+  orig: 144, 93
+  offset: 0, 0
+  index: -1
+01_pic/c1_legR
+  rotate: true
+  xy: 1710, 156
+  size: 75, 136
+  orig: 75, 136
+  offset: 0, 0
+  index: -1
+01_pic/c1_mouth
+  rotate: false
+  xy: 1477, 203
+  size: 143, 103
+  orig: 143, 103
+  offset: 0, 0
+  index: -1
+01_pic/c1_tail
+  rotate: false
+  xy: 1747, 630
+  size: 173, 146
+  orig: 173, 146
+  offset: 0, 0
+  index: -1
+01_pic/c1_teethD
+  rotate: true
+  xy: 1970, 164
+  size: 48, 23
+  orig: 48, 23
+  offset: 0, 0
+  index: -1
+01_pic/c1_teethU
+  rotate: true
+  xy: 1865, 21
+  size: 74, 37
+  orig: 74, 37
+  offset: 0, 0
+  index: -1
+01_pic/c1_tongue
+  rotate: true
+  xy: 1961, 1552
+  size: 61, 33
+  orig: 61, 33
+  offset: 0, 0
+  index: -1
+01_pic/c2_armL
+  rotate: false
+  xy: 1344, 224
+  size: 131, 82
+  orig: 131, 82
+  offset: 0, 0
+  index: -1
+01_pic/c2_armR
+  rotate: false
+  xy: 1712, 233
+  size: 167, 90
+  orig: 167, 90
+  offset: 0, 0
+  index: -1
+01_pic/c2_body
+  rotate: false
+  xy: 1241, 53
+  size: 125, 167
+  orig: 125, 167
+  offset: 0, 0
+  index: -1
+01_pic/c2_earL
+  rotate: false
+  xy: 1904, 79
+  size: 79, 75
+  orig: 79, 75
+  offset: 0, 0
+  index: -1
+01_pic/c2_earR
+  rotate: false
+  xy: 1922, 606
+  size: 77, 101
+  orig: 77, 101
+  offset: 0, 0
+  index: -1
+01_pic/c2_eyeL
+  rotate: false
+  xy: 1179, 308
+  size: 33, 47
+  orig: 33, 47
+  offset: 0, 0
+  index: -1
+01_pic/c2_eyeR
+  rotate: false
+  xy: 1953, 1278
+  size: 33, 47
+  orig: 33, 47
+  offset: 0, 0
+  index: -1
+01_pic/c2_eyeWhite
+  rotate: true
+  xy: 1126, 16
+  size: 189, 113
+  orig: 189, 113
+  offset: 0, 0
+  index: -1
+01_pic/c2_head
+  rotate: true
+  xy: 695, 9
+  size: 327, 274
+  orig: 327, 274
+  offset: 0, 0
+  index: -1
+01_pic/c2_hip
+  rotate: true
+  xy: 1961, 1649
+  size: 79, 35
+  orig: 79, 35
+  offset: 0, 0
+  index: -1
+01_pic/c2_legL
+  rotate: false
+  xy: 1622, 204
+  size: 86, 72
+  orig: 86, 72
+  offset: 0, 0
+  index: -1
+01_pic/c2_legR
+  rotate: false
+  xy: 1611, 2
+  size: 58, 89
+  orig: 58, 89
+  offset: 0, 0
+  index: -1
+01_pic/c2_mouth
+  rotate: false
+  xy: 1804, 97
+  size: 98, 57
+  orig: 98, 57
+  offset: 0, 0
+  index: -1
+01_pic/c2_tail
+  rotate: true
+  xy: 229, 82
+  size: 111, 72
+  orig: 111, 72
+  offset: 0, 0
+  index: -1
+01_pic/c2_teethD
+  rotate: true
+  xy: 1978, 472
+  size: 46, 18
+  orig: 46, 18
+  offset: 0, 0
+  index: -1
+01_pic/c2_teethU
+  rotate: true
+  xy: 1584, 3
+  size: 50, 23
+  orig: 50, 23
+  offset: 0, 0
+  index: -1
+01_pic/c2_tongue
+  rotate: false
+  xy: 1307, 18
+  size: 52, 33
+  orig: 52, 33
+  offset: 0, 0
+  index: -1
+01_pic/c3_armL
+  rotate: true
+  xy: 617, 552
+  size: 127, 73
+  orig: 127, 73
+  offset: 0, 0
+  index: -1
+01_pic/c3_armR
+  rotate: false
+  xy: 1179, 222
+  size: 163, 84
+  orig: 163, 84
+  offset: 0, 0
+  index: -1
+01_pic/c3_body
+  rotate: true
+  xy: 1712, 325
+  size: 114, 172
+  orig: 151, 172
+  offset: 37, 0
+  index: -1
+01_pic/c3_earL
+  rotate: true
+  xy: 1881, 214
+  size: 105, 116
+  orig: 105, 116
+  offset: 0, 0
+  index: -1
+01_pic/c3_earR
+  rotate: true
+  xy: 1882, 520
+  size: 84, 117
+  orig: 84, 117
+  offset: 0, 0
+  index: -1
+01_pic/c3_head
+  rotate: true
+  xy: 695, 338
+  size: 341, 269
+  orig: 341, 269
+  offset: 0, 0
+  index: -1
+01_pic/c3_hip
+  rotate: true
+  xy: 966, 606
+  size: 73, 39
+  orig: 73, 39
+  offset: 0, 0
+  index: -1
+01_pic/c3_legL
+  rotate: false
+  xy: 1882, 446
+  size: 94, 72
+  orig: 94, 72
+  offset: 0, 0
+  index: -1
+01_pic/c3_legR
+  rotate: false
+  xy: 1804, 2
+  size: 59, 93
+  orig: 59, 93
+  offset: 0, 0
+  index: -1
+01_pic/c3_mouth
+  rotate: true
+  xy: 1622, 278
+  size: 111, 88
+  orig: 111, 88
+  offset: 0, 0
+  index: -1
+01_pic/c3_nose
+  rotate: false
+  xy: 1432, 2
+  size: 90, 51
+  orig: 90, 51
+  offset: 0, 0
+  index: -1
+01_pic/c3_tail
+  rotate: true
+  xy: 1175, 495
+  size: 96, 54
+  orig: 96, 54
+  offset: 0, 0
+  index: -1
+01_pic/c3_teethD
+  rotate: false
+  xy: 1747, 1070
+  size: 14, 16
+  orig: 14, 16
+  offset: 0, 0
+  index: -1
+01_pic/c3_teethU
+  rotate: true
+  xy: 1961, 1437
+  size: 51, 34
+  orig: 51, 34
+  offset: 0, 0
+  index: -1
+01_pic/c3_tongue
+  rotate: false
+  xy: 1961, 1615
+  size: 38, 32
+  orig: 38, 32
+  offset: 0, 0
+  index: -1
+01_pic/c4_armL
+  rotate: false
+  xy: 1904, 13
+  size: 80, 64
+  orig: 80, 64
+  offset: 0, 0
+  index: -1
+01_pic/c4_armR
+  rotate: true
+  xy: 1611, 93
+  size: 108, 80
+  orig: 108, 80
+  offset: 0, 0
+  index: -1
+01_pic/c4_body
+  rotate: true
+  xy: 1693, 52
+  size: 102, 109
+  orig: 102, 113
+  offset: 0, 0
+  index: -1
+01_pic/c4_earL
+  rotate: true
+  xy: 1736, 2
+  size: 48, 50
+  orig: 48, 50
+  offset: 0, 0
+  index: -1
+01_pic/c4_earR
+  rotate: true
+  xy: 1961, 1335
+  size: 48, 36
+  orig: 48, 36
+  offset: 0, 0
+  index: -1
+01_pic/c4_eyeL
+  rotate: false
+  xy: 1953, 1245
+  size: 28, 31
+  orig: 29, 31
+  offset: 1, 0
+  index: -1
+01_pic/c4_eyeR
+  rotate: false
+  xy: 1953, 1212
+  size: 28, 31
+  orig: 28, 31
+  offset: 0, 0
+  index: -1
+01_pic/c4_eyeWhite
+  rotate: true
+  xy: 1886, 321
+  size: 123, 111
+  orig: 123, 111
+  offset: 0, 0
+  index: -1
+01_pic/c4_head
+  rotate: false
+  xy: 966, 425
+  size: 207, 166
+  orig: 207, 166
+  offset: 0, 0
+  index: -1
+01_pic/c4_hip
+  rotate: true
+  xy: 1961, 1490
+  size: 60, 33
+  orig: 60, 33
+  offset: 0, 0
+  index: -1
+01_pic/c4_legL
+  rotate: true
+  xy: 1175, 432
+  size: 61, 40
+  orig: 61, 40
+  offset: 0, 0
+  index: -1
+01_pic/c4_legR
+  rotate: true
+  xy: 1241, 16
+  size: 35, 64
+  orig: 35, 64
+  offset: 0, 0
+  index: -1
+01_pic/c4_mouth
+  rotate: false
+  xy: 1524, 2
+  size: 58, 51
+  orig: 60, 55
+  offset: 1, 0
+  index: -1
+01_pic/c4_nose
+  rotate: false
+  xy: 1671, 2
+  size: 63, 48
+  orig: 63, 48
+  offset: 0, 0
+  index: -1
+01_pic/c4_tail
+  rotate: true
+  xy: 1961, 1385
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+01_pic/c4_teethD
+  rotate: true
+  xy: 1718, 1316
+  size: 9, 11
+  orig: 9, 11
+  offset: 0, 0
+  index: -1
+01_pic/c4_tongue
+  rotate: true
+  xy: 1882, 606
+  size: 22, 25
+  orig: 24, 25
+  offset: 2, 0
+  index: -1
+01_pic/catKing
+  rotate: false
+  xy: 2, 1081
+  size: 676, 647
+  orig: 682, 652
+  offset: 5, 1
+  index: -1
+01_pic/catKingEye
+  rotate: false
+  xy: 966, 357
+  size: 233, 66
+  orig: 233, 66
+  offset: 0, 0
+  index: -1
+01_pic/catKingEyeGlow
+  rotate: true
+  xy: 1622, 391
+  size: 256, 88
+  orig: 257, 90
+  offset: 1, 1
+  index: -1
+01_pic/discoball1
+  rotate: false
+  xy: 617, 681
+  size: 388, 388
+  orig: 400, 400
+  offset: 6, 6
+  index: -1
+01_pic/discoball2
+  rotate: false
+  xy: 1232, 698
+  size: 388, 388
+  orig: 400, 400
+  offset: 6, 6
+  index: -1
+01_pic/discoball3
+  rotate: false
+  xy: 1232, 308
+  size: 388, 388
+  orig: 400, 400
+  offset: 6, 6
+  index: -1
+01_pic/discoballShine01
+  rotate: false
+  xy: 1463, 55
+  size: 146, 146
+  orig: 151, 151
+  offset: 2, 4
+  index: -1
+01_pic/discoballTop
+  rotate: false
+  xy: 1922, 709
+  size: 77, 330
+  orig: 77, 330
+  offset: 0, 0
+  index: -1
+01_pic/floor01
+  rotate: false
+  xy: 1222, 1088
+  size: 539, 226
+  orig: 539, 227
+  offset: 0, 1
+  index: -1
+01_pic/floor02
+  rotate: true
+  xy: 467, 3
+  size: 539, 226
+  orig: 539, 229
+  offset: 0, 3
+  index: -1
+01_pic/fog
+  rotate: true
+  xy: 303, 544
+  size: 535, 312
+  orig: 540, 320
+  offset: 2, 7
+  index: -1
+01_pic/lightL
+  rotate: false
+  xy: 1622, 649
+  size: 58, 437
+  orig: 61, 460
+  offset: 1, 1
+  index: -1
+01_pic/lightR
+  rotate: false
+  xy: 1682, 655
+  size: 63, 431
+  orig: 68, 454
+  offset: 3, 0
+  index: -1
+01_pic/smokeB
+  rotate: true
+  xy: 1718, 1327
+  size: 401, 241
+  orig: 459, 258
+  offset: 17, 17
+  index: -1
+01_pic/smokeF
+  rotate: true
+  xy: 1007, 593
+  size: 476, 223
+  orig: 490, 237
+  offset: 6, 4
+  index: -1
+01_pic/wall01
+  rotate: false
+  xy: 680, 1071
+  size: 540, 162
+  orig: 540, 288
+  offset: 0, 120
+  index: -1
+01_pic/wall02
+  rotate: true
+  xy: 303, 2
+  size: 540, 162
+  orig: 540, 288
+  offset: 0, 120
+  index: -1
+zombieParty_fx.jpg
+size: 508,508
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0001
+  rotate: true
+  xy: 483, 358
+  size: 12, 23
+  orig: 126, 75
+  offset: 10, 41
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0002
+  rotate: false
+  xy: 483, 401
+  size: 22, 27
+  orig: 126, 75
+  offset: 10, 37
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0003
+  rotate: false
+  xy: 157, 6
+  size: 49, 64
+  orig: 126, 75
+  offset: 0, 11
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0004
+  rotate: true
+  xy: 80, 13
+  size: 55, 75
+  orig: 126, 75
+  offset: 0, 0
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0005
+  rotate: true
+  xy: 327, 68
+  size: 59, 75
+  orig: 126, 75
+  offset: 0, 0
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0006
+  rotate: true
+  xy: 79, 124
+  size: 71, 75
+  orig: 126, 75
+  offset: 0, 0
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0007
+  rotate: false
+  xy: 427, 198
+  size: 77, 75
+  orig: 126, 75
+  offset: 0, 0
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0008
+  rotate: false
+  xy: 347, 198
+  size: 78, 75
+  orig: 126, 75
+  offset: 0, 0
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0009
+  rotate: false
+  xy: 181, 199
+  size: 81, 75
+  orig: 126, 75
+  offset: 0, 0
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0010
+  rotate: false
+  xy: 300, 354
+  size: 91, 75
+  orig: 126, 75
+  offset: 0, 0
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0011
+  rotate: false
+  xy: 204, 354
+  size: 94, 75
+  orig: 126, 75
+  offset: 4, 0
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0012
+  rotate: false
+  xy: 2, 431
+  size: 100, 75
+  orig: 126, 75
+  offset: 9, 0
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0013
+  rotate: false
+  xy: 204, 431
+  size: 97, 75
+  orig: 126, 75
+  offset: 17, 0
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0014
+  rotate: false
+  xy: 303, 431
+  size: 97, 75
+  orig: 126, 75
+  offset: 27, 0
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0015
+  rotate: false
+  xy: 393, 353
+  size: 88, 75
+  orig: 126, 75
+  offset: 38, 0
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0016
+  rotate: false
+  xy: 88, 197
+  size: 81, 75
+  orig: 126, 75
+  offset: 45, 0
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0017
+  rotate: false
+  xy: 264, 199
+  size: 81, 75
+  orig: 126, 75
+  offset: 45, 0
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0018
+  rotate: true
+  xy: 2, 122
+  size: 73, 75
+  orig: 126, 75
+  offset: 53, 0
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0019
+  rotate: true
+  xy: 327, 129
+  size: 67, 75
+  orig: 126, 75
+  offset: 59, 0
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0020
+  rotate: true
+  xy: 79, 70
+  size: 52, 75
+  orig: 126, 75
+  offset: 74, 0
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0021
+  rotate: true
+  xy: 208, 25
+  size: 45, 69
+  orig: 126, 75
+  offset: 81, 0
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0022
+  rotate: false
+  xy: 320, 17
+  size: 41, 49
+  orig: 126, 75
+  offset: 85, 0
+  index: -1
+02_fx/fx_partyTwGlow/fx_partyTwGlow_0023
+  rotate: false
+  xy: 363, 19
+  size: 37, 47
+  orig: 126, 75
+  offset: 89, 0
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0001
+  rotate: false
+  xy: 498, 490
+  size: 8, 16
+  orig: 125, 76
+  offset: 10, 49
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0002
+  rotate: false
+  xy: 483, 372
+  size: 15, 27
+  orig: 125, 76
+  offset: 10, 38
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0003
+  rotate: false
+  xy: 279, 24
+  size: 39, 54
+  orig: 125, 76
+  offset: 0, 22
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0004
+  rotate: true
+  xy: 2, 68
+  size: 52, 67
+  orig: 125, 76
+  offset: 0, 9
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0005
+  rotate: true
+  xy: 2, 8
+  size: 58, 76
+  orig: 125, 76
+  offset: 0, 0
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0006
+  rotate: true
+  xy: 404, 66
+  size: 62, 76
+  orig: 125, 76
+  offset: 0, 0
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0007
+  rotate: true
+  xy: 171, 124
+  size: 73, 76
+  orig: 125, 76
+  offset: 0, 0
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0008
+  rotate: false
+  xy: 282, 276
+  size: 80, 76
+  orig: 125, 76
+  offset: 0, 0
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0009
+  rotate: false
+  xy: 195, 276
+  size: 85, 76
+  orig: 125, 76
+  offset: 0, 0
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0010
+  rotate: false
+  xy: 2, 275
+  size: 90, 76
+  orig: 125, 76
+  offset: 0, 0
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0011
+  rotate: false
+  xy: 102, 352
+  size: 91, 76
+  orig: 125, 76
+  offset: 6, 0
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0012
+  rotate: false
+  xy: 104, 430
+  size: 98, 76
+  orig: 125, 76
+  offset: 9, 0
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0013
+  rotate: false
+  xy: 2, 353
+  size: 98, 76
+  orig: 125, 76
+  offset: 15, 0
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0014
+  rotate: false
+  xy: 402, 430
+  size: 94, 76
+  orig: 125, 76
+  offset: 26, 0
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0015
+  rotate: false
+  xy: 94, 274
+  size: 85, 76
+  orig: 125, 76
+  offset: 40, 0
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0016
+  rotate: false
+  xy: 2, 197
+  size: 84, 76
+  orig: 125, 76
+  offset: 41, 0
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0017
+  rotate: false
+  xy: 364, 275
+  size: 80, 76
+  orig: 125, 76
+  offset: 45, 0
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0018
+  rotate: true
+  xy: 249, 124
+  size: 73, 76
+  orig: 125, 76
+  offset: 52, 0
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0019
+  rotate: true
+  xy: 404, 130
+  size: 66, 76
+  orig: 125, 76
+  offset: 59, 0
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0020
+  rotate: false
+  xy: 446, 275
+  size: 59, 76
+  orig: 125, 76
+  offset: 66, 0
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0021
+  rotate: true
+  xy: 156, 72
+  size: 50, 69
+  orig: 125, 76
+  offset: 75, 0
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0022
+  rotate: true
+  xy: 227, 80
+  size: 42, 52
+  orig: 125, 76
+  offset: 83, 0
+  index: -1
+02_fx/fx_zombieTwGlow/fx_zombieTwGlow_0023
+  rotate: false
+  xy: 402, 17
+  size: 37, 47
+  orig: 125, 76
+  offset: 88, 0
+  index: -1

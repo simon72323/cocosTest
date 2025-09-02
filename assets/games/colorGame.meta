@@ -1,0 +1,36 @@
+{
+  "ver": "1.2.0",
+  "importer": "directory",
+  "imported": true,
+  "uuid": "2034d329-10bc-4ace-a56f-74b9ddcb41b9",
+  "files": [],
+  "subMetas": {},
+  "userData": {
+    "isBundle": true,
+    "bundleName": "colorGame",
+    "bundleFilterConfig": [
+      {
+        "range": "exclude",
+        "type": "asset",
+        "patchOption": {
+          "patchType": "glob",
+          "value": "db://assets/*.test"
+        },
+        "assets": [
+          "9bdd90e0-150e-4c08-8ad2-6569d46d45f4"
+        ]
+      },
+      {
+        "range": "exclude",
+        "type": "asset",
+        "patchOption": {
+          "patchType": "glob",
+          "value": "db://assets/*.test"
+        },
+        "assets": [
+          "ae1fc024-8a4a-45a4-8644-edf056635f4d"
+        ]
+      }
+    ]
+  }
+}

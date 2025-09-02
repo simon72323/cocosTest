@@ -1,0 +1,46 @@
+{
+  "ver": "1.0.27",
+  "importer": "image",
+  "imported": true,
+  "uuid": "d4f45cae-daf2-4335-b6f1-92154ee6c5a8",
+  "files": [
+    ".json",
+    ".png"
+  ],
+  "subMetas": {
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "d4f45cae-daf2-4335-b6f1-92154ee6c5a8@6c48a",
+      "displayName": "particleCoin",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "clamp-to-edge",
+        "wrapModeT": "clamp-to-edge",
+        "imageUuidOrDatabaseUri": "d4f45cae-daf2-4335-b6f1-92154ee6c5a8",
+        "isUuid": true,
+        "visible": false,
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "type": "texture",
+    "hasAlpha": true,
+    "fixAlphaTransparencyArtifacts": false,
+    "redirect": "d4f45cae-daf2-4335-b6f1-92154ee6c5a8@6c48a",
+    "compressSettings": {
+      "useCompressTexture": true,
+      "presetId": "e5DVTOEOBIB5ynRrTPNoWL"
+    }
+  }
+}

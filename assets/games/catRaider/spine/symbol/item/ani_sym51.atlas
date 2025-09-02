@@ -1,0 +1,369 @@
+
+symItem.png
+size: 523,1030
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+sym51/eyeskin
+  rotate: true
+  xy: 180, 176
+  size: 103, 34
+  orig: 105, 36
+  offset: 1, 1
+  index: -1
+sym51/symbol_0
+  rotate: true
+  xy: 223, 834
+  size: 194, 218
+  orig: 196, 220
+  offset: 1, 1
+  index: -1
+sym51/symbol_0_eye
+  rotate: false
+  xy: 332, 191
+  size: 105, 33
+  orig: 108, 39
+  offset: 2, 2
+  index: -1
+sym51/symbol_0_eye_L
+  rotate: false
+  xy: 511, 483
+  size: 10, 22
+  orig: 13, 25
+  offset: 1, 2
+  index: -1
+sym51/symbol_0_eye_R
+  rotate: true
+  xy: 439, 125
+  size: 28, 26
+  orig: 49, 31
+  offset: 20, 1
+  index: -1
+sym51/symbol_1
+  rotate: true
+  xy: 223, 638
+  size: 194, 218
+  orig: 196, 220
+  offset: 1, 1
+  index: -1
+sym51/symbol_1_eye
+  rotate: false
+  xy: 332, 156
+  size: 105, 33
+  orig: 108, 39
+  offset: 2, 2
+  index: -1
+sym51/symbol_1_eye_L
+  rotate: false
+  xy: 511, 459
+  size: 10, 22
+  orig: 13, 26
+  offset: 1, 2
+  index: -1
+sym51/symbol_1_eye_R
+  rotate: true
+  xy: 2, 205
+  size: 28, 26
+  orig: 49, 31
+  offset: 20, 1
+  index: -1
+sym51/symbol_2
+  rotate: true
+  xy: 2, 625
+  size: 194, 218
+  orig: 196, 220
+  offset: 1, 1
+  index: -1
+sym51/symbol_2_eye
+  rotate: false
+  xy: 332, 121
+  size: 105, 33
+  orig: 108, 39
+  offset: 2, 2
+  index: -1
+sym51/symbol_2_eye_L
+  rotate: false
+  xy: 511, 435
+  size: 10, 22
+  orig: 13, 26
+  offset: 1, 2
+  index: -1
+sym51/symbol_2_eye_R
+  rotate: true
+  xy: 30, 205
+  size: 28, 26
+  orig: 49, 31
+  offset: 20, 1
+  index: -1
+sym51/symbol_3
+  rotate: true
+  xy: 222, 442
+  size: 194, 218
+  orig: 196, 220
+  offset: 1, 1
+  index: -1
+sym51/symbol_3_eye
+  rotate: true
+  xy: 432, 14
+  size: 105, 33
+  orig: 108, 39
+  offset: 2, 2
+  index: -1
+sym51/symbol_3_eye_L
+  rotate: true
+  xy: 498, 423
+  size: 10, 22
+  orig: 13, 26
+  offset: 1, 2
+  index: -1
+sym51/symbol_3_eye_R
+  rotate: true
+  xy: 48, 251
+  size: 28, 26
+  orig: 49, 31
+  offset: 20, 1
+  index: -1
+sym51/symbol_4
+  rotate: true
+  xy: 2, 429
+  size: 194, 218
+  orig: 196, 220
+  offset: 1, 1
+  index: -1
+sym51/symbol_4_eye
+  rotate: true
+  xy: 467, 2
+  size: 105, 33
+  orig: 108, 39
+  offset: 2, 2
+  index: -1
+sym51/symbol_4_eye_L
+  rotate: true
+  xy: 498, 411
+  size: 10, 22
+  orig: 13, 26
+  offset: 1, 2
+  index: -1
+sym51/symbol_4_eye_R
+  rotate: true
+  xy: 58, 221
+  size: 28, 26
+  orig: 49, 31
+  offset: 20, 1
+  index: -1
+
+symItem_fx.jpg
+size: 2033,1543
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+sym51_fx/pic_light_10
+  rotate: false
+  xy: 1699, 1260
+  size: 105, 116
+  orig: 200, 200
+  offset: 46, 37
+  index: -1
+sym51_fx/symbol_light_00
+  rotate: true
+  xy: 1024, 585
+  size: 6, 28
+  orig: 98, 110
+  offset: 1, 59
+  index: -1
+sym51_fx/symbol_light_01
+  rotate: false
+  xy: 679, 1205
+  size: 16, 65
+  orig: 98, 110
+  offset: 0, 40
+  index: -1
+sym51_fx/symbol_light_02
+  rotate: false
+  xy: 1675, 863
+  size: 22, 79
+  orig: 98, 110
+  offset: 0, 31
+  index: -1
+sym51_fx/symbol_light_03
+  rotate: false
+  xy: 902, 1215
+  size: 27, 91
+  orig: 98, 110
+  offset: 0, 19
+  index: -1
+sym51_fx/symbol_light_04
+  rotate: true
+  xy: 1408, 402
+  size: 33, 100
+  orig: 98, 110
+  offset: 0, 10
+  index: -1
+sym51_fx/symbol_light_05
+  rotate: true
+  xy: 1568, 549
+  size: 37, 105
+  orig: 98, 110
+  offset: 0, 5
+  index: -1
+sym51_fx/symbol_light_06
+  rotate: false
+  xy: 1987, 1119
+  size: 44, 108
+  orig: 98, 110
+  offset: 0, 2
+  index: -1
+sym51_fx/symbol_light_07
+  rotate: false
+  xy: 1979, 679
+  size: 50, 109
+  orig: 98, 110
+  offset: 0, 1
+  index: -1
+sym51_fx/symbol_light_08
+  rotate: false
+  xy: 899, 931
+  size: 55, 109
+  orig: 98, 110
+  offset: 0, 1
+  index: -1
+sym51_fx/symbol_light_09
+  rotate: true
+  xy: 919, 355
+  size: 59, 110
+  orig: 98, 110
+  offset: 0, 0
+  index: -1
+sym51_fx/symbol_light_10
+  rotate: true
+  xy: 1827, 531
+  size: 65, 110
+  orig: 98, 110
+  offset: 1, 0
+  index: -1
+sym51_fx/symbol_light_11
+  rotate: true
+  xy: 1024, 513
+  size: 70, 110
+  orig: 98, 110
+  offset: 1, 0
+  index: -1
+sym51_fx/symbol_light_12
+  rotate: true
+  xy: 1136, 509
+  size: 74, 110
+  orig: 98, 110
+  offset: 3, 0
+  index: -1
+sym51_fx/symbol_light_13
+  rotate: true
+  xy: 1248, 507
+  size: 76, 110
+  orig: 98, 110
+  offset: 7, 0
+  index: -1
+sym51_fx/symbol_light_14
+  rotate: false
+  xy: 1437, 937
+  size: 77, 110
+  orig: 98, 110
+  offset: 10, 0
+  index: -1
+sym51_fx/symbol_light_15
+  rotate: true
+  xy: 1130, 168
+  size: 76, 110
+  orig: 98, 110
+  offset: 14, 0
+  index: -1
+sym51_fx/symbol_light_16
+  rotate: true
+  xy: 1032, 84
+  size: 75, 110
+  orig: 98, 110
+  offset: 19, 0
+  index: -1
+sym51_fx/symbol_light_17
+  rotate: true
+  xy: 1347, 180
+  size: 73, 110
+  orig: 98, 110
+  offset: 24, 0
+  index: -1
+sym51_fx/symbol_light_18
+  rotate: true
+  xy: 912, 523
+  size: 68, 110
+  orig: 98, 110
+  offset: 30, 0
+  index: -1
+sym51_fx/symbol_light_19
+  rotate: true
+  xy: 1675, 491
+  size: 63, 110
+  orig: 98, 110
+  offset: 35, 0
+  index: -1
+sym51_fx/symbol_light_20
+  rotate: true
+  xy: 927, 189
+  size: 57, 110
+  orig: 98, 110
+  offset: 41, 0
+  index: -1
+sym51_fx/symbol_light_21
+  rotate: false
+  xy: 1979, 790
+  size: 52, 110
+  orig: 98, 110
+  offset: 46, 0
+  index: -1
+sym51_fx/symbol_light_22
+  rotate: true
+  xy: 1827, 483
+  size: 46, 110
+  orig: 98, 110
+  offset: 52, 0
+  index: -1
+sym51_fx/symbol_light_23
+  rotate: true
+  xy: 1371, 543
+  size: 41, 108
+  orig: 98, 110
+  offset: 57, 1
+  index: -1
+sym51_fx/symbol_light_24
+  rotate: true
+  xy: 1550, 441
+  size: 35, 103
+  orig: 98, 110
+  offset: 63, 1
+  index: -1
+sym51_fx/symbol_light_25
+  rotate: false
+  xy: 181, 3
+  size: 29, 97
+  orig: 98, 110
+  offset: 69, 1
+  index: -1
+sym51_fx/symbol_light_26
+  rotate: true
+  xy: 269, 4
+  size: 24, 86
+  orig: 98, 110
+  offset: 74, 2
+  index: -1
+sym51_fx/symbol_light_27
+  rotate: true
+  xy: 797, 1023
+  size: 17, 69
+  orig: 98, 110
+  offset: 81, 8
+  index: -1
+sym51_fx/symbol_light_28
+  rotate: true
+  xy: 1067, 889
+  size: 6, 30
+  orig: 98, 110
+  offset: 91, 31
+  index: -1

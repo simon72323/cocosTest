@@ -1,0 +1,15 @@
+info face=num_coin_odd2 size=264 bold=0 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=1 padding=0,0,0,0 spacing=1,1 outline=0
+common lineHeight=264 base=178 scaleW=1008 scaleH=528 pages=1 packed=0 alphaChnl=0 redChnl=4 greenChnl=4 blueChnl=4
+page id=0 file="num_coin_odd2.png"
+chars count=11
+char id=48 x=0 y=0 width=178 height=264 xoffset=0 yoffset=1 xadvance=178 page=0 chnl=0 letter="0"
+char id=49 x=178 y=0 width=119 height=264 xoffset=0 yoffset=1 xadvance=119 page=0 chnl=0 letter="1"
+char id=50 x=297 y=0 width=177 height=264 xoffset=0 yoffset=1 xadvance=177 page=0 chnl=0 letter="2"
+char id=51 x=474 y=0 width=178 height=264 xoffset=0 yoffset=1 xadvance=178 page=0 chnl=0 letter="3"
+char id=52 x=652 y=0 width=178 height=264 xoffset=0 yoffset=1 xadvance=178 page=0 chnl=0 letter="4"
+char id=53 x=830 y=0 width=178 height=264 xoffset=0 yoffset=1 xadvance=178 page=0 chnl=0 letter="5"
+char id=54 x=0 y=264 width=178 height=264 xoffset=0 yoffset=1 xadvance=178 page=0 chnl=0 letter="6"
+char id=55 x=178 y=264 width=170 height=264 xoffset=0 yoffset=1 xadvance=170 page=0 chnl=0 letter="7"
+char id=56 x=348 y=264 width=178 height=264 xoffset=0 yoffset=1 xadvance=178 page=0 chnl=0 letter="8"
+char id=57 x=526 y=264 width=178 height=264 xoffset=0 yoffset=1 xadvance=178 page=0 chnl=0 letter="9"
+char id=120 x=704 y=264 width=178 height=264 xoffset=0 yoffset=1 xadvance=178 page=0 chnl=0 letter="x"
