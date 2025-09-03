@@ -1,15 +1,19 @@
-import { _decorator, Component, Node, tween, Vec3, Label, Sprite, UITransform, Button, Prefab, SpriteFrame, Animation, UIOpacity } from 'cc';
-import { getPoolManager } from '@common/manager/PoolManager';
-import { CGUtils } from '../tools/CGUtils';
-import { RebetData } from '../enum/CGInterface';
-import { CGAudioName } from '../manager/CGAudioName';
-import { LanguageManager } from '@common/manager/LanguageManager';
-import { BetType, RebetState } from '../enum/CGEnum';
-import { CGGameData } from '../model/CGGameData';
-import { Logger } from '@common/utils/Logger';
-import { NumberUtils } from '@common/utils/NumberUtils';
 import { gtmEvent } from '@common/h5GameTools/userAnalysis/GTEvent';
 import { getAudioManager } from '@common/manager/AudioManager';
+import { getLanguageManager } from '@common/manager/LanguageManager';
+import { getPoolManager } from '@common/manager/PoolManager';
+import { Logger } from '@common/utils/Logger';
+import { NumberUtils } from '@common/utils/NumberUtils';
+import { _decorator, Component, Node, tween, Vec3, Label, Sprite, UITransform, Button, Prefab, SpriteFrame, Animation, UIOpacity } from 'cc';
+
+import { BetType, RebetState } from '@/games/colorGame/script/enum/CGEnum';
+import { RebetData } from '@/games/colorGame/script/enum/CGInterface';
+import { CGAudioName } from '@/games/colorGame/script/manager/CGAudioName';
+
+
+import { CGGameData } from '@/games/colorGame/script/model/CGGameData';
+import { CGUtils } from '@/games/colorGame/script/tools/CGUtils';
+
 const { ccclass, property } = _decorator;
 
 //生成籌碼屬性設置
@@ -35,34 +39,49 @@ interface TempBetData {
 export class CGChipDispatcher extends Component {
     @property(Node)
     private chipDispatcher!: Node;//籌碼派發層
+
     @property(Node)//籌碼選擇區
     private touchChip!: Node;
+
     @property([Node])
     private btnCall!: Node[];//跟注按鈕(3顆)
+
     @property([Node])
     private btnStopCall!: Node[];//取消跟注按鈕(3顆)
+
     @property([Node])
     private callFx!: Node[];//跟注特效
+
     @property(Node)
     private btnRebet!: Node;//續押按鈕
+
     @property(Node)
     private btnAuto!: Node;//自動投注按鈕
+
     @property(Node)
     private btnAutoStop!: Node;//停止自動投注按鈕
+
     @property(Label)
     private rebetCreditLable!: Label;//續押額度
+
     @property(Node)
     private betTopBtns!: Node;//押注按鈕區
+
     @property(Node)//用戶位置
     private userPos!: Node;
+
     @property([Node])
     private addBetCredit: Node[] = [];//新增押注額分數節點(分數右側)
+
     @property([SpriteFrame])
     private chipSF: SpriteFrame[] = [];//押注籌碼貼圖
+
     @property(SpriteFrame)
     private chipReBetSF: SpriteFrame = null!;//續押籌碼貼圖
+
     @property(Prefab)
     private betChipBlack: Prefab = null!;//其他用戶押注籌碼
+
     @property(Prefab)
     private betChipColor: Prefab = null!;//本地用戶押注籌碼
 
@@ -217,7 +236,7 @@ export class CGChipDispatcher extends Component {
      * 清除暫存押注資料
      */
     private async clearTempBetData(betSuccess: boolean = false) {
-        Logger.debug("清除暫存押注資料,關閉押注介面")
+        Logger.debug('清除暫存押注資料,關閉押注介面');
         //可下注階段且續押值大於0，則啟用續押
         if (this.isStartBet && this._rebetData.total > 0) {
             this.setRebetInteractable(true);//啟用續押
@@ -298,7 +317,7 @@ export class CGChipDispatcher extends Component {
      * 暫存押注額度更新
      */
     private async updateTempBetUI() {
-        const languageData = await LanguageManager.getLanguageData('gameCore');
+        const languageData = await getLanguageManager().getLanguageData('gameCore');
         const betInfo = this.betTopBtns.getChildByName('BetInfo');
         const betInfoLabel = betInfo!.getChildByName('Label')!;
         const betInfoCallLabel = betInfo!.getChildByName('CallLabel')!;
@@ -306,7 +325,7 @@ export class CGChipDispatcher extends Component {
         //是否顯示跟注說明額度
         if (this._tempBetData.callBet > 0) {
             betInfoCallLabel.active = true;
-            const userBetString = languageData['Bet'] + ' : ' + CGUtils.NumDigits(this._tempBetData.userBet)
+            const userBetString = languageData['Bet'] + ' : ' + CGUtils.NumDigits(this._tempBetData.userBet);
             const callBetString = ' (' + languageData['Call'] + ' : ' + CGUtils.NumDigits(this._tempBetData.callBet) + ')';
             betInfoCallLabel.getComponent(Label)!.string = userBetString + callBetString;
         } else {
@@ -468,7 +487,7 @@ export class CGChipDispatcher extends Component {
      * @controller
      */
     public async payChipToBetArea(betOdds: number[]): Promise<void> {
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
             for (let i = 0; i < betOdds.length; i++) {
                 if (betOdds[i] > 0) {
                     for (let user = 0; user < 2; user++) {
@@ -560,7 +579,7 @@ export class CGChipDispatcher extends Component {
      * @param credit 用戶餘額
      * @controller
      */
-    public setRebet(state: RebetState, credit?: number) {
+    public setRebet(state: RebetState, _credit?: number) {
         this._rebetData.state = state;
         this.updateRebetUI(state);
         switch (this._rebetData.state) {
@@ -571,12 +590,11 @@ export class CGChipDispatcher extends Component {
             case RebetState.ONCE_BET://單次續押狀態
                 getAudioManager().playOnceSound(CGAudioName.BtnOpen);
                 return this._rebetData.betCredits;//返回押注資料
-                break;
             case RebetState.AUTO_STOP://停止自動續押
                 getAudioManager().playOnceSound(CGAudioName.BtnClose);
                 break;
             case RebetState.AUTO_BET://自動續押狀態
-                getAudioManager().playOnceSound(CGAudioName.BtnOpen);;
+                getAudioManager().playOnceSound(CGAudioName.BtnOpen);
         }
     }
 

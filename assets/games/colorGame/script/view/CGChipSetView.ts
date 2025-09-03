@@ -1,25 +1,32 @@
-import { _decorator, Component, Node, Label, Sprite, Toggle, UIOpacity } from 'cc';
-import { CGUtils } from '../tools/CGUtils';
-import { CGAudioName } from '../manager/CGAudioName';
-import { CGGameData } from '../model/CGGameData';
-import { Logger } from '@common/utils/Logger';
 import { getAudioManager } from '@common/manager/AudioManager';
+import { Logger } from '@common/utils/Logger';
+import { _decorator, Component, Node, Label, Sprite, Toggle, UIOpacity } from 'cc';
+
+import { CGAudioName } from '@/games/colorGame/script/manager/CGAudioName';
+import { CGGameData } from '@/games/colorGame/script/model/CGGameData';
+import { CGUtils } from '@/games/colorGame/script/tools/CGUtils';
 
 const { ccclass, property } = _decorator;
 @ccclass('CGChipSetView')
 export class CGChipSetView extends Component {
     @property(Node)//籌碼選擇區
     private touchChip!: Node;
+
     @property(Node)//籌碼設置按鈕
     private btnChipSet!: Node;
+
     @property(Node)//籌碼預設按鈕
     private btnDefault!: Node;
+
     @property(Node)//籌碼確認按鈕
     private btnConfirm!: Node;
+
     @property(Node)//關閉彈窗按鈕
     private btnClose!: Node;
+
     @property(Node)//籌碼設置彈窗
     private chipSetPopup!: Node;
+
     @property(Node)//籌碼Toggle
     private chipToggle!: Node;
 

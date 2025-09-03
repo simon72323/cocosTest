@@ -3,32 +3,32 @@ export const REEL_DATA = {
         {
             x: -396,//X軸位置
             y: 490,//最上方的symbol位置
-            height: 1176,//該行高度(包含非連線區的上下symbol)
+            height: 1176//該行高度(包含非連線區的上下symbol)
             // intervalY: 196//每個symbol的間距
             //未來需要判斷水平或垂直(有些是垂直)
         },
         {
             x: -198,
             y: 490,
-            height: 1176,
+            height: 1176
             // intervalY: 196
         },
         {
             x: 0,
             y: 490,
-            height: 1176,
+            height: 1176
             // intervalY: 196
         },
         {
             x: 198,
             y: 490,
-            height: 1176,
+            height: 1176
             // intervalY: 196
         },
         {
             x: 396,
             y: 490,
-            height: 1176,
+            height: 1176
             // intervalY: 196
         }
     ],
@@ -58,8 +58,8 @@ export const REEL_DATA = {
     wildID: 17,
     scatterID: 18,
     scatterReadyAmount: 2,//scatter聽牌數量(設置幾張就要出現聽牌)
-    bigWinRange: [20, 50, 100],//大獎切換範圍(贏分倍率)
+    bigWinRange: [20, 50, 100]//大獎切換範圍(贏分倍率)
     // topSymbol: ['1', '10'],
     // endShowSpine: ['1', '10'],
     // tintColor: 0xFFFFFF80
-}
+};

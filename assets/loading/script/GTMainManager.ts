@@ -1,17 +1,20 @@
-import { _decorator, Component, Sprite, Node, ProgressBar, Label, screen, find } from 'cc';
-import { urlHelper } from '@common/utils/UrlHelper';
-import { DEV } from 'cc/env';
-import { getEventManager } from '@common/manager/EventManager';
-import { Logger } from '@common/utils/Logger';
-import { commonStore } from '@common/h5GameTools/CommonStore';
-import { gtmEvent } from '@common/h5GameTools/userAnalysis/GTEvent';
 import boot from '@common/h5GameTools/Boot';
-import { GTLoadingCommTool as CommTool } from './comm/GTLoadingCommTool';
-import { GTLoadingTool, LoadType } from './comm/GTLoadingTool';
-import { disWatchAll, watch } from '@common/utils/Reactivity';
-import { GTStyleManager } from '@/comm/scripts/manager/GTStyleManager';
+import { commonStore } from '@common/h5GameTools/CommonStore';
 import { Comm, Game } from '@common/h5GameTools/GTCommEvents';
 import { GameStatus, SiteType } from '@common/h5GameTools/State';
+import { gtmEvent } from '@common/h5GameTools/userAnalysis/GTEvent';
+import { getEventManager } from '@common/manager/EventManager';
+import { Logger } from '@common/utils/Logger';
+import { disWatchAll, watch } from '@common/utils/Reactivity';
+import { urlHelper } from '@common/utils/UrlHelper';
+import { _decorator, Component, Sprite, Node, ProgressBar, Label, screen, find } from 'cc';
+import { DEV } from 'cc/env';
+
+import { GTStyleManager } from '@/comm/scripts/manager/GTStyleManager';
+
+import { GTLoadingCommTool as CommTool } from '@/loading/script/comm/GTLoadingCommTool';
+import { GTLoadingTool, LoadType } from '@/loading/script/comm/GTLoadingTool';
+
 
 /**
  * GTMainManager 類別
@@ -26,27 +29,37 @@ const { ccclass, property } = _decorator;
 export class GTMainManager extends Component {
     @property(Node)
     public loadingBarNode : Node = null!;
+
     @property(ProgressBar)
     public loadBar : ProgressBar = null!;
+
     @property(Label)
     public loadPercent : Label = null!;
+
     @property(Node)
     public gameNode : Node = null!;
+
     @property(Node)
     public loadingNode : Node = null!;
+
     @property(Node)
     public logoNode : Node = null!;
+
     @property(Sprite)
     public logoSprite : Sprite = null!;
+
     @property(Node)
     public alertNode : Node = null!;
 
     @property(Node)
     public leftBG : Node = null!;
+
     @property(Node)
     public rightBG : Node = null!;
+
     @property(Node)
     public topBG : Node = null!;
+
     @property(Node)
     public bottomBG : Node = null!;
 
@@ -55,7 +68,7 @@ export class GTMainManager extends Component {
     private gameCoreNode : Node = null!;
     private _nodeOriginY: { [uuid: string]: number } = {};
 
-    
+
     private gameSetupReadyPromise: Promise<void> = null!;
     private resolveGameSetupReady: () => void = null!;
 
@@ -64,9 +77,9 @@ export class GTMainManager extends Component {
     // private testDemoModeDomain : string = 'https://demo.casinovir999.net/';//測試站
     private testModeDomain : string = 'https://bbgp-game2.casinovir999.net/';//測試站
     // private testModeDomain : string = 'https://dowincasino-test.com/';//LM測試站
-    
+
     private isLoadLoaclBundle : boolean = false;
-    
+
 
     private progressMap: Map<LoadType, number> = new Map();
     private progressWeights: Map<LoadType, number> = new Map([
@@ -84,16 +97,16 @@ export class GTMainManager extends Component {
     onRestartGameBind: () => void = null!;
     onScreenResizeBind: () => void = null!;
     onOrientationchangeBind: () => void = null!;
-    
+
     public onLoad(): void {
         Logger.warn('GTMainManager onLoad');
         gtmEvent.LOADER_START();
-        
+
         this.setup();
         this.setupWatcher();
         this.setupListener();
     }
-    
+
     public start(): void {
         Logger.debug('GTMainManager start');
         this.mainStep();
@@ -110,7 +123,7 @@ export class GTMainManager extends Component {
         this.switchBG();
         if (CommTool.isMacRetina()) {
             window.devicePixelRatio = 1;
-        } 
+        }
         if (DEV) {
             urlHelper.domain = this.testModeDomain;
         }
@@ -119,12 +132,12 @@ export class GTMainManager extends Component {
         boot();
         this.clearProgress();
         this.showGlobalMask(false, 0);
-        
+
         // 針對16:9-16:9.4特殊的進行loadingBar位置往上移動
         if(CommTool.checkNeedRefixNode() && CommTool.canAutoFix()){
             const canvasSize = CommTool.getCanvas()!;
             const aspectRatio = canvasSize.height / canvasSize.width;
-            const minRatio = 16 / 9.4; 
+            const minRatio = 16 / 9.4;
             const maxRatio = 16 / 9;
             if(aspectRatio >= minRatio && aspectRatio < maxRatio){
                 this.loadingBarNode.setPosition(this.loadingBarNode.position.x, this.loadingBarNode.position.y + CommTool.getFixY()/2);
@@ -144,9 +157,9 @@ export class GTMainManager extends Component {
         getEventManager().on(Comm.GET_TOPGAMENODE,this.onGetTopGameNodeBind);
         getEventManager().on(Comm.GET_UNDERSETTINGPANELNODE,this.onGetUnderSettingPanelNodeBind);
         getEventManager().on(Game.RESTART_GAME, this.onRestartGameBind);
-        
+
         this.onOrientationchangeBind = () => {
-            CommTool.handleWindowResize()
+            CommTool.handleWindowResize();
             setTimeout(CommTool.handleWindowResize.bind(this), 100);
         };
         this.onScreenResizeBind = () => {
@@ -155,8 +168,8 @@ export class GTMainManager extends Component {
                 CommTool.setNodeFade(this.topBG, false);
                 CommTool.setNodeFade(this.bottomBG, false);
             }
-            
-            this.onResize(); 
+
+            this.onResize();
             setTimeout(this.onResize.bind(this), 100);
         };
 
@@ -168,20 +181,20 @@ export class GTMainManager extends Component {
     private restartGameListener(): void{
         this.reLoadGame();
     }
-    
+
     private setupWatcher():void {
         this.gameSetupReadyPromise = new Promise(resolve => {
             this.resolveGameSetupReady = resolve;
         });
 
-        const disWatch = watch(()=> commonStore.storeState.gameStatus, 
-        (newStatus, oldStatus) => {
-            if(newStatus === GameStatus.OnGameSetupReady){
-                this.resolveGameSetupReady();
-                disWatch();
-            }      
-        });
-        
+        const disWatch = watch(()=> commonStore.storeState.gameStatus,
+            (newStatus, _oldStatus) => {
+                if(newStatus === GameStatus.OnGameSetupReady){
+                    this.resolveGameSetupReady();
+                    disWatch();
+                }
+            });
+
     }
 
     private async reLoadGame():Promise<void>{
@@ -189,10 +202,10 @@ export class GTMainManager extends Component {
         this.alertNode.active = false;
         await CommTool.setNodeFade( this.logoNode, true);
 
-        this.showGlobalMask(false); 
+        this.showGlobalMask(false);
         this.clearProgress();
         CommTool.setNodeFade(this.loadingBarNode, true);
-        
+
         await new Promise(resolve => setTimeout(resolve, 1000));
 
         disWatchAll();
@@ -201,7 +214,7 @@ export class GTMainManager extends Component {
         await this.loadNode.destroy();
         await this.pubVersionNode.destroy();
         await this.gameCoreNode.destroy();
-        
+
         await new Promise(resolve => setTimeout(resolve, 100));
         this.setupWatcher();
         this.setupListener();
@@ -232,7 +245,7 @@ export class GTMainManager extends Component {
     }
 
     private onResize(){
-         if( CommTool.checkNeedRefixNode() && CommTool.canAutoFix() ){
+        if( CommTool.checkNeedRefixNode() && CommTool.canAutoFix() ){
             if (this._nodeOriginY[this.loadingBarNode.uuid] === undefined) {
                 this._nodeOriginY[this.loadingBarNode.uuid] = this.loadingBarNode.position.y;
             }
@@ -252,7 +265,7 @@ export class GTMainManager extends Component {
             const gameHash = await GTLoadingTool.GETGameHashJson(this.getGameSettingJson()); // 等待 gameHash 獲取完成
             const gameBundle = await GTLoadingTool.LoadAssetManagerBundle(this.getGameBundleURL(), gameHash); // 等待 bundle 載入完成
             const commBundle = await GTLoadingTool.LoadAssetManagerBundle('comm','');
-        
+
             // 步驟 1: 先建立語言包的 Promise
             const loadingLangPromise =
              GTLoadingTool.LoadLangSource(LoadType.LoadingLangRes, gameBundle.name, urlHelper.lang, this.updateProgress.bind(this));
@@ -265,10 +278,10 @@ export class GTMainManager extends Component {
             const loadingScenePromise = GTLoadingTool.LoadBundleByPrefabType(LoadType.LoadingScene, gameBundle.name, this.updateProgress.bind(this));
             const pubversionNodePromise = GTLoadingTool.LoadBundleByPrefabType(LoadType.PubVersion, commBundle.name, this.updateProgress.bind(this));
             const gameScenePromise = GTLoadingTool.LoadBundleByPrefabType(LoadType.GameScene, gameBundle.name, this.updateProgress.bind(this));
- 
+
 
             // 設定蓋板遮罩
-            await this.loadGlobalMask();    
+            await this.loadGlobalMask();
             await loadingScenePromise.then(Node => {
                 this.loadingNode.addChild(Node);
                 Node.active = true;
@@ -277,8 +290,8 @@ export class GTMainManager extends Component {
             });
             // 打開第一個覆蓋背景畫面
             await CommTool.setNodeFade( this.logoNode, false, 0);
-            
-            await pubversionNodePromise.then(async (Node) => {
+
+            await pubversionNodePromise.then(async Node => {
                 this.gameNode.addChild(Node);
                 Node.active = true;
                 this.pubVersionNode = Node;
@@ -294,10 +307,10 @@ export class GTMainManager extends Component {
                         // 3. 直接呼叫並等待換圖流程完成
                         await styleManager.updateStyle();
                     } else {
-                        Logger.error("GTStyleManager component not found on GamePanelManager node!");
+                        Logger.error('GTStyleManager component not found on GamePanelManager node!');
                     }
                 } else {
-                    Logger.error("GamePanelManager node not found!");
+                    Logger.error('GamePanelManager node not found!');
                 }
             });
 
@@ -330,9 +343,9 @@ export class GTMainManager extends Component {
 
         } catch (error) {
             Logger.error('Failed to load game bundle or get game hash:', error);
-                // 在這裡處理載入失敗的邏輯，例如顯示錯誤訊息給用戶
+            // 在這裡處理載入失敗的邏輯，例如顯示錯誤訊息給用戶
         }
-        
+
     }
 
     private updateProgress(progress: number, type?: LoadType) {
@@ -345,9 +358,9 @@ export class GTMainManager extends Component {
             const progress = this.progressMap.get(loadType) || 0;
             totalProgress += (progress / 100) * weight;
         }
-        
+
         this.updateLoadingBar(Math.floor(totalProgress));
-    }   
+    }
 
     public updateLoadingBar( progress: number, msg?: string):void{
         // 防止部分遊戲進度條會出現不明震盪
@@ -388,7 +401,7 @@ export class GTMainManager extends Component {
     private switchBG():void{
         const isDemo = urlHelper.isDemo;
         const siteType = commonStore.storeState.siteType;
-        
+
         switch (siteType) {
             case SiteType.LM:
                 this.setBGLogoToLM();
@@ -408,10 +421,10 @@ export class GTMainManager extends Component {
 
     private async loadGlobalMask(): Promise<void>{
         const bgs = [
-            {node:this.leftBG, url:'texture/bg/bg_vague_left/spriteFrame'},
-            {node:this.rightBG, url:'texture/bg/bg_vague_right/spriteFrame'},
-            {node:this.topBG, url:'texture/bg/bg_vague_top/spriteFrame'},
-            {node:this.bottomBG, url:'texture/bg/bg_vague_bottom/spriteFrame'}
+            { node:this.leftBG, url:'texture/bg/bg_vague_left/spriteFrame' },
+            { node:this.rightBG, url:'texture/bg/bg_vague_right/spriteFrame' },
+            { node:this.topBG, url:'texture/bg/bg_vague_top/spriteFrame' },
+            { node:this.bottomBG, url:'texture/bg/bg_vague_bottom/spriteFrame' }
         ];
 
         const gameObj = CommTool.getGameTypeObject(urlHelper.gameType);
@@ -430,7 +443,7 @@ export class GTMainManager extends Component {
         }
         this.showGlobalMask(true);
     }
-    
+
     private showGlobalMask(show: boolean, duration: number = 0.3):void{
         let bgs = [this.leftBG, this.rightBG, this.topBG, this.bottomBG];
         if(CommTool.checkNeedRefixNode() && CommTool.canAutoFix()){
@@ -449,18 +462,21 @@ export class GTMainManager extends Component {
     private async setBGLogoToBB():Promise<void>{
         this.logoSprite.spriteFrame = await CommTool.loadPicFromRes('BBINLoading');
     }
+
     /**
      * 更換logo為試玩
      */
     private async setBGLogoToDemo():Promise<void>{
         this.logoSprite.spriteFrame = await CommTool.loadPicFromRes('demoLoading2');
     }
+
     /**
      * 更換logo為XC
      */
     private async setBGLogoToXC():Promise<void>{
         CommTool.setBGLogoTwoPic(this.logoSprite, 'xcLoadingLand','xcLoading');
     }
+
     /**
      * 更換logo為LM
      */
@@ -476,14 +492,17 @@ export class GTMainManager extends Component {
         const tempNode = find('Canvas/gameNode/PubVersion/Portrait/ControlToSettingNode');
         msg.callback(tempNode);
     }
+
     private onGetSettingToBottomNode(msg : any):void{
         const tempNode = find('Canvas/gameNode/PubVersion/Portrait/SettingToBottomNode');
         msg.callback(tempNode);
     }
+
     private onGetTopGameNode(msg : any):void{
         const tempNode = find('Canvas/gameNode/PubVersion/Portrait/TopGameNode');
         msg.callback(tempNode);
     }
+
     private onGetUnderSettingPanelNode(msg : any):void{
         const tempNode = find('Canvas/gameNode/PubVersion/Portrait/UnderSettingPanelNode');
         msg.callback(tempNode);

@@ -1,4 +1,4 @@
-import { _decorator, Component, director, Node } from "cc";
+import { _decorator, Component, director, Node } from 'cc';
 const { ccclass } = _decorator;
 
 // 定義事件監聽器類型
@@ -115,6 +115,4 @@ export class EventManager extends Component {
     }
 }
 
-export const getEventManager = () => {
-    return EventManager.getInstance();
-}
+export const getEventManager = () => EventManager.getInstance();

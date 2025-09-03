@@ -1,13 +1,16 @@
-import { _decorator, Animation, Component, Node, Prefab, sp, tween, UIOpacity, Vec3 } from 'cc';
-import { awaitSleep } from '@common/utils/tools';
-import { G5279Model, G5279Time } from '../../model/G5279Model';
 import { getPoolManager } from '@common/manager/PoolManager';
+import { awaitSleep } from '@common/utils/tools';
+import { _decorator, Animation, Component, Node, Prefab, sp, tween, UIOpacity, Vec3 } from 'cc';
+
+import { G5279Model, G5279Time } from '@/games/catRaider/script/model/G5279Model';
+
 const { ccclass, property } = _decorator;
 
 @ccclass('G5279EnergyBallItem')
 export class G5279EnergyBallItem extends Component {
     @property(Prefab)
     private energyWin: Prefab = null!;
+
     @property(Node)
     private itemWinLayer: Node = null!;
 

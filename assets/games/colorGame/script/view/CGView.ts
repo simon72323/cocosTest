@@ -1,11 +1,13 @@
 import { _decorator, Component, Node, Label, UITransform } from 'cc';
-import { CGUtils } from '../tools/CGUtils';
+
+import { CGUtils } from '@/games/colorGame/script/tools/CGUtils';
 
 const { ccclass, property } = _decorator;
 @ccclass('CGView')
 export class CGView extends Component {
     @property(Node)//押注區資訊
     private betInfo!: Node;
+
     @property(Label)//限額資訊
     private limitInfo!: Label;
 

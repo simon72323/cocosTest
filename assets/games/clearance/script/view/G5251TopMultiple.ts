@@ -1,15 +1,19 @@
 import { _decorator, Component, Node } from 'cc';
-import { G5251Utils } from '../tools/G5251Utils';
+
+import { G5251Utils } from '@/games/clearance/script/tools/G5251Utils';
 const { ccclass, property } = _decorator;
 
 @ccclass('G5251TopMultiple')
 export class G5251TopMultiple extends Component {
     @property(Node)
     private mainBg: Node = null!;
+
     @property(Node)
     private mainMultiple: Node = null!;
+
     @property(Node)
     private freeBg: Node = null!;
+
     @property(Node)
     private freeMultiple: Node = null!;
 
@@ -41,19 +45,20 @@ export class G5251TopMultiple extends Component {
      * @param multipleIndex 倍率層級
      */
     public multipleChange(isFreeMode: boolean, multipleIndex: number) {
-        multipleIndex += 1;//顯示下一個倍率
+        let tempMultipleIndex = multipleIndex;
+        tempMultipleIndex += 1;//顯示下一個倍率
         const doubleArray = isFreeMode ? [2, 4, 6, 10] : [1, 2, 3, 5];
-        if (multipleIndex > doubleArray.length - 1)
-            multipleIndex = doubleArray.length - 1;
+        if (tempMultipleIndex > doubleArray.length - 1)
+            tempMultipleIndex = doubleArray.length - 1;
         if (isFreeMode) {
-            if (multipleIndex > 0 && !this.freeMultiple.children[multipleIndex].active) {
-                this.freeMultiple.children[multipleIndex].active = true;
+            if (tempMultipleIndex > 0 && !this.freeMultiple.children[tempMultipleIndex].active) {
+                this.freeMultiple.children[tempMultipleIndex].active = true;
                 this.freeMultiple.children[multipleIndex - 1].active = false;//上一個隱藏
             }
         } else {
-            if (multipleIndex > 0 && !this.mainMultiple.children[multipleIndex].active) {
-                this.mainMultiple.children[multipleIndex].active = true;
-                this.mainMultiple.children[multipleIndex - 1].active = false;//上一個隱藏
+            if (tempMultipleIndex > 0 && !this.mainMultiple.children[tempMultipleIndex].active) {
+                this.mainMultiple.children[tempMultipleIndex].active = true;
+                this.mainMultiple.children[tempMultipleIndex - 1].active = false;//上一個隱藏
             }
         }
     }
@@ -63,7 +68,7 @@ export class G5251TopMultiple extends Component {
      * @returns 
      */
     public async multipleChangeFree(): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             for (const child of this.mainMultiple.children) {
                 child.active = false;//隱藏main倍率
             }

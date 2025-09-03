@@ -1,5 +1,5 @@
-import { _decorator, Component, Node, Label, Prefab, instantiate } from 'cc';
 import { LanguageManager } from '@common/manager/LanguageManager';
+import { _decorator, Component, Node, Label, Prefab, instantiate } from 'cc';
 
 const { ccclass, property } = _decorator;
 
@@ -7,6 +7,7 @@ const { ccclass, property } = _decorator;
 export class CGTipMessage extends Component {
     @property(Node)
     private tipMessage!: Node;//提示訊息顯示層
+
     @property(Prefab)
     private tipPrefab: Prefab = null!;//提示訊息
 

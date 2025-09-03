@@ -15,14 +15,15 @@
  * - 節點必須包含 cc.Label 組件
  * - 依賴 LanguageManager 的正確初始化
  */
+import { getLanguageManager } from '@common/manager/LanguageManager';
 import { _decorator, Component, Label } from 'cc';
-import { LanguageManager } from '@common/manager/LanguageManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('LocalizedLabel')
 export class LocalizedLabel extends Component {
     @property({ tooltip: 'languageKey' })
     public key: string = '';
+
     @property({ tooltip: 'loadingPage' })
     public isLoading: boolean = false;
 
@@ -39,7 +40,7 @@ export class LocalizedLabel extends Component {
         const label = this.getComponent(Label);
         if (label) {
             const folderName = this.isLoading ? 'loadingPage' : 'gameCore';
-            const languageData = await LanguageManager.getLanguageData(folderName);
+            const languageData = await getLanguageManager().getLanguageData(folderName);
             label.string = languageData[this.key];
         }
     }

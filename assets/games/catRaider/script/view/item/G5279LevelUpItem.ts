@@ -1,12 +1,14 @@
 
-import { _decorator, Animation, Component, Sprite } from 'cc';
-import { awaitSleep } from '@common/utils/tools';
 import { getAudioManager } from '@common/manager/AudioManager';
+import { awaitSleep } from '@common/utils/tools';
+import { _decorator, Animation, Component, Sprite } from 'cc';
 
-import { SymbolNode } from '../../data/G5279Interface';
-import { G5279AudioName } from '../../data/G5279AudioEnum';
-import { G5279Resources } from '../../data/G5279Resources';
-import { getG5279Model, G5279Time } from '../../model/G5279Model';
+import { G5279AudioName } from '@/games/catRaider/script/data/G5279AudioEnum';
+import { SymbolNode } from '@/games/catRaider/script/data/G5279Interface';
+import { G5279Resources } from '@/games/catRaider/script/data/G5279Resources';
+
+import { getG5279Model, G5279Time } from '@/games/catRaider/script/model/G5279Model';
+
 
 const { ccclass, property } = _decorator;
 

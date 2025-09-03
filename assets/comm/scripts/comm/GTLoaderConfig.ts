@@ -1,11 +1,11 @@
-import { BUILD } from "cc/env";
-import { Component, _decorator, ccenum } from "cc";
-import { Logger } from "@common/utils/Logger";
+import { Logger } from '@common/utils/Logger';
+import { Component, _decorator, ccenum } from 'cc';
+import { BUILD } from 'cc/env';
 
-const { ccclass, property, menu, } = _decorator;
+const { ccclass, property, menu } = _decorator;
 
-enum GameSiteCategories { Default, XC };
-ccenum(GameSiteCategories)
+enum GameSiteCategories { Default, XC }
+ccenum(GameSiteCategories);
 
 @ccclass('PlayerConfig')
 @menu('Mahjong/PlayerConfig')
@@ -23,18 +23,20 @@ export class PlayerConfig extends Component {
     // public _hostname: string = '127.0.0.1';
 
     @property({ tooltip: '自訂連線位址', displayName: 'wsUrl', visible: true })
-    public wsUrl = `wss://fx8ec8.casinovir999.net/fxcasino/fxLB?gameType=5276`;
+    public wsUrl = 'wss://fx8ec8.casinovir999.net/fxcasino/fxLB?gameType=5276';
+
     @property({
         tooltip: '測試:登入Session',
         displayName: '🧪 Session',
-        visible: function (this: PlayerConfig) { return this.loginOption; }
+        visible (this: PlayerConfig) { return this.loginOption; }
     })
     public session = 'bb0433b883db775484203db0e6018397a55cfb3611';
 
-    @property({ 
-        tooltip: '測試:遊戲編號', 
-        displayName: '🧪 GameType', 
-        visible: function (this: PlayerConfig) { return this.loginOption; } })
+    @property({
+        tooltip: '測試:遊戲編號',
+        displayName: '🧪 GameType',
+        visible (this: PlayerConfig) { return this.loginOption; }
+    })
     public gameType = '5276';
 
     @property({ tooltip: '顯示重新連線' })

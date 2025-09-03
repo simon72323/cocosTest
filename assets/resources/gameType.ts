@@ -143,5 +143,5 @@ export const gameTypes = [
     { type: '5171', name: 'candyPartyFast', autoFixView: false },
     /** 奪寶奇喵-5279 */
     { type: '5279', name: 'catRaider', autoFixView: false }
-  ];
-  
+];
+

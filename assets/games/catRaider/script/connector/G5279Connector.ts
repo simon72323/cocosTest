@@ -1,20 +1,19 @@
-import { _decorator } from 'cc';
 import { AESCrypto } from '@common/core/crypto/AESCrypto';
-// import { commonStore} from '@gt-npm/gt-lib-ts/es/h5GameTools';
-// import { utils } from '@gt-npm/gt-lib-ts';
-import { SlotConnectorEvent } from './G5279ConnectorEvent';
 import { WebSocketCore } from '@common/core/network/WebSocketCore';
-import { getEventManager } from '@common/manager/EventManager';
 import { WebSocketEvent } from '@common/core/network/WebSocketEvent';
+import { commonStore } from '@common/h5GameTools/CommonStore';
+import { Comm, GTAlertType } from '@common/h5GameTools/GTCommEvents';
+import { loadingInfo, TimeLabelKeys } from '@common/h5GameTools/userAnalysis/LoadingInfo';
+import { getEventManager } from '@common/manager/EventManager';
+import { DetectDevice } from '@common/utils/DetectDevice';
 import { Logger } from '@common/utils/Logger';
 import { urlHelper } from '@common/utils/UrlHelper';
-import { DetectDevice } from '@common/utils/DetectDevice';
-import { loadingInfo, TimeLabelKeys } from '@common/h5GameTools/userAnalysis/LoadingInfo';
-import { Comm, GTAlertType } from '@common/h5GameTools/GTCommEvents';
-import { commonStore } from '@common/h5GameTools/CommonStore';
+import { _decorator } from 'cc';
+
+import { SlotConnectorEvent } from '@/games/catRaider/script/connector/G5279ConnectorEvent';
 
 
-const { ccclass, property } = _decorator;
+const { ccclass } = _decorator;
 
 @ccclass('G5279Connector')
 export class G5279Connector {
@@ -28,6 +27,7 @@ export class G5279Connector {
     public get wsIsDisConnect(): boolean {
         return this._wsIsDisConnect;
     }
+
     public set wsIsDisConnect(value: boolean) {
         this._wsIsDisConnect = value;
     }
@@ -51,8 +51,8 @@ export class G5279Connector {
         this.wsCore = new WebSocketCore();
         // this.wsCore.setupWs({
         //     protocolMap: {
-        //         BINARY: "casino.bin",
-        //         STRING: "casino.op"
+        //         BINARY: 'casino.bin',
+        //         STRING: 'casino.op'
         //     }
         // });
         //監聽連線變化
@@ -66,15 +66,15 @@ export class G5279Connector {
     wsStatusHandler(event: any) {
         Logger.log(`[NetStatus]::${event.status}`);
         switch (event.status) {
-            case "open":
+            case 'open':
                 loadingInfo.push(TimeLabelKeys.WS);
                 getEventManager().emit(SlotConnectorEvent.CONNECTED, { event: true });
                 this.wsCore.on(WebSocketEvent.NETWORK_RESULT, (e: any) => this.wsResultHandler(e));
                 this.callLogin();//新架構變成前端登入後要先傳login
                 break;
-            case "error":
-            case "close":
-                Logger.log("Disconnected, try again.");
+            case 'error':
+            case 'close':
+                Logger.log('Disconnected, try again.');
                 this.wsCore.off(WebSocketEvent.NETWORK_RESULT);
                 this.dispatchDisconnectEvent();
                 break;
@@ -89,7 +89,7 @@ export class G5279Connector {
         const eventData = event.result;
         //過濾網路狀態消息
         if (eventData && eventData.NetStatusEvent) {
-            Logger.debug("[NetStatusEvent]", eventData);
+            Logger.debug('[NetStatusEvent]', eventData);
             return;
         }
         this.dispatchConnectorEvent(eventData);
@@ -146,8 +146,8 @@ export class G5279Connector {
             type: exitGame ? GTAlertType.ERROR : GTAlertType.BASIC_NONE,
             title: commonStore.i18n.SYSTEM_MESSAGE,
             content,
-            cancelBtnText: "",
-            confirmBtnText: "",
+            cancelBtnText: '',
+            confirmBtnText: '',
             cancelCallback: () => {
                 if (exitGame) {
                     urlHelper.exitByError(message);
@@ -160,7 +160,7 @@ export class G5279Connector {
      * 連接 WebSocket
      * 返回 Promise 以處理連接過程
      */
-    connect(wsHost?: any) {
+    connect(_wsHost?: any) {
         return new Promise<void>(async (resolve, reject) => {
             const domain = location.origin;
             const domainUrl = new URL(domain);
@@ -168,7 +168,7 @@ export class G5279Connector {
             Logger.log(`[SlotGameConnector] >> Start connect to :${wsPath} , sid:${urlHelper.sid} `);
             if (this.useEncryption) {
                 this.wsCore.setupWs({
-                    useCrypto: new AESCrypto("OTNlODQ0YTkzNGQ3MWU4ODY3Yjg3NWI4NjVkN2U0ODcuODMwMGU1YjQ5MTdjMjhmNw")
+                    useCrypto: new AESCrypto('OTNlODQ0YTkzNGQ3MWU4ODY3Yjg3NWI4NjVkN2U0ODcuODMwMGU1YjQ5MTdjMjhmNw')
                 });
             }
             this.wsCore.connect(wsPath);
@@ -214,7 +214,7 @@ export class G5279Connector {
      * 返回 Promise 以等待特定事件的結果
      */
     async awaitApiResult(eventName: any) {
-        return await new Promise((resolve) => {
+        return await new Promise(resolve => {
             getEventManager().once(eventName, (e: any) => { resolve(e); });
         });
     }
@@ -239,10 +239,10 @@ export class G5279Connector {
      */
     // async callJoinGame() {
     //     this.wsCore.callServer({
-    //         action: "joinGame",
+    //         action: 'joinGame',
     //         gameType: parseInt(UrlHelper.shared.gameType)
     //     });
-    //     const data = await this.awaitApiResult("joinGame" /* JOIN_GAME */);
+    //     const data = await this.awaitApiResult('joinGame' /* JOIN_GAME */);
     //     // loadingInfo.push(TimeLabelKeys.joinGame);
     //     return data;
     // }
@@ -259,7 +259,7 @@ export class G5279Connector {
                 // sid: '964b9bb9-bf45-421f-92d6-06be5fce2dff',
                 lang: urlHelper.lang,
                 gameType: parseInt(urlHelper.gameType),
-                dInfo: DetectDevice.getDeviceInfo(),
+                dInfo: DetectDevice.getDeviceInfo()
             }
         };
         // UrlHelper.shared.hallId && (param.hallID = UrlHelper.shared.hallId);
@@ -320,8 +320,8 @@ export class G5279Connector {
             gameType: parseInt(urlHelper.gameType),
             data: {
                 betInfo: {
-                    betCredit: betCredit,
-                    betType: betType
+                    betCredit,
+                    betType
                 }
             }
         });
@@ -337,8 +337,8 @@ export class G5279Connector {
             action: SlotConnectorEvent.CREDIT_EXCHANGE,
             gameType: parseInt(urlHelper.gameType),
             data: {
-                rate: rate,
-                credit: credit
+                rate,
+                credit
             }
 
         });
@@ -393,7 +393,7 @@ export class G5279Connector {
      * 更新用戶分析
      * 調用伺服器方法
      */
-    callUpdateUserAnalysis(data: any) {
+    callUpdateUserAnalysis(_data: any) {
         this.wsCore.callServer({
             action: SlotConnectorEvent.UPDATE_USER_ANALYSIS
         });

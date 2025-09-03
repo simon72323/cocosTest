@@ -1,39 +1,37 @@
+import boot from '@common/h5GameTools/Boot';
+import { commonStore } from '@common/h5GameTools/CommonStore';
+import { GTLoaderButtonType, Comm, Game, GTAlertPram, GTAlertType } from '@common/h5GameTools/GTCommEvents';
+import { GameStatus } from '@common/h5GameTools/State';
+import { gtmEvent } from '@common/h5GameTools/userAnalysis/GTEvent';
+import { getAudioManager } from '@common/manager/AudioManager';
+import { getEventManager } from '@common/manager/EventManager';
+import { LanguageManager } from '@common/manager/LanguageManager';
+import { awaitNextTick } from '@common/utils/ccTools';
+import { Logger } from '@common/utils/Logger';
+import { NumberUtils } from '@common/utils/NumberUtils';
+import { urlHelper } from '@common/utils/UrlHelper';
+import { WorkOnBlurManager } from '@common/utils/WorkOnBlurManager';
+import { WorkTimerManager } from '@common/utils/WorkTimerManager';
 import { _decorator, Camera, Component, director, find, Layers } from 'cc';
 import { DEV } from 'cc/env';
 
-import { GameStatus } from '@common/h5GameTools/State';
-import { Logger } from '@common/utils/Logger';
-import { gtmEvent } from '@common/h5GameTools/userAnalysis/GTEvent';
-import { commonStore } from '@common/h5GameTools/CommonStore';
-import { NumberUtils } from '@common/utils/NumberUtils';
-
-import { WorkTimerManager } from '@common/utils/WorkTimerManager';
-import { WorkOnBlurManager } from '@common/utils/WorkOnBlurManager';
-import { getAudioManager } from '@common/manager/AudioManager';
-import { LanguageManager } from '@common/manager/LanguageManager';
-import { awaitNextTick } from '@common/utils/ccTools';
-
-import { g5279Connector } from './connector/G5279Connector';
-import { SlotConnectorEvent } from './connector/G5279ConnectorEvent';
-import { G5279MainController } from './controller/G5279MainController';
-import { G5279ReelController } from './controller/G5279ReelController';
-import { onBeginGame, onCreditExchange, onGetMachineDetail, onHitJackpot, onOnLoadInfo, updateJPData } from './data/G5279Interface';
-import { G5279AudioName } from './data/G5279AudioEnum';
-import { G5279Config } from './data/G5279Config';
-import { getG5279Model } from './model/G5279Model';
-import { G5279Setting } from './G5279Setting';
-import { G5279BetState } from './data/G5279Enum';
-import { getEventManager } from '@common/manager/EventManager';
-import { GTLoaderButtonType, Comm, Game, GTAlertPram, GTAlertType } from '@common/h5GameTools/GTCommEvents';
-import boot from '@common/h5GameTools/Boot';
-import { urlHelper } from '@common/utils/UrlHelper';
-
+import { g5279Connector } from '@/games/catRaider/script/connector/G5279Connector';
+import { SlotConnectorEvent } from '@/games/catRaider/script/connector/G5279ConnectorEvent';
+import { G5279MainController } from '@/games/catRaider/script/controller/G5279MainController';
+import { G5279ReelController } from '@/games/catRaider/script/controller/G5279ReelController';
+import { G5279AudioName } from '@/games/catRaider/script/data/G5279AudioEnum';
+import { G5279Config } from '@/games/catRaider/script/data/G5279Config';
+import { G5279BetState } from '@/games/catRaider/script/data/G5279Enum';
+import { onBeginGame, onCreditExchange, onGetMachineDetail, onHitJackpot, onOnLoadInfo, updateJPData } from '@/games/catRaider/script/data/G5279Interface';
+import { G5279Setting } from '@/games/catRaider/script/G5279Setting';
+import { getG5279Model } from '@/games/catRaider/script/model/G5279Model';
 
 const { ccclass, property } = _decorator;
 @ccclass('G5279GameMain')
 export class G5279GameMain extends Component {
     @property(G5279MainController)
     private mainController: G5279MainController = null!;//控制器
+
     @property(G5279ReelController)
     private reelController: G5279ReelController = null!;//輪軸控制器
 
@@ -48,11 +46,11 @@ export class G5279GameMain extends Component {
      */
     protected onLoad() {
         LanguageManager.loadLanguageBundle('catRaider');//設置語系資源(遊戲名稱)
-        console.warn("初始化語系")
+        console.warn('初始化語系');
         //啟用後台運行(針對動畫、tween、schedule、spine等動畫)
         WorkOnBlurManager.getInstance();
         WorkTimerManager    .getInstance();
-        
+
         commonStore.storeMutation.setData('gameStatus', GameStatus.OnGameInit);//初始化遊戲狀態
     }
 
@@ -96,7 +94,7 @@ export class G5279GameMain extends Component {
     private beginGame(testData: any) {
         this.reelController.handleSpinDown();//處理當spin按下時
         this.setting.hideFakePanel();//隱藏假資料面板
-        const mockData: onBeginGame = { event: true, data: testData, };
+        const mockData: onBeginGame = { event: true, data: testData };
         this.onBeginGame(mockData);
     }
 
@@ -216,7 +214,7 @@ export class G5279GameMain extends Component {
         if (!beginGameMsg.event) return;
 
         // 發送派彩的 GTM 事件
-        gtmEvent.CORE_GAME_PAYOFF(beginGameMsg.data.totalPay)//【公版】發送派彩 GTM 事件
+        gtmEvent.CORE_GAME_PAYOFF(beginGameMsg.data.totalPay);//【公版】發送派彩 GTM 事件
 
         //---------------【奪寶奇喵沒有slotGame的免費遊戲邏輯】---------------
         // 發送主要免費遊戲開始的 GTM 事件
@@ -279,7 +277,7 @@ export class G5279GameMain extends Component {
             confirmCallback: () => {
                 getEventManager().emit(Game.RESTART_GAME);//呼叫【公版】重新連線
             }
-        }
+        };
         getEventManager().emit(Comm.SHOW_ALERT, alert);//通知【公版】顯示斷線提示
     }
 

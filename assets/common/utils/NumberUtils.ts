@@ -47,13 +47,13 @@ export class NumberUtils {
     public static getRandomArray<T>(array: T[], getCount: number): T[] {
         const newArr: T[] = [];
         const tempArray = [...array]; // 複製陣列避免修改原陣列
-        
+
         for (let i = 0; i < getCount && tempArray.length > 0; i++) {
             const randomIndex = Math.floor(Math.random() * tempArray.length);
             const item = tempArray.splice(randomIndex, 1)[0];
             newArr.push(item);
         }
-        
+
         // 按數字大小排序（如果是數字的話）
         return newArr.sort((a, b) => {
             if (typeof a === 'number' && typeof b === 'number') {
@@ -73,7 +73,7 @@ export class NumberUtils {
         if (isNaN(+valueStr)) {
             return valueStr;
         }
-        
+
         const arr = valueStr.split('.');
         const re = /(\d{1,3})(?=(\d{3})+$)/g;
         const num = arr[0].replace(re, '$1,') + (arr.length === 2 ? `.${arr[1]}` : '');
@@ -92,34 +92,34 @@ export class NumberUtils {
         if (isNaN(+valueStr)) {
             return valueStr;
         }
-        
+
         const slice = valueStr.split('.');
         if (slice.length === 1) {
             return `${valueStr}${roundCount ? `.${'0'.repeat(roundCount)}` : ''}`;
         }
-        
+
         const decimalLength = slice[1].length;
         if (roundCount === undefined) {
             return valueStr;
         }
-        
+
         const lengthDiff = roundCount - decimalLength;
-        
+
         if (!lengthDiff) {
             return valueStr;
         }
-        
+
         if (lengthDiff > 0) {
             return `${valueStr}${'0'.repeat(lengthDiff)}`;
         }
-        
+
         let floorString = valueStr.slice(0, lengthDiff);
-        
+
         if (type === 'round') {
             const checkNum = valueStr.slice(lengthDiff, lengthDiff + 1);
             floorString = +checkNum >= 5 ? (+`${floorString}51`).toFixed(roundCount) : floorString;
         }
-        
+
         return floorString;
     }
 
@@ -131,22 +131,22 @@ export class NumberUtils {
     public static formatNumber(param: FormatNumberParams): string {
         const { formatValue, roundCount, thousandth, keepDecimal, isKFormat, decimalType = 'floor' } = param;
         const valueNum = +formatValue;
-        
+
         if (isNaN(valueNum)) return `${formatValue}`;
-        
+
         let calcValue: number | string = valueNum;
         let kSymbol = '';
-        
+
         if (isKFormat && valueNum >= 1e5) {
             calcValue = NumberUtils.accMul(valueNum, 1e-3);
             kSymbol = 'K';
         }
-        
+
         if (roundCount !== undefined) {
             calcValue = NumberUtils.pointFormat(calcValue, roundCount, decimalType);
             calcValue = keepDecimal ? calcValue : +calcValue;
         }
-        
+
         const thousandthValue = thousandth ? NumberUtils.thousandFormat(calcValue) : `${calcValue}`;
         return `${thousandthValue}${kSymbol}`;
     }
@@ -161,16 +161,16 @@ export class NumberUtils {
         const arg1Str = `${arg1}`;
         const arg2Str = `${arg2}`;
         let pow = 0;
-        
+
         const arg1Decimal = arg1Str.split('.')[1];
         const arg2Decimal = arg2Str.split('.')[1];
-        
+
         pow += arg1Decimal ? arg1Decimal.length : 0;
         pow += arg2Decimal ? arg2Decimal.length : 0;
-        
+
         const r1 = +arg1Str.replace('.', '');
         const r2 = +arg2Str.replace('.', '');
-        
+
         return r1 * r2 / Math.pow(10, pow);
     }
 
@@ -183,13 +183,13 @@ export class NumberUtils {
     public static accDiv(arg1: number, arg2: number): number {
         const arg1Str = `${arg1}`;
         const arg2Str = `${arg2}`;
-        
+
         const t1 = arg1Str.split('.')[1]?.length || 0;
         const t2 = arg2Str.split('.')[1]?.length || 0;
-        
+
         const r1 = +arg1Str.replace('.', '');
         const r2 = +arg2Str.replace('.', '');
-        
+
         return NumberUtils.accMul(r1 / r2, +`1e${t2 - t1}`);
     }
 
@@ -203,19 +203,19 @@ export class NumberUtils {
         let r1 = 0;
         let r2 = 0;
         let m: number;
-        
+
         try {
             r1 = arg1.toString().split('.')[1].length;
-        } catch (e) {
+        } catch {
             // 忽略錯誤
         }
-        
+
         try {
             r2 = arg2.toString().split('.')[1].length;
-        } catch (e) {
+        } catch {
             // 忽略錯誤
         }
-        
+
         m = Math.pow(10, Math.max(r1, r2));
         return (NumberUtils.accMul(arg1, m) + NumberUtils.accMul(arg2, m)) / m;
     }

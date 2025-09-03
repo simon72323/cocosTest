@@ -1,13 +1,15 @@
-import {
-    _decorator, Component, Toggle, SpriteFrame, EventHandler, Button, Sprite
-} from 'cc';
 import { commonStore } from '@common/h5GameTools/CommonStore';
-import { getEventManager } from '@common/manager/EventManager';
-import { Logger } from '@common/utils/Logger';
-import { loadSprite, getSpritePath } from '../comm/GTCommUtils';
+
 import { Comm, GTLoaderButtonType } from '@common/h5GameTools/GTCommEvents';
 import { gtmEvent } from '@common/h5GameTools/userAnalysis/GTEvent';
+import { getEventManager } from '@common/manager/EventManager';
+import { Logger } from '@common/utils/Logger';
 import { urlHelper } from '@common/utils/UrlHelper';
+import {
+    _decorator, Component, Toggle, SpriteFrame, Button, Sprite
+} from 'cc';
+
+import { loadSprite, getSpritePath } from '@/comm/scripts/comm/GTCommUtils';
 
 const { ccclass, property } = _decorator;
 
@@ -17,7 +19,7 @@ const SOUND_SPRITES = [
     'btn_function_soundOn_hover',
     'btn_function_soundOff_hover',
     'btn_function_soundOn_selected',
-    'btn_function_soundOff_selected',
+    'btn_function_soundOff_selected'
 ];
 
 export enum GTSettingToggleType {
@@ -110,16 +112,16 @@ export class GTSettingTogglePanel extends Component {
     }
 
     public checkByType(type: GTSettingToggleType): void {
-        Logger.debug("checkByType", type);
+        Logger.debug('checkByType', type);
         this.panelType = type;
     }
 
-    public exitBtnClick(event: EventHandler): void {
+    public exitBtnClick(): void {
         gtmEvent.LOADER_SETTING_EXIT_CLICK();
         this._callDelegate('gtSettingPanel_onExitToggle', null);
     }
 
-    public soundBtnClick(event: EventHandler): void {
+    public soundBtnClick(): void {
         const soundOn = !commonStore.storeState.bgAudioOn;
         gtmEvent.LOADER_SETTING_SOUNDSET_CLICK();
         this._updateSoundBtnSprite(soundOn);

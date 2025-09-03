@@ -1,29 +1,40 @@
-import { _decorator, Animation, Component, Font, instantiate, Label, Material, Node, ParticleSystem, ParticleSystem2D, Prefab, Size, SkeletalAnimation, SkinnedMeshRenderer, Sprite, SpriteFrame, tween, UIOpacity, UITransform, Vec3 } from 'cc';
-import { floors, SymbolNode } from '../data/G5279Interface';
-import { awaitSleep } from '@common/utils/tools';
-import { G5279Config } from '../data/G5279Config';
-import { getPoolManager } from '@common/manager/PoolManager';
-import { getEventManager } from '@common/manager/EventManager';
-import { G5279Event } from '../data/G5279Event';
-import { G5279SymbolIDs } from '../data/G5279Enum';
-import { NumberUtils } from '@common/utils/NumberUtils';
-import { getG5279Model, G5279Time } from '../model/G5279Model';
 import { getAudioManager } from '@common/manager/AudioManager';
-import { G5279AudioName } from '../data/G5279AudioEnum';
-import { playAnimFinish, runScore } from '../tools/G5279Tools';
+import { getEventManager } from '@common/manager/EventManager';
+import { getPoolManager } from '@common/manager/PoolManager';
+import { NumberUtils } from '@common/utils/NumberUtils';
+import { awaitSleep } from '@common/utils/tools';
+import { _decorator, Animation, Component, Font, instantiate, Label, Material, Node, ParticleSystem, ParticleSystem2D, Prefab, Size, SkeletalAnimation, SkinnedMeshRenderer, Sprite, SpriteFrame, tween, UIOpacity, UITransform, Vec3 } from 'cc';
+
+import { G5279AudioName } from '@/games/catRaider/script/data/G5279AudioEnum';
+import { G5279Config } from '@/games/catRaider/script/data/G5279Config';
+
+
+import { G5279SymbolIDs } from '@/games/catRaider/script/data/G5279Enum';
+import { G5279Event } from '@/games/catRaider/script/data/G5279Event';
+
+
+import { floors, SymbolNode } from '@/games/catRaider/script/data/G5279Interface';
+import { getG5279Model, G5279Time } from '@/games/catRaider/script/model/G5279Model';
+
+
+import { playAnimFinish, runScore } from '@/games/catRaider/script/tools/G5279Tools';
+
 const { ccclass, property } = _decorator;
 
 @ccclass('G5279Floor')
 export class G5279Floor extends Component {
     @property(Node)
     private floorLayer: Node = null!;
+
     @property(Prefab)
     private floor: Prefab = null!;
+
     @property([Material])
     private floorMaterial: Material[] = [];
 
     @property(Node)
     private floorFxLayer: Node = null!;
+
     @property(Prefab)
     private floorFxLastOne: Prefab = null!;
 
@@ -31,21 +42,28 @@ export class G5279Floor extends Component {
     //------------------地面symbol相關--------------
     @property(Node)
     private floorSymLayer: Node = null!;//地板symbol層
+
     @property(Prefab)
     private sym101: Prefab = null!;
+
     @property(Prefab)
     private sym102: Prefab = null!;
+
     @property(Prefab)
     private symCoin: Prefab = null!;
+
     @property(Node)
     private symCoinWin: Node = null!;//金幣表演層
+
     @property(Prefab)
     private coinScore: Prefab = null!;//金幣大獎主節點
+
     @property([Prefab])
     private coins: Prefab[] = [];//大獎金幣
 
     @property([SpriteFrame])
     private coinSF: SpriteFrame[] = [];//金幣貼圖，4=暗化灰階
+
     @property([Font])
     private coinFont: Font[] = [];//金幣數字，4=暗化灰階
 
@@ -55,28 +73,32 @@ export class G5279Floor extends Component {
         new Vec3(216, 216, 0),
         new Vec3(324, 324, 0),
         new Vec3(756, 756, 0)
-    ]
+    ];
+
     //金幣尺寸大小
     private readonly coinSize = [
         new Size(432, 432),
         new Size(648, 648),
         new Size(864, 864),
         new Size(1728, 1728)
-    ]
+    ];
+
     //金幣倍率尺寸大小
     private readonly coinOddSize = [
         new Size(380, 220),
         new Size(570, 300),
         new Size(780, 400),
         new Size(1540, 700)
-    ]
+    ];
+
     //金幣閃光尺寸大小
     private readonly coinLightSize = [
         new Size(520, 520),
         new Size(780, 780),
         new Size(1040, 1040),
         new Size(2080, 2080)
-    ]
+    ];
+
     private readonly coinFontSizeHeight = [200, 260, 300, 480];//金幣數字大小與高度
     private readonly coinPos = {
         //金幣win的X軸偏移位置左(同時中2顆金幣以上才會用到)
@@ -518,7 +540,7 @@ export class G5279Floor extends Component {
      * @returns 金幣表演完
      */
     public async showCoins(): Promise<number> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             const coinNode: SymbolNode[] = [];//要揭露的coin
             //重後面開始判斷，因為最上層要最先揭露
             const length = this.coinsFloorID.length;
@@ -558,7 +580,7 @@ export class G5279Floor extends Component {
      * @returns 金幣得分
      */
     private async createCoinScore(coinNode: SymbolNode[]): Promise<number> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             //金幣的時間會是1,1.5,2(其他維持1,2,3)
             const timeScale = 0.5 * getG5279Model().timeScale + 0.5;
             const symCoinWinUIOpacity = this.symCoinWin.getComponent(UIOpacity)!;

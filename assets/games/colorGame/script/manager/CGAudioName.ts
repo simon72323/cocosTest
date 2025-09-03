@@ -22,5 +22,5 @@ export const CGAudioName = {
     TitleStopBet: 'sound/titleStopBet',// 標題-停止押注
     ChipBack: 'sound/chipBack',// 籌碼回收
     ChipDrop: 'sound/chipDrop',// 籌碼移動到玩家
-    LockBet: 'sound/lockBet',// 跟注
+    LockBet: 'sound/lockBet'// 跟注
 };

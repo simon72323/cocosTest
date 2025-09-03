@@ -1,15 +1,18 @@
-import { _decorator, Component, Node, Label, Sprite, SpriteFrame, Animation } from 'cc';
-import { CGUtils } from '../tools/CGUtils';
-import { PlayerData } from '../enum/CGInterface';
 import { Logger } from '@common/utils/Logger';
+import { _decorator, Component, Node, Label, Sprite, SpriteFrame, Animation } from 'cc';
+
+import { PlayerData } from '@/games/colorGame/script/enum/CGInterface';
+import { CGUtils } from '@/games/colorGame/script/tools/CGUtils';
 
 const { ccclass, property } = _decorator;
 @ccclass('CGRankView')
 export class CGRankView extends Component {
     @property(Node)//用戶位置
     private userPos!: Node;
+
     @property([SpriteFrame])//頭像貼圖
     private avatarPhoto: SpriteFrame[] = [];
+
     @property(SpriteFrame)//頭像貼圖
     private nullPhoto: SpriteFrame = null!;
 
@@ -40,7 +43,7 @@ export class CGRankView extends Component {
             const scoreLabel = rankUser.getChildByName('Label')!.getComponent(Label)!;
             const avatarSprite = rankUser.getChildByName('Mask')!.children[0].getComponent(Sprite)!;
             if (newRankings[i]) {
-                nameLabel.string = newRankings[i].displayName.slice(0, 3) + '***';;
+                nameLabel.string = newRankings[i].displayName.slice(0, 3) + '***';
                 scoreLabel.string = CGUtils.NumDigits(newRankings[i].pay!);
                 avatarSprite.spriteFrame = this.avatarPhoto[newRankings[i].avatarID];
 

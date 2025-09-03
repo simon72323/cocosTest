@@ -1,21 +1,23 @@
 import { Logger } from '@common/utils/Logger';
-import { DetectDevice } from '../../utils/DetectDevice';
+
 import { urlHelper } from '@common/utils/UrlHelper';
 import { getUrlQuery } from '@common/utils/UrlUtils';
+
+import { DetectDevice } from '@/common/utils/DetectDevice';
 /**
  * 時間標籤鍵值枚舉
  */
 export enum TimeLabelKeys {
-    ENTRANCE = "entrance",
-    LOADER = "loader",
-    WS = "ws",
-    LOGIN = "login",
-    TAKE_MACHINE = "takeMachine",
-    LOAD_INFO = "loadInfo",
-    SETUP_COSTUME_START = "setupCostumeStart",
-    SETUP_COSTUME_END = "setupCostumeEnd",
-    MACHINE_DETAIL_START = "machineDetailStart",
-    MACHINE_DETAIL_END = "machineDetailEnd"
+    ENTRANCE = 'entrance',
+    LOADER = 'loader',
+    WS = 'ws',
+    LOGIN = 'login',
+    TAKE_MACHINE = 'takeMachine',
+    LOAD_INFO = 'loadInfo',
+    SETUP_COSTUME_START = 'setupCostumeStart',
+    SETUP_COSTUME_END = 'setupCostumeEnd',
+    MACHINE_DETAIL_START = 'machineDetailStart',
+    MACHINE_DETAIL_END = 'machineDetailEnd'
 }
 
 /**
@@ -35,9 +37,9 @@ interface TimeLabelItem {
  */
 export class LoadingInfo {
     private timeLabels: Record<string, TimeLabelItem> = {};
-    private currentLabel: string = "";
+    private currentLabel: string = '';
     private firstTime: number = 0;
-    private gameType: string = "";
+    private gameType: string = '';
     private userID: number = 0;
     private sendOnce: boolean = true;
 
@@ -95,14 +97,14 @@ export class LoadingInfo {
      * 顯示所有時間標籤
      */
     public show(): void {
-        let showString = "";
+        let showString = '';
         let currentItem = this.timeLabels[this.currentLabel];
 
         while (currentItem) {
             const date = new Date(currentItem.time);
             const timeFormat = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}.${date.getUTCMilliseconds()}`;
 
-            showString = `${currentItem.preLabel?.label || "enterPage"} => ${currentItem.label}: 
+            showString = `${currentItem.preLabel?.label || 'enterPage'} => ${currentItem.label}: 
           time: ${timeFormat}
           diff: ${currentItem.timeDiff}
         ${showString}`;
@@ -145,16 +147,16 @@ export class LoadingInfo {
         const deviceInfo = DetectDevice.getDeviceInfo();
 
         const portal = (() => {
-            const platform = getUrlQuery("platform");
+            const platform = getUrlQuery('platform');
             switch (platform) {
-                case "AIO":
-                    return deviceInfo.mua || "AIO";
-                case "app":
-                    return "APP";
-                case "":
-                    return DetectDevice.isPC ? "PC" : "Phone";
+                case 'AIO':
+                    return deviceInfo.mua || 'AIO';
+                case 'app':
+                    return 'APP';
+                case '':
+                    return DetectDevice.isPC ? 'PC' : 'Phone';
                 default:
-                    return "其他";
+                    return '其他';
             }
         })();
 
@@ -171,8 +173,8 @@ export class LoadingInfo {
             UserID: (urlHelper as any).userId,
             SessionID: (urlHelper as any).sid,
             Domain: location.host,
-            Browser: deviceInfo.pf || "",
-            OS: deviceInfo.os || "",
+            Browser: deviceInfo.pf || '',
+            OS: deviceInfo.os || '',
             Portal: portal,
             ClickGame: clickGame,
             Entrance: this.getTime(TimeLabelKeys.ENTRANCE),
@@ -200,14 +202,14 @@ export class LoadingInfo {
         fetch(
             `${(urlHelper as any).domain}/ipl/portal.php/game/casinofrontend_entrance/loadingtime`,
             {
-                method: "POST",
+                method: 'POST',
                 headers: {
-                    "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+                    'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
                 },
                 body: sendData
             }
         ).catch(() => {
-            Logger.warn("發送loadingtime失敗");
+            Logger.warn('發送loadingtime失敗');
         });
     }
 }

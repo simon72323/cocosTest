@@ -1,19 +1,20 @@
 import { commonStore } from '@common/h5GameTools/CommonStore';
-import { _decorator, Component, Node, Label, Toggle, Sprite, tween, v3, Button } from 'cc';
-import { getEventManager } from '@common/manager/EventManager';
-import { GTWebView, WEBMODE } from '../uicomponents/GTWebView';
-import { GTExchangeView } from '../uicomponents/GTExchangeView';
-import { GTSettingTogglePanel, GTSettingToggleType, GTSettingTogglePanelDelegate } from '../uicomponents/GTSettingTogglePanel';
-import { watch } from '@common/utils/Reactivity';
-import { GTLoaderEventType } from '../comm/GTLoaderEventType';
-import { NumberUtils } from '@common/utils/NumberUtils';
-import { gtLoaderCommStore } from '../comm/GTLoderCommStore';
-import { getAutoExchangeCredit, getDecimalPlaces, geti18nTex } from '../comm/GTCommTools';
 import { Comm, Game, GTAlertPram, GTAlertType, GTLoaderButtonType } from '@common/h5GameTools/GTCommEvents';
-import { Logger } from '@common/utils/Logger';
-import { gtmEvent } from '@common/h5GameTools/userAnalysis/GTEvent';
-import { urlHelper } from '@common/utils/UrlHelper';
 import { slotGameConnector } from '@common/h5GameTools/SlotGameConnector';
+import { gtmEvent } from '@common/h5GameTools/userAnalysis/GTEvent';
+import { getEventManager } from '@common/manager/EventManager';
+import { Logger } from '@common/utils/Logger';
+import { NumberUtils } from '@common/utils/NumberUtils';
+import { watch } from '@common/utils/Reactivity';
+import { urlHelper } from '@common/utils/UrlHelper';
+import { _decorator, Component, Node, Label, Toggle, Sprite, tween, v3, Button } from 'cc';
+
+import { getAutoExchangeCredit, getDecimalPlaces, geti18nTex } from '@/comm/scripts/comm/GTCommTools';
+import { GTLoaderEventType } from '@/comm/scripts/comm/GTLoaderEventType';
+import { gtLoaderCommStore } from '@/comm/scripts/comm/GTLoderCommStore';
+import { GTExchangeView } from '@/comm/scripts/uicomponents/GTExchangeView';
+import { GTSettingTogglePanel, GTSettingToggleType, GTSettingTogglePanelDelegate } from '@/comm/scripts/uicomponents/GTSettingTogglePanel';
+import { GTWebView, WEBMODE } from '@/comm/scripts/uicomponents/GTWebView';
 
 const { ccclass, property } = _decorator;
 
@@ -41,7 +42,7 @@ export class GTSettingPanelManager extends Component implements GTSettingToggleP
     private _firstExchangeFinshed: boolean = false;
     private _helpToggle: Toggle = null!;                   // 幫助開關
     private _tempVersion: string = '1.7.3';             // 默認版本號 
-    
+
     /**
      * 組件加載時的初始化設置。
      */
@@ -82,7 +83,7 @@ export class GTSettingPanelManager extends Component implements GTSettingToggleP
      * 設置狀態變化時的反應方法。
      */
     private _setupWatchers(): void {
-        watch(() => commonStore.storeState.gameCoreVersion, (newV, oldV) => {
+        watch(() => commonStore.storeState.gameCoreVersion, () => {
             this._setVersionLabel();
         });
 
@@ -96,7 +97,7 @@ export class GTSettingPanelManager extends Component implements GTSettingToggleP
             }
             this._firstLoadFinshed = true;
         });
-        watch(() => commonStore.storeState.credit, (newCredit, oldCredit) => {
+        watch(() => commonStore.storeState.credit, () => {
             this._formatAndDisplayCreditLabel();
             this.creditLabel.updateRenderData();
         });
@@ -128,7 +129,7 @@ export class GTSettingPanelManager extends Component implements GTSettingToggleP
     /**
      * 更新並格式化Credit顯示標籤。
      */
-     private _formatAndDisplayCreditLabel(): void {
+    private _formatAndDisplayCreditLabel(): void {
         this.creditLabel.string = NumberUtils.formatNumber({
             formatValue: commonStore.storeState.credit.toString(),
             roundCount: commonStore.storeState.customConfig.showDecimalPoints?2:0, //XC不能顯示小數點後兩位
@@ -142,7 +143,7 @@ export class GTSettingPanelManager extends Component implements GTSettingToggleP
     /**
      * 更新並格式化Bet注額顯示標籤。
      */
-     private _formatAndDisplayBetLabel(): void {
+    private _formatAndDisplayBetLabel(): void {
         const num = commonStore.storeState.totalBet;
         const numLen = getDecimalPlaces(num);
         this.betLabel.string = NumberUtils.formatNumber({
@@ -158,9 +159,9 @@ export class GTSettingPanelManager extends Component implements GTSettingToggleP
     private playJumpScoreAni(label : Label):void{
         this.scheduleOnce(()=>{
             tween(label.node)
-            .to(0.1, { position: v3(label.node.position.x, 20 , label.node.position.z) })
-            .to(0.1, { position: v3(label.node.position.x, 0, label.node.position.z) })
-            .start();
+                .to(0.1, { position: v3(label.node.position.x, 20 , label.node.position.z) })
+                .to(0.1, { position: v3(label.node.position.x, 0, label.node.position.z) })
+                .start();
         },0);
     }
 
@@ -175,13 +176,13 @@ export class GTSettingPanelManager extends Component implements GTSettingToggleP
             getEventManager().emit(Game.EXCHANGE_CREDIT, {
                 exchangeCredit: 0,
                 isManual:false,
-                callback: (success: boolean) => {
+                callback: (_success: boolean) => {
                     gtLoaderCommStore.setData('isGameReady', true);
                 }
             });
             return;
         }
-        Logger.debug("Exchange View Toggled.");
+        Logger.debug('Exchange View Toggled.');
         const { autoExchange, balance } = commonStore.storeState;
         let isManualTrigger = gtLoaderCommStore.getData('isManualTrigger');
         let e_credit = getAutoExchangeCredit();
@@ -207,10 +208,10 @@ export class GTSettingPanelManager extends Component implements GTSettingToggleP
     // 從這裡進來的一定都是手動觸發
     public onPrepareOpenExchangeView(): void{
 
-        Logger.debug("onPrepareOpenExchangeView")
+        Logger.debug('onPrepareOpenExchangeView');
         gtLoaderCommStore.setData('isManualTrigger', true);
         getEventManager().emit(Comm.PREPARE_EXCHANGE);
-        getEventManager().emit(Comm.LOADER_BUTTON_CLICK,{type: GTLoaderButtonType.settingPanelBtn});
+        getEventManager().emit(Comm.LOADER_BUTTON_CLICK,{ type: GTLoaderButtonType.settingPanelBtn });
     }
 
     public onShortCutExchangeBtnPreessed():void {
@@ -223,7 +224,7 @@ export class GTSettingPanelManager extends Component implements GTSettingToggleP
      * 當按下設置按鈕時被調用。
      */
     public onSettingPanelPressed(): void {
-        Logger.debug("Setting Panel Toggled.");
+        Logger.debug('Setting Panel Toggled.');
         gtmEvent.LOADER_MAIN_SETTING();
 
         if(GTSettingToggleType.RULE == this.togglePanel.panelType){
@@ -242,7 +243,7 @@ export class GTSettingPanelManager extends Component implements GTSettingToggleP
      * 關閉設定面板。
      */
     public onSettingPanelClosePressed(): void {
-        Logger.debug("Setting Panel Closed.");
+        Logger.debug('Setting Panel Closed.');
         gtmEvent.LOADER_SETTING_EXITSETTING_CLICK();
 
         this._updatePanel();
@@ -256,7 +257,7 @@ export class GTSettingPanelManager extends Component implements GTSettingToggleP
      * @param toggle Toggle 切換狀態
      */
     public onHelpTogglePressed(toggle: Toggle): void {
-        Logger.debug("Help Toggle Pressed.");
+        Logger.debug('Help Toggle Pressed.');
 
         if (toggle.isChecked) {
             gtmEvent.LOADER_SETTING_HELP_CLICK();
@@ -290,7 +291,7 @@ export class GTSettingPanelManager extends Component implements GTSettingToggleP
      * 設置歷史視圖的頁面內容。
      */
     private _setHistoryWebView(): void {
-        Logger.debug("_setHistoryWebView");
+        Logger.debug('_setHistoryWebView');
         this._setWebViewContent('GAME_HISTORY', WEBMODE.HISTORY);
     }
 
@@ -298,17 +299,16 @@ export class GTSettingPanelManager extends Component implements GTSettingToggleP
      * 設置規則視圖的頁面內容。
      */
     private _setRuleWebView(): void {
-        Logger.debug("_setRuleWebView");
+        Logger.debug('_setRuleWebView');
         this._setWebViewContent('GAME_RULE', WEBMODE.RULE);
     }
 
     // GTSettingTogglePanelDelegate 所需的方法
     /**
      * 當退出切換被按下時的行為。
-     * @param toggle 切換��態
      */
-    public gtSettingPanel_onExitToggle(toggle: Toggle): void {
-        Logger.debug("Exit Toggle Pressed.");
+    public gtSettingPanel_onExitToggle(): void {
+        Logger.debug('Exit Toggle Pressed.');
 
         const alertParams: GTAlertPram = {
             type: GTAlertType.DIALOG,
@@ -341,7 +341,7 @@ export class GTSettingPanelManager extends Component implements GTSettingToggleP
      * @param toggle 切換狀態
      */
     public gtSettingPanel_onSoundToggle(toggle: Toggle): void {
-        Logger.debug("Sound Toggle Pressed.");
+        Logger.debug('Sound Toggle Pressed.');
         if ( toggle.isChecked ){
             gtmEvent.LOADER_SETTING_SOUNDSET_CLICK();
         }
@@ -352,7 +352,7 @@ export class GTSettingPanelManager extends Component implements GTSettingToggleP
      * @param toggle 切換狀態
      */
     public gtSettingPanel_onExchangeToggle(toggle: Toggle): void {
-        Logger.debug("Exchange Toggle Pressed.");
+        Logger.debug('Exchange Toggle Pressed.');
         // 如果是自動開啟，因為會把畫面叫起來導致Toggle isCheck又觸發一次。
         const isPrepareExchange = gtLoaderCommStore.getData('isPrepareExchange');
         if ( toggle.isChecked && isPrepareExchange == false) {
@@ -368,7 +368,7 @@ export class GTSettingPanelManager extends Component implements GTSettingToggleP
      * @param toggle 切換狀態
      */
     public gtSettingPanel_onHistoryToggle(toggle: Toggle): void {
-        Logger.debug("History Toggle Pressed.");
+        Logger.debug('History Toggle Pressed.');
 
         if (toggle.isChecked) {
             gtmEvent.LOADER_SETTING_BETHISTORY_CLICK();
@@ -384,7 +384,7 @@ export class GTSettingPanelManager extends Component implements GTSettingToggleP
      * @param toggle 切換狀態
      */
     public gtSettingPanel_onRuleToggle(toggle: Toggle): void {
-        Logger.debug("Rule Toggle Pressed.");
+        Logger.debug('Rule Toggle Pressed.');
 
         if (toggle.isChecked) {
             gtmEvent.LOADER_SETTING_GAMERULE_CLICK();
@@ -402,7 +402,7 @@ export class GTSettingPanelManager extends Component implements GTSettingToggleP
      * @param exchangeAll 是否全部交換
      */
     public gtExchangeView_onStartGame(isAuto: boolean, exchangeCredit: number, exchangeAll: boolean): void {
-        Logger.debug("Exchange Game Started with Credit:", exchangeCredit);
+        Logger.debug('Exchange Game Started with Credit:', exchangeCredit);
 
         commonStore.storeMutation.setData('autoExchange', isAuto);
         commonStore.storeMutation.setData('exchangeAll', exchangeAll);
@@ -437,7 +437,7 @@ export class GTSettingPanelManager extends Component implements GTSettingToggleP
             }
         });
 
-        const { autoExchange, exchangeCredit} = commonStore.storeState;
+        const { autoExchange, exchangeCredit } = commonStore.storeState;
         // 手動換分才要儲存狀態
         if(isManualTrigger && exchangeCredit !== 0 ){
             getEventManager().emit(Comm.CALL_STORE_EXRECORD, {

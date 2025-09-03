@@ -1,12 +1,12 @@
-import { _decorator, Component, find, Node, Sprite } from 'cc';
-const { ccclass, property } = _decorator;
-import { GTAlert } from '../uicomponents/GTAlert';
-import { GTLoaderEventType } from '../comm/GTLoaderEventType';
 import { commonStore } from '@common/h5GameTools/CommonStore';
-import { getEventManager } from '@common/manager/EventManager';
 import { Comm, GTAlertPram, GTAlertType } from '@common/h5GameTools/GTCommEvents';
+import { getEventManager } from '@common/manager/EventManager';
 import { Logger } from '@common/utils/Logger';
+import { _decorator, Component, find, Node, Sprite } from 'cc';
 
+import { GTLoaderEventType } from '@/comm/scripts/comm/GTLoaderEventType';
+import { GTAlert } from '@/comm/scripts/uicomponents/GTAlert';
+const { ccclass, property } = _decorator;
 /**
  * GTAlertPanelManager 類別
  *
@@ -45,15 +45,6 @@ export class GTAlertPanelManager extends Component {
     public onDestroy(): void {
         getEventManager().off(Comm.SHOW_ALERT, this.showAlertBind);
         getEventManager().off(GTLoaderEventType.CLOSE_ALERT, this.closeAlertBind);
-    }
-
-    start() {
-        // 如果需要，可以在這裡添加其他初始化邏輯
-
-    }
-
-    update(deltaTime: number) {
-        // 如果需要，可以在這裡添加每幀更新的邏輯
     }
 
     /**
@@ -111,7 +102,7 @@ export class GTAlertPanelManager extends Component {
                                 console.error('Error executing original callback:', error);
                             }
                         }
-                    }
+                    };
 
                     this.basicAlert.showAlert(processedAlert);
                 }

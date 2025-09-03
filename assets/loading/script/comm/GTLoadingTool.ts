@@ -1,7 +1,8 @@
-import { Logger } from "@common/utils/Logger";
-import { AssetManager, assetManager, instantiate, Prefab, Node, Asset, SpriteFrame } from "cc";
-import { GTLoadingCommTool as CommTool } from "./GTLoadingCommTool";
-import { urlHelper } from "@common/utils/UrlHelper";
+import { Logger } from '@common/utils/Logger';
+import { urlHelper } from '@common/utils/UrlHelper';
+import { AssetManager, assetManager, instantiate, Prefab, Node, Asset, SpriteFrame } from 'cc';
+
+import { GTLoadingCommTool as CommTool } from '@/loading/script/comm/GTLoadingCommTool';
 
 // 將 LoadType enum 保持在外部，方便其他檔案引用
 export enum LoadType {
@@ -30,12 +31,12 @@ export class GTLoadingTool {
             }
             const jsonData = await response.json();
             const gameObj = CommTool.getGameTypeObject(urlHelper.gameType);
-            if (!gameObj) return "";
+            if (!gameObj) return '';
             const value: string = jsonData.assets.bundleVers[gameObj.name];
             return value;
         } catch (err) {
             console.error(err);
-            return ""; // 或 throw err; 視需求
+            return ''; // 或 throw err; 視需求
         }
     }
 
@@ -123,7 +124,7 @@ export class GTLoadingTool {
                 return reject(error);
             }
             bundle.load(prefabType, Prefab,
-                (finished, total, item) => {
+                (finished, total) => {
                     if (onProgress) {
                         onProgress(finished / total * 100, prefabType);
                     }
@@ -160,7 +161,7 @@ export class GTLoadingTool {
                 Logger.error(error.message);
                 return reject(error);
             }
-            bundle.loadDir(type + `/${lang}`, null, (finished, total, item) => {
+            bundle.loadDir(type + `/${lang}`, null, (finished, total) => {
                 onProgress(finished / total * 100, type);
             }, (err, data) => {
                 if (err || !data.length) {
@@ -169,8 +170,8 @@ export class GTLoadingTool {
                         GTLoadingTool.LoadLangSource(type, bundleName, 'en', onProgress).then(() => {
                             Logger.debug(`嘗試加載成功 ${bundleName} Lang: en`);
                             resolve();
-                        }).catch((err) => {
-                            reject(new Error(`預設語言 'en' 資源也加載失敗: ${type}` + err))
+                        }).catch(err => {
+                            reject(new Error(`預設語言 'en' 資源也加載失敗: ${type}` + err));
                         });
                     } else {
                         reject(new Error(`預設語言 'en' 資源也加載失敗: ${type}`));

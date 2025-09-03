@@ -1,7 +1,7 @@
+import { Comm } from '@common/h5GameTools/GTCommEvents';
+import { getEventManager } from '@common/manager/EventManager';
 import { Logger } from '@common/utils/Logger';
 import { urlHelper } from '@common/utils/UrlHelper';
-import { getEventManager } from '@common/manager/EventManager';
-import { Comm } from '@common/h5GameTools/GTCommEvents';
 
 /**
  * 状态接口
@@ -84,7 +84,7 @@ export function useMutations(state: GameState) {
          * 开始游戏
          */
         onBeginGame(data: GameData): void {
-            Logger.debug("[CommonStore::onBegingame]", data);
+            Logger.debug('[CommonStore::onBegingame]', data);
             state.credit = parseFloat(data.Credit?.toString() || state.credit.toString());
             state.wagersID = data.WagersID || state.wagersID;
         }
@@ -115,7 +115,7 @@ export function useMutations(state: GameState) {
          * 加载信息
          */
         onOnLoadInfo(data: GameData): void {
-            Logger.debug("[CommonStore::onOnLoadInfo]", data);
+            Logger.debug('[CommonStore::onOnLoadInfo]', data);
             state.isCash = data.isCash || false;
             state.userName = data.LoginName || '';
             state.userID = data.UserID || state.userID;
@@ -156,7 +156,7 @@ export function useMutations(state: GameState) {
          * 获取机器详情
          */
         onGetMachineDetail(data: GameData): void {
-            Logger.debug("[CommonStore::onGetMachineDetail]", data);
+            Logger.debug('[CommonStore::onGetMachineDetail]', data);
             state.currency = data.Currency || state.currency;
             state.balance = +(data.Balance || 0);
             state.credit = +(data.Credit || 0);
@@ -166,7 +166,7 @@ export function useMutations(state: GameState) {
          * 积分兑换
          */
         onCreditExchange(data: GameData): void {
-            Logger.debug("[CommonStore::onCreditExchange]", data);
+            Logger.debug('[CommonStore::onCreditExchange]', data);
             state.balance = +(data.Balance || state.balance);
             state.credit = +(data.Credit || state.credit);
         }
@@ -175,7 +175,7 @@ export function useMutations(state: GameState) {
          * 余额兑换
          */
         onBalanceExchange(data: GameData): void {
-            Logger.debug("[CommonStore::onBalanceExchange]", data);
+            Logger.debug('[CommonStore::onBalanceExchange]', data);
             state.balance = +(data.Balance || 0);
             state.credit = 0;
         }
@@ -184,7 +184,7 @@ export function useMutations(state: GameState) {
          * 中奖
          */
         onHitJackpot(data: GameData): void {
-            Logger.debug("[CommonStore::onBalanceExchange]", data);
+            Logger.debug('[CommonStore::onBalanceExchange]', data);
             this.onBeginGame(data.beginGameResult?.data || {} as GameData);
         }
 
@@ -192,7 +192,7 @@ export function useMutations(state: GameState) {
          * 游戏结束
          */
         onEndGame(data: GameData): void {
-            Logger.debug("[CommonStore::onEndGame]", data);
+            Logger.debug('[CommonStore::onEndGame]', data);
             state.credit = +(data.Credit || 0);
         }
 
@@ -200,14 +200,14 @@ export function useMutations(state: GameState) {
          * 保持机器状态
          */
         onKeepMachineStatus(data: any): void {
-            Logger.debug("[CommonStore::onKeepMachineStatus]", data);
+            Logger.debug('[CommonStore::onKeepMachineStatus]', data);
         }
 
         /**
          * 双倍游戏
          */
         onDoubleGame(data: any): void {
-            Logger.debug("[CommonStore::onDoubleGame]", data);
+            Logger.debug('[CommonStore::onDoubleGame]', data);
         }
 
         /**

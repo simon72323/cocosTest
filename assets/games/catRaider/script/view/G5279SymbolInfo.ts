@@ -1,13 +1,12 @@
-import { _decorator, Component, Label, Node, Prefab, Sprite, Vec3, UIOpacity, Button, tween, Tween } from 'cc';
-import { getPoolManager } from '@common/manager/PoolManager';
 import { LocalizedSprite } from '@common/components/localization/LocalizedSprite';
 import { getAudioManager } from '@common/manager/AudioManager';
+import { getPoolManager } from '@common/manager/PoolManager';
+import { _decorator, Component, Label, Node, Prefab, Sprite, Vec3, UIOpacity, Button, tween, Tween } from 'cc';
 
-import { G5279AudioName } from '../data/G5279AudioEnum';
-import { G5279Resources } from '../data/G5279Resources';
-import { G5279GameState } from '../data/G5279Enum';
-
-import { getG5279Model } from '../model/G5279Model';
+import { G5279AudioName } from '@/games/catRaider/script/data/G5279AudioEnum';
+import { G5279GameState } from '@/games/catRaider/script/data/G5279Enum';
+import { G5279Resources } from '@/games/catRaider/script/data/G5279Resources';
+import { getG5279Model } from '@/games/catRaider/script/model/G5279Model';
 
 const { ccclass, property } = _decorator;
 
@@ -15,13 +14,16 @@ const { ccclass, property } = _decorator;
 export class G5279SymbolInfo extends Component {
     @property(Prefab)
     private infoChrItem: Prefab = null!;//符號資訊
+
     @property(Prefab)
     private infoGem: Prefab = null!;//寶石賠率
 
     @property([Node])
     private symbolBtns: Node[] = [];//5x5資訊按鈕
+
     @property(Node)
     private btnInfoClose: Node = null!;//資訊返回按鈕
+
     @property(Node)
     private showSymbolInfoNode: Node = null!;//顯示賠率節點
 
@@ -36,7 +38,7 @@ export class G5279SymbolInfo extends Component {
         'tx_odds_sym2',
         'tx_odds_sym3',
         'tx_odds_sym4'
-    ]
+    ];
 
     private itemSpriteName: string[] = [
         'tx_odds_sym51',
@@ -45,15 +47,15 @@ export class G5279SymbolInfo extends Component {
         'tx_odds_sym54',
         'tx_odds_sym55',
         'tx_odds_sym56'
-    ]
+    ];
 
     //四個關卡的左側位置，用來判斷資訊是否要水平翻轉
     private leftPos: number[][] = [
         [0, 1, 2, 5, 6, 7, 10, 11, 12, 15, 16, 17, 20, 21, 22],
         [0, 1, 2, 6, 7, 8, 12, 13, 14, 18, 19, 20, 24, 25, 26, 30, 31, 32],
         [0, 1, 2, 3, 7, 8, 9, 10, 14, 15, 16, 17, 21, 22, 23, 24, 28, 29, 30, 31, 35, 36, 37, 38, 42, 43, 44, 45],
-        [0, 1, 2, 3, 8, 9, 10, 11, 16, 17, 18, 19, 24, 25, 26, 27, 32, 33, 34, 35, 40, 41, 42, 43, 48, 49, 50, 51, 56, 57, 58, 59],
-    ]
+        [0, 1, 2, 3, 8, 9, 10, 11, 16, 17, 18, 19, 24, 25, 26, 27, 32, 33, 34, 35, 40, 41, 42, 43, 48, 49, 50, 51, 56, 57, 58, 59]
+    ];
 
     private _symbolInfoNode: Node = null!;//紀錄目前顯示的賠率節點
     private _reelSymbolID: number[] = [];//當前盤面符號ID
@@ -80,16 +82,16 @@ export class G5279SymbolInfo extends Component {
             for (let j = 0; j < symbolBtns.children.length; j++) {
                 const eventHandler = new Component.EventHandler();
                 eventHandler.target = this.node;
-                eventHandler.component = "G5279SymbolInfo";
-                eventHandler.handler = "showSymbolInfo";
+                eventHandler.component = 'G5279SymbolInfo';
+                eventHandler.handler = 'showSymbolInfo';
                 eventHandler.customEventData = j.toString();
                 symbolBtns.children[j].getComponent(Button)!.clickEvents.push(eventHandler);
             }
         }
         const eventHandler = new Component.EventHandler();
         eventHandler.target = this.node;
-        eventHandler.component = "G5279SymbolInfo";
-        eventHandler.handler = "exitSymbolInfo";
+        eventHandler.component = 'G5279SymbolInfo';
+        eventHandler.handler = 'exitSymbolInfo';
         this.btnInfoClose.getComponent(Button)!.clickEvents.push(eventHandler);
     }
 
@@ -163,7 +165,7 @@ export class G5279SymbolInfo extends Component {
         //背景水平翻轉
         const isLeftPos = this.leftPos[currentLv].includes(posID);
         const horizontalScale = isLeftPos ? new Vec3(1, 1, 1) : new Vec3(-1, 1, 1);
-        const lvScale = [1, 0.91, 0.83, 0.75]
+        const lvScale = [1, 0.91, 0.83, 0.75];
         const infoScale = horizontalScale.clone().multiplyScalar(lvScale[currentLv]);
 
         this._symbolInfoNode.setScale(infoScale);
@@ -183,8 +185,8 @@ export class G5279SymbolInfo extends Component {
         if (button.clickEvents.length === 0) {
             const eventHandler = new Component.EventHandler();
             eventHandler.target = this.node;
-            eventHandler.component = "G5279SymbolInfo";
-            eventHandler.handler = "exitSymbolInfo";
+            eventHandler.component = 'G5279SymbolInfo';
+            eventHandler.handler = 'exitSymbolInfo';
             button.clickEvents.push(eventHandler);
         }
     }

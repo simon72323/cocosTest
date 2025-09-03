@@ -1,14 +1,16 @@
-import { _decorator, Color, Component, Node, Prefab, Sprite, tween, UIOpacity, Vec3 } from 'cc';
 import { getPoolManager } from '@common/manager/PoolManager';
-import { SymbolNode } from '../data/G5279Interface';
-import { G5279Floor } from './G5279Floor';
-import { getG5279Model } from '../model/G5279Model';
+import { _decorator, Color, Component, Node, Prefab, Sprite, tween, UIOpacity, Vec3 } from 'cc';
+
+import { SymbolNode } from '@/games/catRaider/script/data/G5279Interface';
+import { getG5279Model } from '@/games/catRaider/script/model/G5279Model';
+import { G5279Floor } from '@/games/catRaider/script/view/G5279Floor';
 const { ccclass, property } = _decorator;
 
 @ccclass('G5279RoadLine')
 export class G5279RoadLine extends Component {
     @property(Prefab)
     private roadLine: Prefab = null!;
+
     @property(Node)
     private roadLineLayer: Node = null!;
 
@@ -75,7 +77,7 @@ export class G5279RoadLine extends Component {
                 const position = roadLineNode.position.clone();
                 tween(roadLineNode)
                     .to(shakeTime / 1666, { position: new Vec3(position.x, position.y, position.z + 50) }, { easing: 'cubicOut' })
-                    .to(shakeTime / 1666, { position: position }, { easing: 'cubicIn' })
+                    .to(shakeTime / 1666, { position }, { easing: 'cubicIn' })
                     .start();
                 break;
             }

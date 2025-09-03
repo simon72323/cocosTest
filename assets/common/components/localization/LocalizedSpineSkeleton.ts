@@ -15,14 +15,15 @@
  * - 節點必須包含 cc.sp.Skeleton 組件
  * - 依賴 LanguageManager 的正確初始化
  */
+import { getLanguageManager } from '@common/manager/LanguageManager';
 import { _decorator, Component, sp } from 'cc';
-import { LanguageManager } from '@common/manager/LanguageManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('LocalizedSpineSkeleton')
 export class LocalizedSpineSkeleton extends Component {
     @property({ tooltip: 'spineName' })
     public spineName: string = '';
+
     @property({ tooltip: 'loadingPage' })
     public isLoading: boolean = false;
 
@@ -39,7 +40,7 @@ export class LocalizedSpineSkeleton extends Component {
         const skeleton = this.getComponent(sp.Skeleton);
         if (skeleton) {
             const folderName = this.isLoading ? 'loadingPage' : 'gameCore';
-            skeleton.skeletonData = await LanguageManager.getSkeletonData(this.spineName, folderName);
+            skeleton.skeletonData = await getLanguageManager().getSkeletonData(this.spineName, folderName);
         }
     }
 }

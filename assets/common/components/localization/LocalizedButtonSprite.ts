@@ -27,24 +27,30 @@
  * - 需要確保 LanguageManager 已正確初始化
  * - 圖片資源必須已在 LanguageManager 中載入
  */
+import { getLanguageManager } from '@common/manager/LanguageManager';
 import { _decorator, Button, CCString, Component, NodeEventType, Sprite } from 'cc';
-import { LanguageManager } from '@common/manager/LanguageManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('LocalizedButtonSprite')
 export class LocalizedButtonSprite extends Component {
     @property(CCString)
     public upSpriteName: string = '';
+
     @property(CCString)
     public downSpriteName: string = '';
+
     @property(CCString)
     public hoverSpriteName: string = '';
+
     @property(CCString)
     public disableSpriteName: string = '';
+
     @property({ type: Button, tooltip: '主要按鈕' })
     public button: Button = null!;
+
     @property({ tooltip: 'loadingPage' })
     public isLoading: boolean = false;
+
     private isPressed: boolean = false;//紀錄是否按下狀態
     private originalUpdateState: (() => void) | null = null; // 添加這個屬性來存儲原始函數
 
@@ -114,7 +120,7 @@ export class LocalizedButtonSprite extends Component {
         const sprite = this.getComponent(Sprite);
         if (sprite) {
             const folderName = this.isLoading ? 'loadingPage' : 'gameCore';
-            sprite.spriteFrame = await LanguageManager.getSpriteFrame(spriteName, folderName);
+            sprite.spriteFrame = await getLanguageManager().getSpriteFrame(spriteName, folderName);
         }
     }
 }

@@ -1,9 +1,10 @@
-import { _decorator, Component } from 'cc';
-const { ccclass, property } = _decorator;
-import { getEventManager } from '@common/manager/EventManager';
-import { GTMarquee } from '../uicomponents/GTMarquee';
+
 import { commonStore } from '@common/h5GameTools/CommonStore';
 import { Comm } from '@common/h5GameTools/GTCommEvents';
+import { getEventManager } from '@common/manager/EventManager';
+import { _decorator, Component } from 'cc';
+
+import { GTMarquee } from '@/comm/scripts/uicomponents/GTMarquee';
 
 interface MarqueeData {
     marquee: {
@@ -12,7 +13,7 @@ interface MarqueeData {
         jpPayoff: string;
     };
 }
-
+const { ccclass, property } = _decorator;
 /**
  * GTMarqueePanelManager 類別
  *
@@ -23,6 +24,7 @@ interface MarqueeData {
 export class GTMarqueePanelManager extends Component {
     @property(GTMarquee)
     public marquee: GTMarquee = null!;
+
     setMarqueeBind!: (data: any) => void;
     protected onLoad(): void {
         // 初始化

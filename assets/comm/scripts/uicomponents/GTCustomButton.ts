@@ -1,12 +1,14 @@
-import { _decorator, Button, Sprite, CCFloat, EventTouch, Node, Vec3, tween, UITransform, UIOpacity, SpriteFrame, Color, color, Label, log, EventHandler } from 'cc';
+import { _decorator, Button, Sprite, CCFloat, EventTouch, Node, Vec3, tween, UITransform, UIOpacity, SpriteFrame, Color, Label } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('GTCustomButtonScaleArg')
 class GTCustomButtonScaleArg {
     @property(Node)
     public target: Node = null!;
+
     @property(CCFloat)
     public zoomScale: number = 0.9;
+
     @property(CCFloat)
     public duration: number = 0.1;
 }
@@ -15,6 +17,7 @@ class GTCustomButtonScaleArg {
 class GTCustomButtonDisableOpacity {
     @property(UIOpacity)
     public uiOpacity: UIOpacity = null!;
+
     @property(CCFloat)
     public opacity: number = 150;
 }
@@ -23,12 +26,16 @@ class GTCustomButtonDisableOpacity {
 class GTCustomButtonSyncSprite {
     @property(Node)
     public target: Node = null!;
+
     @property(SpriteFrame)
     public normalSprite: SpriteFrame = null!;
+
     @property(SpriteFrame)
     public pressedSprite: SpriteFrame = null!;
+
     @property(SpriteFrame)
     public hoverSprite: SpriteFrame = null!;
+
     @property(SpriteFrame)
     public disabledSprite: SpriteFrame = null!;
 }
@@ -37,12 +44,16 @@ class GTCustomButtonSyncSprite {
 class GTCustomButtonSyncLabelColor {
     @property(Label)
     public target: Label = null!;
+
     @property(Color)
     public normalColor: Color = new Color(255, 255, 255, 255);
+
     @property(Color)
     public pressedColor: Color = new Color(255, 255, 255, 255);
+
     @property(Color)
     public hoverColor: Color = new Color(255, 255, 255, 255);
+
     @property(Color)
     public disabledColor: Color = new Color(255, 255, 255, 255);
 }
@@ -51,38 +62,45 @@ class GTCustomButtonSyncLabelColor {
 export class GTCustomButton extends Button {
     @property([GTCustomButtonSyncSprite])
     private syncSprite: GTCustomButtonSyncSprite[] = [];
+
     @property([GTCustomButtonSyncLabelColor])
     private syncLabelColor: GTCustomButtonSyncLabelColor[] = [];
+
     @property([GTCustomButtonScaleArg])
     private scaleArgs: GTCustomButtonScaleArg[] = [];
+
     @property([Sprite])
     private disabledGray: Sprite[] = [];
+
     @property([GTCustomButtonDisableOpacity])
     private disabledOpacity: GTCustomButtonDisableOpacity[] = [];
+
     @property([Node])
     private hoverNode: Node[] = [];
+
     @property([Node])
-    private downNode: Node[] = [];    
+    private downNode: Node[] = [];
 
     protected _onTouchBegan(event?: EventTouch): void {
         super._onTouchBegan(event);
-        
+
         if (!this._interactable) return;
         // log("按下按鈕--CustomButton")
         for (const data of this.downNode) {
             data.active = true;
             this.scheduleOnce(() => {
                 data.active = false;
-            }, 1)
+            }, 1);
         }
         for (const data of this.scaleArgs) {
             data.target.setScale(new Vec3(1, 1, 1));
             tween(data.target)
                 .to(0.05, { scale: new Vec3(data.zoomScale, data.zoomScale, 1) }, { easing: 'sineOut' })
-                .start()
+                .start();
         }
-        
+
     }
+
     protected _onTouchEnded(event?: EventTouch): void {
         super._onTouchEnded(event);
         // log("放開按鈕")
@@ -94,7 +112,7 @@ export class GTCustomButton extends Button {
             if (data.target.scale.x === 1) return;
             tween(data.target)
                 .to(data.duration, { scale: new Vec3(1, 1, 1) }, { easing: 'sineOut' })
-                .start()
+                .start();
         }
     }
 
@@ -104,9 +122,10 @@ export class GTCustomButton extends Button {
         for (const data of this.scaleArgs) {
             tween(data.target)
                 .to(data.duration, { scale: new Vec3(1, 1, 1) }, { easing: 'sineOut' })
-                .start()
+                .start();
         }
     }
+
     protected _onMouseMoveIn(): void {
         super._onMouseMoveIn();
         if (!this._interactable) return;
@@ -141,7 +160,7 @@ export class GTCustomButton extends Button {
             for (const data of this.scaleArgs) {
                 tween(data.target)
                     .to(0.05, { scale: new Vec3(data.zoomScale, data.zoomScale, 1) }, { easing: 'sineOut' })
-                    .start()
+                    .start();
             }
         }
         else {
@@ -186,7 +205,7 @@ export class GTCustomButton extends Button {
         }
     }
 
-    private getButtonState(key : number):String{
+    private getButtonState(key: number): String {
         let str = '';
         switch (key) {
             case 0:

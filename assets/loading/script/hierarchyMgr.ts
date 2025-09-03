@@ -1,14 +1,15 @@
-import { _decorator, Component, Node, find, assetManager, Prefab, instantiate, Label, ProgressBar, SpriteFrame, Sprite} from 'cc';
-import { loadingMgr } from './loadingMgr';
-import { disWatchAll, watch } from '@common/utils/Reactivity';
 import { commonStore } from '@common/h5GameTools/CommonStore';
-import { urlHelper } from '@common/utils/UrlHelper';
-import { Logger } from '@common/utils/Logger';
-import { gtmEvent } from '@common/h5GameTools/userAnalysis/GTEvent';
-import { NumberUtils } from '@common/utils/NumberUtils';
-import { GameStatus } from '@common/h5GameTools/State';
 import { Comm, Game } from '@common/h5GameTools/GTCommEvents';
+import { GameStatus } from '@common/h5GameTools/State';
+import { gtmEvent } from '@common/h5GameTools/userAnalysis/GTEvent';
 import { getEventManager } from '@common/manager/EventManager';
+import { Logger } from '@common/utils/Logger';
+import { NumberUtils } from '@common/utils/NumberUtils';
+import { disWatchAll, watch } from '@common/utils/Reactivity';
+import { urlHelper } from '@common/utils/UrlHelper';
+import { _decorator, Component, Node, find, assetManager, Prefab, instantiate, Label, ProgressBar, SpriteFrame, Sprite } from 'cc';
+
+import { loadingMgr } from '@/loading/script/loadingMgr';
 
 const { ccclass, property } = _decorator;
 export enum loadingState {
@@ -20,6 +21,7 @@ export enum loadingState {
 export class hierarchyMgr extends Component {
     @property(Node)
     public loadBarNode : Node = null!;
+
     public loadingMgr: loadingMgr = null!;
     private gameNode: Node = null!;
     private addSceneNode: Node = null!;
@@ -62,6 +64,7 @@ export class hierarchyMgr extends Component {
         this.onGetUnderSettingPanelNodeBind = this.onGetUnderSettingPanelNode.bind(this);
         this.setListenerToGetNode();
     }
+
     public start(): void {
         this.startLoadPubVersionBundle();
     }
@@ -72,7 +75,7 @@ export class hierarchyMgr extends Component {
     public startLoadPubVersionBundle(): void {
         const disWatch = watch(
             () => commonStore.storeState.gameStatus,
-            (newStatus, oldStatus) => {
+            (newStatus, _oldStatus) => {
                 if(newStatus === GameStatus.OnGameSetupReady){
                     gtmEvent.LOADER_GAME_SETUP_READY(NumberUtils.accAdd(NumberUtils.accAdd( this.pubVersionDLTime, this.loadSceneDLTime), this.gameSceneDLTime));
                     this.closeloadingPage();
@@ -86,6 +89,7 @@ export class hierarchyMgr extends Component {
         });
         this.loadingMgr.loadPubVersionScene();
     }
+
     /**
      * 開始讀取遊戲的bundle
      **/
@@ -94,22 +98,23 @@ export class hierarchyMgr extends Component {
         this.gameLoadingNode = find('Canvas/PubVersion/Portrait/loadingNode')!;
         this.loadingMgr.loadGameHash();
     }
+
     /**
      * 開始讀取遊戲prefab
      */
     public startLoadGamePrefab(): void {
         this.onPreloadSceneCB(loadingState.Game);
     }
+
     /**
      * 讀取場景
      **/
     private onPreloadSceneCB(state: number): void {
-        let prefabNode;
-        const sceneNode = find(`Canvas`)!;
+        const sceneNode = find('Canvas')!;
         switch (state) {
             case loadingState.pubVersion:
                 //讀取公版prefab加至場景
-                prefabNode = this.getPrefab('prefab/PubVersion', 'comm')!.then(
+                this.getPrefab('prefab/PubVersion', 'comm')!.then(
                     Node => {
                         sceneNode.addChild(Node);
                         Node.setSiblingIndex(3);
@@ -120,26 +125,26 @@ export class hierarchyMgr extends Component {
 
                         gtmEvent.LOADER_PUBVERSION_FINSHED(this.pubVersionDLTime);
                     }
-                ).catch(err => { alert(err + '-onPreloadSceneCB pubVersion') });
+                ).catch(err => { alert(err + '-onPreloadSceneCB pubVersion'); });
 
                 break;
             case loadingState.GameLoading:
                 //從遊戲bundle取得loadingScene prefab
-                prefabNode = this.getPrefab(`prefab/loadingScene`, this.loadingMgr.getGameNameStr()).then(
+                this.getPrefab('prefab/loadingScene', this.loadingMgr.getGameNameStr()).then(
                     Node => {
                         Node.active = false;
                         this.gameLoadingNode.addChild(Node);
                         this.loadingNode = Node;
                         this.getGameBg();
                         getEventManager().emit('UPDATE_STYLE_RESOURCE');
-                        
+
                         gtmEvent.LOADER_LOADINGSCENE_FINSHED(this.loadSceneDLTime);
                     }
-                ).catch(err => { alert(err + '-onPreloadSceneCB luckyLoading') });
+                ).catch(err => { alert(err + '-onPreloadSceneCB luckyLoading'); });
                 break;
             case loadingState.Game:
                 //從遊戲bundle取得gameScene prefab
-                prefabNode = this.getPrefab(`prefab/gameScene`, `${this.loadingMgr.getGameNameStr()}`).then(
+                this.getPrefab('prefab/gameScene', `${this.loadingMgr.getGameNameStr()}`).then(
                     Node => {
                         this.gameNode = Node;
                         const bundleName = `${this.loadingMgr.getGameNameStr()}`;
@@ -148,7 +153,7 @@ export class hierarchyMgr extends Component {
 
                         gtmEvent.LOADER_GAMESCENE_FINSHED(this.gameSceneDLTime);
                     }
-                ).catch(err => { alert(err + '-onPreloadSceneCB GameLoading') });
+                ).catch(err => { alert(err + '-onPreloadSceneCB GameLoading'); });
                 break;
             default:
                 Logger.debug('unknow gameType');
@@ -156,6 +161,7 @@ export class hierarchyMgr extends Component {
         }
 
     }
+
     /**
      * 關閉公版ＵＩ與公版讀取頁，開啟遊戲讀取頁並讀取遊戲prefab
      */
@@ -170,6 +176,7 @@ export class hierarchyMgr extends Component {
         this.activeGameLoadingNode();
         this.startLoadGamePrefab();
     }
+
     /**
      * 刪除遊戲node,重新跑抓bundle流程開啟遊戲
      */
@@ -192,6 +199,7 @@ export class hierarchyMgr extends Component {
         this.loadinglabel.string = sum.toString() + '%';
         this.loadingBar.progress = sum * 0.01;
     }
+
     /**
      * 當語系資源讀取完成,掛上遊戲節點使之開始init
      */
@@ -201,6 +209,7 @@ export class hierarchyMgr extends Component {
         this.addSceneNode.addChild(this.gameNode);
         this.gameNode.active = true;
     }
+
     /**
      * 重置
      */
@@ -241,7 +250,7 @@ export class hierarchyMgr extends Component {
         return new Promise((resolve, reject) => {
             if (bundle) {
                 bundle.load(prefabPath, Prefab,
-                    (finished, total, item) => {
+                    (finished, total, _item) => {
                         let loadingNum = 0;
                         switch (prefabPath) {
                             case 'prefab/gameScene':
@@ -265,10 +274,10 @@ export class hierarchyMgr extends Component {
                         this.setLoadingBar();
                     }, function (err, prefab) {
                         if (err) {
-                            reject(err)
+                            reject(err);
                         }
                         let newNode = instantiate(prefab);
-                        resolve(newNode)
+                        resolve(newNode);
                     });
             }
         });
@@ -283,7 +292,7 @@ export class hierarchyMgr extends Component {
             return;
         }
         const bgNode = this.node.parent!.getChildByName('BG')!;
-        this.loadSpriteFromBundle('texture/bg/bg_vague_left/spriteFrame',`${this.loadingMgr.getGameNameStr()}`).then((data)=>{
+        this.loadSpriteFromBundle('texture/bg/bg_vague_left/spriteFrame',`${this.loadingMgr.getGameNameStr()}`).then(data=>{
             if (data) {
                 this.leftBg = bgNode.getChildByName('BG_LEFT')!;
 
@@ -292,7 +301,7 @@ export class hierarchyMgr extends Component {
                 this.checkBGDownLoad();
             }
         });
-        this.loadSpriteFromBundle('texture/bg/bg_vague_right/spriteFrame',`${this.loadingMgr.getGameNameStr()}`).then((data)=>{
+        this.loadSpriteFromBundle('texture/bg/bg_vague_right/spriteFrame',`${this.loadingMgr.getGameNameStr()}`).then(data=>{
             if (data) {
                 this.rightBg = bgNode.getChildByName('BG_RIGHT')!;
                 this.rightBg.getComponent(Sprite)!.spriteFrame = data;
@@ -300,7 +309,7 @@ export class hierarchyMgr extends Component {
                 this.checkBGDownLoad();
             }
         });
-        this.loadSpriteFromBundle('texture/bg/bg_vague_bottom/spriteFrame',`${this.loadingMgr.getGameNameStr()}`).then((data)=>{
+        this.loadSpriteFromBundle('texture/bg/bg_vague_bottom/spriteFrame',`${this.loadingMgr.getGameNameStr()}`).then(data=>{
             if (data) {
                 this.bottomBg = bgNode.getChildByName('BG_BOTTOM')!;
                 this.bottomBg.getComponent(Sprite)!.spriteFrame = data;
@@ -308,7 +317,7 @@ export class hierarchyMgr extends Component {
                 this.checkBGDownLoad();
             }
         });
-        this.loadSpriteFromBundle('texture/bg/bg_vague_top/spriteFrame',`${this.loadingMgr.getGameNameStr()}`).then((data)=>{
+        this.loadSpriteFromBundle('texture/bg/bg_vague_top/spriteFrame',`${this.loadingMgr.getGameNameStr()}`).then(data=>{
             if (data) {
                 this.topBg = bgNode.getChildByName('BG_TOP')!;
                 this.topBg.getComponent(Sprite)!.spriteFrame = data;
@@ -317,6 +326,7 @@ export class hierarchyMgr extends Component {
             }
         });
     }
+
     /**
      * 設置背景圖,塞至html
      */
@@ -347,21 +357,22 @@ export class hierarchyMgr extends Component {
      * @param bundleName
      * @returns
      */
-     private async loadSpriteFromBundle(url : string,bundleName : string): Promise<SpriteFrame> {
+    private async loadSpriteFromBundle(url : string,bundleName : string): Promise<SpriteFrame> {
         return new Promise((resolve, reject) => {
             const bundle = assetManager.getBundle(bundleName)!;
             bundle.load(url,SpriteFrame, (err, spriteFrame)=>{
                 if(err){
                     Logger.error(`load ${url} fail~~~!`);
-                    reject(err)
+                    reject(err);
                 }
                 if (err) {
-                    reject(err)
+                    reject(err);
                 }
-                resolve(spriteFrame)
+                resolve(spriteFrame);
             });
         });
     }
+
     /**
      * 依語系從bundle讀取loading頁語系圖資源
      * @param bundleName 遊戲bundle
@@ -369,14 +380,14 @@ export class hierarchyMgr extends Component {
      * @returns
      */
     public async loadGameLoadingLangSource(bundleName : string,lang : string):Promise<void>{
-        return new Promise((resolve, reject) => {
+        return new Promise(() => {
             const bundle = assetManager.getBundle(bundleName)!;
-            bundle.loadDir(`langResources/loadingPage/${lang}`,null,(finished, total, item)=>{
+            bundle.loadDir(`langResources/loadingPage/${lang}`,null,()=>{
 
             }, (err, data)=>{
                 if(err || !data.length){
                     Logger.error(`loading page ${lang} data fail~~~!`);
-                    Logger.error(`start load en lang`);
+                    Logger.error('start load en lang');
                     if (lang !== 'en') {
                         this.loadGameLoadingLangSource(bundleName,'en');
                     } else {
@@ -388,16 +399,17 @@ export class hierarchyMgr extends Component {
             });
         });
     }
+
     /**
      * 依語系從bundle讀取遊戲語系圖資源
      * @param bundleName 遊戲bundle
      * @param lang 語系
      * @returns
      */
-     private async loadGameLangSource(bundleName : string,lang : string):Promise<void>{
-        return new Promise((resolve, reject) => {
+    private async loadGameLangSource(bundleName : string,lang : string):Promise<void>{
+        return new Promise(() => {
             const bundle = assetManager.getBundle(bundleName)!;
-            bundle.loadDir(`langResources/gameCore/${lang}`,null,(finished, total, item)=>{
+            bundle.loadDir(`langResources/gameCore/${lang}`,null,(finished, total)=>{
                 const loadingNum = Math.floor((finished / total) * 10) ;
                 this.gameLangProgressNum = Math.max(this.gameLangProgressNum,loadingNum);
                 this.setLoadingBar();
@@ -405,7 +417,7 @@ export class hierarchyMgr extends Component {
                 if(err || !data.length){
                     Logger.error(`game ${lang} data fail~~~!`);
                     if (lang !== 'en') {
-                        Logger.error(`start load en lang`);
+                        Logger.error('start load en lang');
                         this.loadGameLangSource(bundleName,'en');
                     } else {
                         this.gameLangProgressNum = 15;
@@ -420,6 +432,7 @@ export class hierarchyMgr extends Component {
             });
         });
     }
+
     /**
      * 設置監聽,遊戲取得公版層級結點
      */
@@ -437,14 +450,17 @@ export class hierarchyMgr extends Component {
         const tempNode = find('Canvas/PubVersion/Portrait/ControlToSettingNode');
         msg.callback(tempNode);
     }
+
     private onGetSettingToBottomNode(msg : any):void{
         const tempNode = find('Canvas/PubVersion/Portrait/SettingToBottomNode');
         msg.callback(tempNode);
     }
+
     private onGetTopGameNode(msg : any):void{
         const tempNode = find('Canvas/PubVersion/Portrait/TopGameNode');
         msg.callback(tempNode);
     }
+
     private onGetUnderSettingPanelNode(msg : any):void{
         const tempNode = find('Canvas/PubVersion/Portrait/UnderSettingPanelNode');
         msg.callback(tempNode);
@@ -464,6 +480,7 @@ export class hierarchyMgr extends Component {
     private closeLoadingNode():void{
         this.loadBarNode.active = false;
     }
+
     /**
      * 秀出loadingbar條與進度顯示
      */

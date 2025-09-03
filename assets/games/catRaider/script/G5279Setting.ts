@@ -1,11 +1,13 @@
 import { _decorator, Component, Toggle, Node, input, Input, EventKeyboard, KeyCode } from 'cc';
-import { G5279FakeData } from './data/G5279FakeDate';
+
+import { G5279FakeData } from '@/games/catRaider/script/data/G5279FakeDate';
 const { ccclass, property } = _decorator;
 
 @ccclass('G5279Setting')
 export class G5279Setting extends Component {
     @property(Node)
     private toggleGroup: Node = null!;
+
     @property(Node)
     private fakePanel: Node = null!;//設置面板
 
@@ -53,7 +55,7 @@ export class G5279Setting extends Component {
             if (toggle.isChecked) {
                 const fakeData = G5279FakeData.Instance.fakeData[i];
                 if (!fakeData) return null;
-                const beginGameMsg = { "event": true, "data": fakeData }
+                const beginGameMsg = { 'event': true, 'data': fakeData };
                 return beginGameMsg;
             }
         }

@@ -1,4 +1,4 @@
-import { assetManager, SpriteFrame } from "cc";
+import { assetManager, SpriteFrame } from 'cc';
 
 
 export function loadSprite(path: string): Promise<SpriteFrame> {

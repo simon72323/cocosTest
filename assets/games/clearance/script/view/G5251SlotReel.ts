@@ -1,7 +1,8 @@
-import { _decorator, Component, Node, UITransform, Prefab } from 'cc';
 import { getPoolManager } from '@common/manager/PoolManager';
-import { G5251SymbolSetting } from './prefab/G5251SymbolSetting';
-import { REEL_DATA } from '../types/G5251ReelData';
+import { _decorator, Component, Node, UITransform, Prefab } from 'cc';
+
+import { REEL_DATA } from '@/games/clearance/script/types/G5251ReelData';
+import { G5251SymbolSetting } from '@/games/clearance/script/view/prefab/G5251SymbolSetting';
 
 const { ccclass, property } = _decorator;
 

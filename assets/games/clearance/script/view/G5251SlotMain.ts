@@ -1,13 +1,14 @@
-import { _decorator, Component, Node, UITransform, Prefab, tween, Vec3, Tween, Animation, UIOpacity, Sprite, ParticleSystem, TweenEasing } from 'cc';
-import { getPoolManager } from '@common/manager/PoolManager';
-import { G5251SymbolSetting } from '../view/prefab/G5251SymbolSetting';
-import { REEL_DATA } from '../types/G5251ReelData';
 import { getAudioManager } from '@common/manager/AudioManager';
-import { G5251AudioName } from '../types/G5251AudioEnum';
-import { NewLines } from '../types/G5251Interface';
-import { G5251Utils } from '../tools/G5251Utils';
-import { G5251Resources } from '../controller/G5251Resources';
-import { g5251Model } from '../model/G5251Model';
+import { getPoolManager } from '@common/manager/PoolManager';
+import { _decorator, Component, Node, UITransform, Prefab, tween, Vec3, Tween, Animation, UIOpacity, Sprite, ParticleSystem } from 'cc';
+
+import { G5251Resources } from '@/games/clearance/script/controller/G5251Resources';
+import { g5251Model } from '@/games/clearance/script/model/G5251Model';
+import { G5251Utils } from '@/games/clearance/script/tools/G5251Utils';
+import { G5251AudioName } from '@/games/clearance/script/types/G5251AudioEnum';
+import { NewLines } from '@/games/clearance/script/types/G5251Interface';
+import { REEL_DATA } from '@/games/clearance/script/types/G5251ReelData';
+import { G5251SymbolSetting } from '@/games/clearance/script/view/prefab/G5251SymbolSetting';
 
 const { ccclass, property } = _decorator;
 
@@ -16,22 +17,29 @@ export class G5251SlotMain extends Component {
     //遊戲節點
     @property(Node)
     private slotReel: Node = null!;//輪軸層
+
     @property(Node)
     private slotWin: Node = null!;//symbol勝利動畫層
+
     @property(Node)
     private allBlack: Node = null!;//所有遮黑
+
     @property(Node)
     private fgBg: Node = null!;//fg背景
 
     //預置體
     @property({ type: Prefab, group: { name: 'Prefab', id: '1' } })
     private scatterReady: Prefab = null!;//scatter聽牌預置體
+
     @property({ type: Prefab, group: { name: 'Prefab', id: '1' } })
     private normalWin: Prefab = null!;//一般symble中獎
+
     @property({ type: Prefab, group: { name: 'Prefab', id: '1' } })
     private goldWin: Prefab = null!;//金牌symble中獎
+
     @property({ type: Prefab, group: { name: 'Prefab', id: '1' } })
     private wildWin: Prefab = null!;//wildsymble中獎
+
     @property({ type: Prefab, group: { name: 'Prefab', id: '1' } })
     private scatterWin: Prefab = null!;//scatter中獎
 
@@ -43,7 +51,7 @@ export class G5251SlotMain extends Component {
      * 等待slot結束
      */
     public waitSlotEnd(): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             this._endSlotRunCallback = resolve;
         });
     }
@@ -90,10 +98,10 @@ export class G5251SlotMain extends Component {
                 .call(() => {
                     loopRun();//持續轉動
                 }).start();
-        }
+        };
 
         //起始轉動後持續循環轉動
-        tween(slotRunNode).to(runTime, { position: new Vec3(xPos, -height, 0) }, { easing: "sineIn" })
+        tween(slotRunNode).to(runTime, { position: new Vec3(xPos, -height, 0) }, { easing: 'sineIn' })
             .call(() => {
                 loopRun();//執行循環轉動
             }).start();
@@ -109,18 +117,20 @@ export class G5251SlotMain extends Component {
      * @param useCurrentPos 使用當前位置停止
      */
     public async stopRun(slotLine: number, runTime: number, stopSymbols: number[], backTime: number, easing: (t: number) => number, useCurrentPos: boolean): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             const slotRunNode = this.slotReel.children[slotLine];//該行slotRun
             this.stotTween(slotLine);//停止該行轉動
             const tempSymbols = slotRunNode.children[0];
             const mainSymbols = slotRunNode.children[1];
             const xPos = REEL_DATA.reelPosition[slotLine].x;
             const height = slotRunNode.getComponent(UITransform)!.height;//行高
+
+            let tempUseCurrentPos = useCurrentPos;
             if (this._isReadyLoop)
-                useCurrentPos = false;//如果是聽牌loop強制false
+                tempUseCurrentPos = false;//如果是聽牌loop強制false
 
             //這邊是計算中途停止時校正symbol圖片內容
-            if (!useCurrentPos) {
+            if (!tempUseCurrentPos) {
                 const symbolHeight = REEL_DATA.baseSymbolSize.height;//symbol高度
 
                 //紀錄上一次的symbol
@@ -149,7 +159,7 @@ export class G5251SlotMain extends Component {
 
             //根據目前Y軸位置判斷是否需要重最上面掉落
             const downPosY = -20;//slot下移位置
-            let currentPosY = useCurrentPos ? slotRunNode.position.y : downPosY - 1;//是否使用當前位置停止
+            let currentPosY = tempUseCurrentPos ? slotRunNode.position.y : downPosY - 1;//是否使用當前位置停止
             if (currentPosY < downPosY) {
                 slotRunNode.position = new Vec3(xPos, height, 0);//slot回歸到上面
                 tempSymbols.position = new Vec3(0, -height, 0);//TempSymbols節點移到下面
@@ -176,7 +186,7 @@ export class G5251SlotMain extends Component {
      * @param readyTime 聽牌時間
      */
     public async readyLoopRun(slotLine: number, readyTime: number): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             this._isReadyLoop = true;//紀錄聽牌loop
             const slotRunNode = this.slotReel.children[slotLine];//該行slotRun
             this.stotTween(slotLine);//停止該行轉動
@@ -233,7 +243,7 @@ export class G5251SlotMain extends Component {
      * 中獎symbol表演
      */
     public async symbolWin(): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             for (const symbol of this.slotWin.children) {
                 symbol.getComponent(Animation)!.play('win');
             }
@@ -289,7 +299,7 @@ export class G5251SlotMain extends Component {
      * @param topSymbols 上方預掉落symbol資料(會直接修改model)
      */
     public async resetSymbol(nextCards: number[][], topSymbols: number[][]): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             for (let i = 0; i < this.slotReel.children.length; i++) {
                 let hideSymbolAmount = 0;//該行隱藏symbol數量
                 const mainSymbols = this.slotReel.children[i].children[1];//該行主要symbol節點
@@ -315,7 +325,7 @@ export class G5251SlotMain extends Component {
      * @param isTurbo 是否為閃電模式
      */
     public async symbolDrop(isTurbo: boolean): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             const length = this.slotReel.children.length;
             let dropAmount = 0;//落下的symbol數量
             //從後面開始掉
@@ -450,7 +460,7 @@ export class G5251SlotMain extends Component {
      * 退還symbolWin節點下的pool
      */
     public async putSymbolWin(): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             while (this.slotWin.children.length > 0) {
                 const symbolWin = this.slotWin.children[0];
                 getPoolManager().put(symbolWin);
@@ -579,7 +589,7 @@ export class G5251SlotMain extends Component {
      * @param scatterPos scatter位置
      */
     public async putScatterReady(scatterPos: number[]): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             for (let i = 0; i < scatterPos.length; i++) {
                 const line = REEL_DATA.symbolPosID.findIndex(row => row.includes(scatterPos[i]));//哪行
                 const pos = REEL_DATA.symbolPosID[line].findIndex(col => col === scatterPos[i]);//哪個位置
@@ -611,12 +621,12 @@ export class G5251SlotMain extends Component {
      * 遮黑淡出
      */
     public async slotBlackHide(): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             tween(this.allBlack.getComponent(UIOpacity)!).to(0.2, { opacity: 0 })
                 .call(() => {
                     this.allBlack.active = false;//隱藏遮黑
                     resolve();
                 }).start();//淡出
-        })
+        });
     }
 }

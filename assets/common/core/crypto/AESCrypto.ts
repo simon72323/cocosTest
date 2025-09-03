@@ -29,12 +29,12 @@ export class AESCrypto {
 
         // 解碼 Base64 密鑰
         let decodedSecret = atob(
-            this.secret.replace(/-/g, "+").replace(/_/g, "/")
+            this.secret.replace(/-/g, '+').replace(/_/g, '/')
         );
-        
+
         // 分離 key 和 iv（格式：key.iv）
-        const [key, iv] = decodedSecret.split(".");
-        
+        const [key, iv] = decodedSecret.split('.');
+
         // 解析 key 和 iv
         this.iv = CryptoJS.enc.Utf8.parse(iv);
         this.key = CryptoJS.enc.Utf8.parse(key);
@@ -47,9 +47,9 @@ export class AESCrypto {
      */
     public encrypt(data: string | object): string {
         let dataString = data;
-        
+
         // 如果數據不是字符串，轉換為 JSON 字符串
-        if (typeof data !== "string") {
+        if (typeof data !== 'string') {
             dataString = JSON.stringify(data);
         }
 

@@ -146,6 +146,4 @@ export default class PoolManager extends Component {
     }
 }
 
-export const getPoolManager = () => {
-    return PoolManager.getInstance();
-}
+export const getPoolManager = () => PoolManager.getInstance();

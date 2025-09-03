@@ -1,5 +1,5 @@
-import { Logger } from "@common/utils/Logger";
-import { getUrlQuery } from "@common/utils/UrlUtils";
+import { Logger } from '@common/utils/Logger';
+import { getUrlQuery } from '@common/utils/UrlUtils';
 
 /**
  * 設備檢測工具類
@@ -34,28 +34,28 @@ export class DetectDevice {
         const target = navigator.userAgent;
 
         switch (true) {
-            case target.includes("Windows NT 10.0"):
-                return "Windows 10";
-            case target.includes("Windows NT 6.2"):
-                return "Windows 8";
-            case target.includes("Windows NT 6.1"):
-                return "Windows 7";
-            case target.includes("Windows NT 6.0"):
-                return "Windows Vista";
-            case target.includes("Windows NT 5.1"):
-                return "Windows XP";
-            case target.includes("Windows NT 5.0"):
-                return "Windows 2000";
-            case target.includes("Windows NT"):
-                return "Windows unknown";
-            case target.includes("Mac"):
-                return "Mac/iOS";
-            case target.includes("X11"):
-                return "UNIX";
-            case target.includes("Linux"):
-                return "Linux";
+            case target.includes('Windows NT 10.0'):
+                return 'Windows 10';
+            case target.includes('Windows NT 6.2'):
+                return 'Windows 8';
+            case target.includes('Windows NT 6.1'):
+                return 'Windows 7';
+            case target.includes('Windows NT 6.0'):
+                return 'Windows Vista';
+            case target.includes('Windows NT 5.1'):
+                return 'Windows XP';
+            case target.includes('Windows NT 5.0'):
+                return 'Windows 2000';
+            case target.includes('Windows NT'):
+                return 'Windows unknown';
+            case target.includes('Mac'):
+                return 'Mac/iOS';
+            case target.includes('X11'):
+                return 'UNIX';
+            case target.includes('Linux'):
+                return 'Linux';
             default:
-                return "";
+                return '';
         }
     }
 
@@ -79,9 +79,9 @@ export class DetectDevice {
     static get iPadOS(): boolean {
         const ua = window.navigator.userAgent;
 
-        if (ua.includes("iPad")) {
+        if (ua.includes('iPad')) {
             return true;
-        } else if (ua.includes("Macintosh")) {
+        } else if (ua.includes('Macintosh')) {
             if (window.navigator.maxTouchPoints && window.navigator.maxTouchPoints > 2) {
                 return true;
             }
@@ -126,7 +126,7 @@ export class DetectDevice {
      * 是否為 AIO 平台
      */
     static get isAIO(): boolean {
-        return getUrlQuery("platform") === "AIO";
+        return getUrlQuery('platform') === 'AIO';
     }
 
     /**
@@ -168,8 +168,8 @@ export class DetectDevice {
      * 獲取瀏覽器版本
      */
     static getBrowser(): string {
-        const spaceSp = navigator.userAgent.split(" ");
-        let browser = "";
+        const spaceSp = navigator.userAgent.split(' ');
+        let browser = '';
 
         switch (true) {
             case DetectDevice.isUB:
@@ -189,10 +189,10 @@ export class DetectDevice {
 
         if (/Mobile Safari/i.test(navigator.userAgent)) {
             browser = spaceSp[spaceSp.length - 1];
-            if (browser.includes("Safari")) {
+            if (browser.includes('Safari')) {
                 browser = spaceSp[spaceSp.length - 4];
             }
-            if (browser.includes("Gecko")) {
+            if (browser.includes('Gecko')) {
                 browser = spaceSp[spaceSp.length - 3];
             }
         } else if (DetectDevice.Android && !browser) {
@@ -203,44 +203,44 @@ export class DetectDevice {
             browser = spaceSp[spaceSp.length - 3];
         }
 
-        return browser.replace(/\//g, " ");
+        return browser.replace(/\//g, ' ');
     }
 
     /**
      * 獲取操作系統和版本
      */
     static getOSAndVersion(): string {
-        const info = navigator.userAgent.split("(")[1].split(")")[0].split(";");
+        const info = navigator.userAgent.split('(')[1].split(')')[0].split(';');
 
         if (DetectDevice.Android) {
-            const androidVersion = info.find((item) => item.includes("Android"));
-            return (androidVersion != null ? androidVersion : "").trim();
+            const androidVersion = info.find(item => item.includes('Android'));
+            return (androidVersion != null ? androidVersion : '').trim();
         } else if (DetectDevice.iOS) {
             const os = info[0];
             let verIndex = 0;
-            let version = "";
+            let version = '';
 
             info.forEach((item, index) => {
-                if (item.includes("OS")) {
+                if (item.includes('OS')) {
                     verIndex = index;
                 }
             });
 
-            const versionPart = info[verIndex].split(" ");
-            const osIndex = versionPart.indexOf("OS");
+            const versionPart = info[verIndex].split(' ');
+            const osIndex = versionPart.indexOf('OS');
 
             if (~osIndex) {
-                const versionString = navigator.userAgent.includes("Macintosh")
+                const versionString = navigator.userAgent.includes('Macintosh')
                     ? versionPart[osIndex + 2]
                     : versionPart[osIndex + 1];
-                version = versionString.replace(/_/g, ".");
+                version = versionString.replace(/_/g, '.');
             }
 
             return `${os} ${version}`;
         } else {
             const desktopOS = DetectDevice.desktopOS;
-            return desktopOS === "Mac/iOS"
-                ? info[1].replace(/_/g, ".").trim()
+            return desktopOS === 'Mac/iOS'
+                ? info[1].replace(/_/g, '.').trim()
                 : desktopOS;
         }
     }
@@ -249,7 +249,7 @@ export class DetectDevice {
      * 是否為 UB 瀏覽器
      */
     static get isUB(): boolean {
-        return navigator.userAgent.includes(" UB");
+        return navigator.userAgent.includes(' UB');
     }
 
     /**
@@ -258,15 +258,15 @@ export class DetectDevice {
     static get isOpera(): boolean {
         return !!(window as any).opr?.addons ||
             !!(window as any).opera ||
-            navigator.userAgent.includes(" OPR/");
+            navigator.userAgent.includes(' OPR/');
     }
 
     /**
      * 是否為 Firefox 1.0+
      */
     static get isFirefox(): boolean {
-        return navigator.userAgent.includes("Firefox") ||
-            navigator.userAgent.includes("FxiOS");
+        return navigator.userAgent.includes('Firefox') ||
+            navigator.userAgent.includes('FxiOS');
     }
 
     /**
@@ -289,7 +289,7 @@ export class DetectDevice {
      * 是否為 Edge 20+
      */
     static get isEdge(): boolean {
-        return navigator.userAgent.includes("Trident") ||
+        return navigator.userAgent.includes('Trident') ||
             /Edg(A|iOS|e)?\//.test(navigator.userAgent);
     }
 
@@ -303,15 +303,15 @@ export class DetectDevice {
     /**
      * 獲取顯卡信息
      */
-    static getGraphicCardInfo(canvas: HTMLCanvasElement = document.createElement("canvas")): string {
-        let graphicCard = "undefined";
+    static getGraphicCardInfo(canvas: HTMLCanvasElement = document.createElement('canvas')): string {
+        let graphicCard = 'undefined';
 
         try {
-            const webGL = canvas.getContext("webgl") ||
-                (canvas as any).getContext("experimental-webgl");
+            const webGL = canvas.getContext('webgl') ||
+                (canvas as any).getContext('experimental-webgl');
 
             if (webGL) {
-                const debugInfo = webGL.getExtension("WEBGL_debug_renderer_info");
+                const debugInfo = webGL.getExtension('WEBGL_debug_renderer_info');
                 if (debugInfo) {
                     graphicCard = webGL.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
                 }
@@ -327,13 +327,13 @@ export class DetectDevice {
      * 獲取設備信息
      */
     static getDeviceInfo(canvas?: HTMLCanvasElement): any {
-        const spaceSp = navigator.userAgent.split(" ");
+        const spaceSp = navigator.userAgent.split(' ');
         let browser = DetectDevice.getBrowser();
-        let webView = "false";
+        let webView = 'false';
         let srs = `${screen.width}x${screen.height}`;
-        let newaio = "";
+        let newaio = '';
         let ub: string[] = [];
-        let encodeIP = "";
+        let encodeIP = '';
         let aio = false;
         let tablet = false;
         let pwa = false;
@@ -344,53 +344,53 @@ export class DetectDevice {
             tablet = DetectDevice.isTablet;
 
             if (DetectDevice.iOS) {
-                webView = DetectDevice.iOSWebView ? "is_iOSWebView" : "isnot_iOSWebView";
+                webView = DetectDevice.iOSWebView ? 'is_iOSWebView' : 'isnot_iOSWebView';
             } else if (DetectDevice.Android) {
-                webView = DetectDevice.AndroidWebView ? "is_AndroidWebView" : "isnot_AndroidWebView";
+                webView = DetectDevice.AndroidWebView ? 'is_AndroidWebView' : 'isnot_AndroidWebView';
             }
 
             if (aio) {
-                browser = "";
-                const gPortal = spaceSp.find((item) => item.includes("game_portal"));
-                const gPlatform = spaceSp.find((item) => item.includes("game_platform"));
+                browser = '';
+                const gPortal = spaceSp.find(item => item.includes('game_portal'));
+                const gPlatform = spaceSp.find(item => item.includes('game_platform'));
                 newaio = `${gPlatform} ${gPortal}`;
             }
         }
 
-        spaceSp.forEach((item) => {
+        spaceSp.forEach(item => {
             if (DetectDevice.isUB) {
-                if (item.includes("Chrome") || item.includes("UB") || item.includes("CustomBrowser")) {
+                if (item.includes('Chrome') || item.includes('UB') || item.includes('CustomBrowser')) {
                     ub.push(item);
                 }
             }
-            if (item.includes("HTTP_BB_FORWARDED")) {
-                encodeIP = item.split("HTTP_BB_FORWARDED/")[1];
+            if (item.includes('HTTP_BB_FORWARDED')) {
+                encodeIP = item.split('HTTP_BB_FORWARDED/')[1];
             }
         });
 
         if ((navigator as any).standalone ||
-            window.matchMedia("(display-mode: standalone)").matches) {
+            window.matchMedia('(display-mode: standalone)').matches) {
             pwa = true;
         }
 
         const deviceInfo = {
-            rd: "fx",
+            rd: 'fx',
             ua: navigator.userAgent,
             os: DetectDevice.getOSAndVersion(),
             srs,
             wrs: `${window.innerWidth}x${window.innerHeight}`,
             dpr: devicePixelRatio,
-            pl: "H5",
+            pl: 'H5',
             pf: browser,
             wv: webView,
             aio,
             vga: DetectDevice.getGraphicCardInfo(canvas),
             tablet,
             cts: Date.now(),
-            mua: getUrlQuery("mua"),
-            dtp: getUrlQuery("dtp"),
+            mua: getUrlQuery('mua'),
+            dtp: getUrlQuery('dtp'),
             newaio,
-            ub: ub.join(" "),
+            ub: ub.join(' '),
             pwa,
             encodeIP: encodeIP || undefined
         };

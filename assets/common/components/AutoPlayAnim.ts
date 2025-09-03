@@ -13,13 +13,16 @@ const { ccclass, property } = _decorator;
 export class AutoPlayAnim extends Component {
     @property(CCBoolean)
     private autoHide: boolean = false;//[默認]或[第一個]動態播完後自動隱藏此節點
+
     @property(CCBoolean)
     private autoDestroy: boolean = false;//[默認]或[第一個]動態播完後自動銷毀此節點
+
     @property(CCBoolean)
     private isInLoop: boolean = false;//是:執行起始+循環動態，否:執行單一動態
+
     @property({
         type: AnimationClip,
-        visible: function (this: AutoPlayAnim) {
+        visible (this: AutoPlayAnim) {
             if (!this.isInLoop)
                 this.inAnim = null!;
             return this.isInLoop;
@@ -29,7 +32,7 @@ export class AutoPlayAnim extends Component {
 
     @property({
         type: AnimationClip,
-        visible: function (this: AutoPlayAnim) {
+        visible (this: AutoPlayAnim) {
             if (!this.isInLoop)
                 this.loopAnim = null!;
             return this.isInLoop;
@@ -43,7 +46,7 @@ export class AutoPlayAnim extends Component {
             uiOpacity.opacity = 0;
         const anim = this.getComponent(Animation)!;
         if (anim.clips.length === 0) {
-            error(`[ERROR] ${this.node.name} has no clip to play!!!`)
+            error(`[ERROR] ${this.node.name} has no clip to play!!!`);
             return;
         }
         if (this.isInLoop) {
@@ -51,7 +54,7 @@ export class AutoPlayAnim extends Component {
                 anim.off(Animation.EventType.FINISHED, onAnimationFinished.bind(this));
                 anim.getState(this.loopAnim.name).setTime(0);
                 anim.play(this.loopAnim.name);
-            }
+            };
             anim.getState(this.inAnim.name).setTime(0);
             anim.play(this.inAnim.name);
             anim.on(Animation.EventType.FINISHED, onAnimationFinished.bind(this));
@@ -69,7 +72,7 @@ export class AutoPlayAnim extends Component {
                     anim.stop();
                     this.autoHide && (this.node.active = false);
                     this.autoDestroy && this.node.destroy();
-                }
+                };
                 anim.on(Animation.EventType.FINISHED, onAnimationFinished.bind(this));
             }
         }

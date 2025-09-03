@@ -1,16 +1,16 @@
-import { _decorator } from 'cc';
-import { Logger } from '@common/utils/Logger';
+import { AESCrypto } from '@common/core/crypto/AESCrypto';
 import { WebSocketCore } from '@common/core/network/WebSocketCore';
 import { WebSocketEvent } from '@common/core/network/WebSocketEvent';
-import { AESCrypto } from '@common/core/crypto/AESCrypto';
-import { urlHelper } from '@common/utils/UrlHelper';
 import { commonStore } from '@common/h5GameTools/CommonStore';
 import { Comm, GTAlertType } from '@common/h5GameTools/GTCommEvents';
-import { eventEmitter} from '@common/core/event/EventManager';
 import { loadingInfo, TimeLabelKeys } from '@common/h5GameTools/userAnalysis/LoadingInfo';
+import { getEventManager } from '@common/manager/EventManager';
 import { DetectDevice } from '@common/utils/DetectDevice';
+import { Logger } from '@common/utils/Logger';
+import { urlHelper } from '@common/utils/UrlHelper';
+import { _decorator } from 'cc';
 
-const { ccclass, property } = _decorator;
+const { ccclass } = _decorator;
 
 @ccclass('CGGameConnector')
 export class CGGameConnector {
@@ -23,6 +23,7 @@ export class CGGameConnector {
     public get wsIsDisConnect(): boolean {
         return this._wsIsDisConnect;
     }
+
     public set wsIsDisConnect(value: boolean) {
         this._wsIsDisConnect = value;
     }
@@ -31,6 +32,7 @@ export class CGGameConnector {
         this.init();
         // 私有構造函數，防止外部直接實例化
     }
+
     public static getInstance(): CGGameConnector {
         if (!CGGameConnector._instance) {
             CGGameConnector._instance = new CGGameConnector();
@@ -46,8 +48,8 @@ export class CGGameConnector {
         this._wsCore = new WebSocketCore();
         this._wsCore.setupWs({
             protocolMap: {
-                BINARY: "casino.bin",
-                STRING: "casino.op"
+                BINARY: 'casino.bin',
+                STRING: 'casino.op'
             }
         });
         this._wsCore.on(WebSocketEvent.NETWORK_STATUS, (e: any) => this.wsStatusHandler(e));
@@ -60,16 +62,16 @@ export class CGGameConnector {
     wsStatusHandler(event: any) {
         Logger.log(`[NetStatus]::${event.status}`);
         switch (event.status) {
-            case "open":
+            case 'open':
                 loadingInfo.push(TimeLabelKeys.WS);
-                getEventManager().emit("connected" /* CONNECTED */, {
+                getEventManager().emit('connected' /* CONNECTED */, {
                     event: true
                 });
                 this._wsCore.on(WebSocketEvent.NETWORK_RESULT, (e: any) => this.wsResultHandler(e));
                 break;
-            case "error":
-            case "close":
-                Logger.log("Disconnected, try again.");
+            case 'error':
+            case 'close':
+                Logger.log('Disconnected, try again.');
                 this._wsCore.off(WebSocketEvent.NETWORK_RESULT);
                 this.dispatchDisconnectEvent();
                 break;
@@ -83,7 +85,7 @@ export class CGGameConnector {
     wsResultHandler(event: any) {
         const eventResult = event.result;
         if (eventResult == null ? void 0 : eventResult.NetStatusEvent) {
-            Logger.debug("[NetStatusEvent]", eventResult);
+            Logger.debug('[NetStatusEvent]', eventResult);
             return;
         }
         if (eventResult.event == null) {
@@ -95,6 +97,7 @@ export class CGGameConnector {
         }
         this.dispatchConnectorEvent(eventResult);
     }
+
     /**
      * 處理斷開連接事件
      * 如果由用戶主動關閉連接，則退出遊戲
@@ -104,8 +107,9 @@ export class CGGameConnector {
             urlHelper.exitGame();
             return;
         }
-        getEventManager().emit("close" /* CLOSE */, { manual: false });
+        getEventManager().emit('close' /* CLOSE */, { manual: false });
     }
+
     /**
      * 分發事件
      * 觸發事件並處理相關邏輯
@@ -114,13 +118,13 @@ export class CGGameConnector {
         getEventManager().emit(eventObject.action, eventObject);
         if (eventObject.event && eventObject.error == null) {
             switch (eventObject.action) {
-                case "ready" /* READY */:
+                case 'ready' /* READY */:
                     this.callLogin();
                     break;
-                case "takeMachine" /* TAKE_MACHINE */:
+                case 'takeMachine' /* TAKE_MACHINE */:
                     this.callLoadInfo();
                     break;
-                case "onLoadInfo" /* LOAD_INFO */:
+                case 'onLoadInfo' /* LOAD_INFO */:
                     this.callJoinGame();
                     break;
             }
@@ -128,6 +132,7 @@ export class CGGameConnector {
             this.handleConnectorFailEvent(eventObject);
         }
     }
+
     /**
      * 處理連接器失敗事件
      * 顯示錯誤提示並處理錯誤
@@ -135,17 +140,17 @@ export class CGGameConnector {
     handleConnectorFailEvent(eventObject: any) {
         var _a: any, _b: any, _c: any;
         Logger.warn(`[SlotConnector] handleConnectorFailEvent [${eventObject.action}]`, eventObject.data);
-        const errorDictString = ((_a = eventObject) == null ? void 0 : _a.error) || "SYSTEM_BUSY_55670144";
+        const errorDictString = ((_a = eventObject) == null ? void 0 : _a.error) || 'SYSTEM_BUSY_55670144';
         const errorCode = ((_b = eventObject) == null ? void 0 : _b.errCode).toString();
         const errorId = (_c = eventObject) == null ? void 0 : _c.ErrorID;
         if (errorId) {
             switch (errorId) {
-                case "5550000141":
-                case "5554000510":
-                case "5554000290":
+                case '5550000141':
+                case '5554000510':
+                case '5554000290':
                     this.showErrorAlert({
                         message: `${commonStore.i18n.DUPLICATE_ERROR}\uFF08${errorDictString}\uFF09\uFF08${errorId}\uFF09`,
-                        errorKey: "DUPLICATE_ERROR"
+                        errorKey: 'DUPLICATE_ERROR'
                     });
                     break;
                 default:
@@ -156,17 +161,17 @@ export class CGGameConnector {
             const showAlert = () => {
                 var _a2: any;
                 switch (errorDictString) {
-                    case "ACCUMULATION_NOT_EXIST":
+                    case 'ACCUMULATION_NOT_EXIST':
                         this.showErrorAlert({
                             message: `${commonStore.i18n[errorDictString]}\uFF08${(_a2 = eventObject) == null ? void 0 : _a2.errCode}\uFF09`,
                             errorKey: errorDictString,
                             errCode: errorCode
                         });
                         break;
-                    case "SYSTEM_BUSY_55670144":
-                    case "BET_CREDIT_FAILED":
-                    case "BET_FAILED":
-                    case "BET_OVER_MAX":
+                    case 'SYSTEM_BUSY_55670144':
+                    case 'BET_CREDIT_FAILED':
+                    case 'BET_FAILED':
+                    case 'BET_OVER_MAX':
                         this.showErrorAlert({ message: errorDictString, errCode: errorCode, exitGame: false });//關閉彈窗時不退出遊戲
                         break;
                     default:
@@ -175,13 +180,13 @@ export class CGGameConnector {
                 }
             };
             switch (eventObject.action) {
-                case "login" /* LOGIN */:
+                case 'login' /* LOGIN */:
                     showAlert();
                     break;
-                case "takeMachine" /* TAKE_MACHINE */:
+                case 'takeMachine' /* TAKE_MACHINE */:
                     showAlert();
                     break;
-                case "creditExchange" /* CREDIT_EXCHANGE */:
+                case 'creditExchange' /* CREDIT_EXCHANGE */:
                     // if (errorDictString !== "TRANSFER_FAILED") this.callGetMachineDetail();//不需要加這行，因為遊戲內會自動開啟換分介面呼叫
                     showAlert();
                     break;
@@ -191,6 +196,7 @@ export class CGGameConnector {
             }
         }
     }
+
     /**
      * 顯示錯誤提示
      * 處理錯誤並觸發退出遊戲
@@ -210,8 +216,8 @@ export class CGGameConnector {
             type: exitGame ? GTAlertType.ERROR : GTAlertType.BASIC_NONE,
             title: commonStore.i18n.SYSTEM_MESSAGE,
             content,
-            cancelBtnText: "",
-            confirmBtnText: "",
+            cancelBtnText: '',
+            confirmBtnText: '',
             cancelCallback: () => {
                 if (exitGame) {
                     urlHelper.exitByError(errorKey != null ? errorKey : message);
@@ -219,6 +225,7 @@ export class CGGameConnector {
             }
         });
     }
+
     /**
      * 連接 WebSocket
      * 返回 Promise 以處理連接過程
@@ -226,13 +233,7 @@ export class CGGameConnector {
     connect(wsHost?: any) {
         try {
             return new Promise<void>((resolve, reject) => {  // 移除多餘的 async
-                if (window.location.hostname === 'localhost') {
-                    wsHost = 'fxcasino1.bb-in555.com';//BB開發站
-                    // wsHost = 'fx8ec8.casinovir999.net';//BB測試站
-                    // wsHost = 'fx8ec8.dowincasino-dev.com';//XC開發站
-                    // wsHost = 'fx8ec8.dowincasino-test.com';//XC測試站
-                }
-                Logger.log("wsHost", wsHost);
+                Logger.log('wsHost', wsHost);
                 // 使用 then/catch 處理 Promise
                 urlHelper.getWsUrl(wsHost)
                     .then((wsPath: any) => {
@@ -240,13 +241,13 @@ export class CGGameConnector {
 
                         if (this._useEncryption) {
                             this._wsCore.setupWs({
-                                useCrypto: new AESCrypto("OTNlODQ0YTkzNGQ3MWU4ODY3Yjg3NWI4NjVkN2U0ODcuODMwMGU1YjQ5MTdjMjhmNw")
+                                useCrypto: new AESCrypto('OTNlODQ0YTkzNGQ3MWU4ODY3Yjg3NWI4NjVkN2U0ODcuODMwMGU1YjQ5MTdjMjhmNw')
                             });
                         }
 
                         this._wsCore.connect(wsPath);
-                        getEventManager().once("connected", () => resolve());
-                        getEventManager().once("close", () => reject());
+                        getEventManager().once('connected', () => resolve());
+                        getEventManager().once('close', () => reject());
                     })
                     .catch(error => {
                         console.error('Failed to get WebSocket URL:', error);
@@ -259,6 +260,7 @@ export class CGGameConnector {
             throw error;
         }
     }
+
     /**
      * 重新連接 WebSocket
      * 返回 Promise 以處理重新連接過程
@@ -266,10 +268,11 @@ export class CGGameConnector {
     reconnect() {
         return new Promise<void>(async (resolve, reject) => {
             this._wsCore.reconnect();
-            getEventManager().once("connected" /* CONNECTED */, () => resolve());
-            getEventManager().once("close" /* CLOSE */, () => reject());
+            getEventManager().once('connected' /* CONNECTED */, () => resolve());
+            getEventManager().once('close' /* CLOSE */, () => reject());
         });
     }
+
     /**
      * 關閉 WebSocket 連接
      * 處理退出遊戲邏輯
@@ -279,6 +282,7 @@ export class CGGameConnector {
         this._closeConnectionByUser = true;
         this._wsCore.close();
     }
+
     /**
      * 設置 WebSocket 配置
      * 處理加密設置
@@ -294,8 +298,8 @@ export class CGGameConnector {
      * 返回 Promise 以等待特定事件的結果
      */
     async awaitApiResult(eventName: any) {
-        return await new Promise((resolve) => {
-            getEventManager().once(eventName, (e) => { resolve(e); });
+        return await new Promise(resolve => {
+            getEventManager().once(eventName, e => { resolve(e); });
         });
     }
 
@@ -305,10 +309,10 @@ export class CGGameConnector {
      */
     async callLoadInfo() {
         this._wsCore.callServer({
-            action: "onLoadInfo",
+            action: 'onLoadInfo',
             gameType: urlHelper.gameType
         });
-        const result = await this.awaitApiResult("onLoadInfo" /* LOAD_INFO */);
+        const result = await this.awaitApiResult('onLoadInfo' /* LOAD_INFO */);
         loadingInfo.push(TimeLabelKeys.LOAD_INFO);
         return result;
     }
@@ -319,10 +323,10 @@ export class CGGameConnector {
      */
     async callJoinGame() {
         this._wsCore.callServer({
-            action: "joinGame",
+            action: 'joinGame',
             gameType: urlHelper.gameType
         });
-        const result = await this.awaitApiResult("joinGame" /* JOIN_GAME */);
+        const result = await this.awaitApiResult('joinGame' /* JOIN_GAME */);
         // LoadingInfo.shared.push(TimeLabelKeys.joinGame);
         return result;
     }
@@ -333,23 +337,24 @@ export class CGGameConnector {
      */
     async callLogin() {
         const param = {
-            action: "login",
+            action: 'login',
             gameType: urlHelper.gameType,
             data: {
                 sid: urlHelper.sid,
                 lang: urlHelper.lang,
                 dInfo: DetectDevice.getDeviceInfo(),
                 hallID: '',
-                userID: '',
+                userID: ''
             }
         };
         urlHelper.hallId && (param.data.hallID = urlHelper.hallId);
         urlHelper.userId && (param.data.userID = urlHelper.userId);
         this._wsCore.callServer(param);
-        const result = await this.awaitApiResult("login" /* LOGIN */);
+        const result = await this.awaitApiResult('login' /* LOGIN */);
         loadingInfo.push(TimeLabelKeys.LOGIN);
         return result;
     }
+
     /**
      * 獲取機器詳細資訊
      * 調用伺服器方法並等待結果
@@ -357,65 +362,69 @@ export class CGGameConnector {
     async callGetMachineDetail() {
         loadingInfo.push(TimeLabelKeys.MACHINE_DETAIL_START);
         this._wsCore.callServer({
-            action: "getMachineDetail"
+            action: 'getMachineDetail'
         });
-        const result = await this.awaitApiResult("getMachineDetail" /* GET_MACHINE_DETAIL */);
+        const result = await this.awaitApiResult('getMachineDetail' /* GET_MACHINE_DETAIL */);
         loadingInfo.push(TimeLabelKeys.MACHINE_DETAIL_END);
         return result;
     }
+
     /**
      * 離開機器
      * 調用伺服器方法並等待結果
      */
     async callLeaveMachine() {
         this._wsCore.callServer({
-            action: "leaveMachine"
+            action: 'leaveMachine'
         });
-        const result = await this.awaitApiResult("machineLeave" /* MACHINE_LEAVE */);
+        const result = await this.awaitApiResult('machineLeave' /* MACHINE_LEAVE */);
         loadingInfo.push(TimeLabelKeys.TAKE_MACHINE);
         return result;
     }
+
     /**
      * 雙倍遊戲
      * 調用伺服器方法並等待結果
      */
     async callDoubleGame(wagersID: any) {
         this._wsCore.callServer({
-            action: "doubleGame",
+            action: 'doubleGame',
             sid: urlHelper.sid,
             wagersID
         });
-        return this.awaitApiResult("onDoubleGame" /* DOUBLE_GAME */);
+        return this.awaitApiResult('onDoubleGame' /* DOUBLE_GAME */);
     }
+
     /**
      * 開始遊戲
      * 調用伺服器方法並等待結果
      */
     async callBeginGame(param: any) {
         this._wsCore.callServer({
-            action: "beginGame",
+            action: 'beginGame',
             gameType: urlHelper.gameType,
             data: {
                 betInfo: { Cards: param }
             }
         });
-        return this.awaitApiResult("beginGame" /* BEGIN_GAME */);
+        return this.awaitApiResult('beginGame' /* BEGIN_GAME */);
     }
+
     /**
      * 換分
      * 調用伺服器方法並等待結果
      */
     async callCreditExchange(credit: any) {
         this._wsCore.callServer({
-            action: "creditExchange",
+            action: 'creditExchange',
             gameType: urlHelper.gameType,
             data: {
                 rate: '1:1',
-                credit: credit
+                credit
             }
 
         });
-        return this.awaitApiResult("creditExchange" /* CREDIT_EXCHANGE */);
+        return this.awaitApiResult('creditExchange' /* CREDIT_EXCHANGE */);
     }
 
     /**
@@ -424,9 +433,9 @@ export class CGGameConnector {
      */
     async callBalanceExchange() {
         this._wsCore.callServer({
-            action: "balanceExchange"
+            action: 'balanceExchange'
         });
-        return this.awaitApiResult("balanceExchange" /* BALANCE_EXCHANGE */);
+        return this.awaitApiResult('balanceExchange' /* BALANCE_EXCHANGE */);
     }
 
     /**
@@ -435,11 +444,12 @@ export class CGGameConnector {
      */
     async callKeepMachineStatus() {
         this._wsCore.callServer({
-            action: "keepMachineStatus",
+            action: 'keepMachineStatus',
             sid: urlHelper.sid
         });
-        return this.awaitApiResult("keepMachineStatus" /* KEEP_MACHINE_STATUS */);
+        return this.awaitApiResult('keepMachineStatus' /* KEEP_MACHINE_STATUS */);
     }
+
     /**
      * 結束遊戲
      * 調用伺服器方法並等待結果
@@ -447,26 +457,27 @@ export class CGGameConnector {
     async callEndGame(wagersID: any, creditEnd: any) {
         if (creditEnd != null) {
             this.dispatchConnectorEvent({
-                eventName: "onEndGame" /* END_GAME */,
+                eventName: 'onEndGame' /* END_GAME */,
                 event: true,
                 data: { Credit: creditEnd }
             });
         } else {
             this._wsCore.callServer({
-                action: "endGame",
+                action: 'endGame',
                 sid: urlHelper.sid,
                 wagersID
             });
-            return this.awaitApiResult("onEndGame" /* END_GAME */);
+            return this.awaitApiResult('onEndGame' /* END_GAME */);
         }
     }
+
     /**
      * 更新用戶分析
      * 調用伺服器方法
      */
     callUpdateUserAnalysis(data: any) {
         this._wsCore.callServer({
-            action: "updateUserAnalysis",
+            action: 'updateUserAnalysis',
             data
         });
     }
@@ -480,10 +491,10 @@ export class CGGameConnector {
             lastInput: commonStore.storeState.exchangeRecord
         };
         this._wsCore.callServer({
-            action: "saveUserAutoExchange",
+            action: 'saveUserAutoExchange',
             exchangeRecord: useData
         });
-        return this.awaitApiResult("saveUserAutoExchange" /* SAVE_USER_AUTO_EXCHANGE */);
+        return this.awaitApiResult('saveUserAutoExchange' /* SAVE_USER_AUTO_EXCHANGE */);
     }
 
     /**

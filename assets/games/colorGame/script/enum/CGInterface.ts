@@ -1,4 +1,4 @@
-import { RebetState } from "./CGEnum";
+import { RebetState } from '@/games/colorGame/script/enum/CGEnum';
 
 //==================GS資料格式==================
 export interface login {
@@ -16,7 +16,7 @@ export interface login {
         ExchangeRate: number;
         IP: string;
     }
-};
+}
 
 export interface loadInfo {
     action: string;//動作

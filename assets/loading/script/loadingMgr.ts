@@ -1,12 +1,16 @@
-import { _decorator, Component, assetManager, screen, find, AssetManager, view, macro, sys, director, Asset, Sprite, SpriteFrame, resources, JsonAsset, Vec3 } from 'cc';
-import { hierarchyMgr, loadingState } from './hierarchyMgr';
-import { urlHelper } from '@common/utils/UrlHelper';
-import { DEV } from 'cc/env';
-import { Logger } from '@common/utils/Logger';
 import { commonStore } from '@common/h5GameTools/CommonStore';
-import { gtmEvent } from '@common/h5GameTools/userAnalysis/GTEvent';
-import { gameTypes } from '../../resources/gameType';
 import { SiteType } from '@common/h5GameTools/State';
+import { gtmEvent } from '@common/h5GameTools/userAnalysis/GTEvent';
+import { Logger } from '@common/utils/Logger';
+import { urlHelper } from '@common/utils/UrlHelper';
+import { _decorator, Component, assetManager, screen, find, AssetManager, view, macro, sys, director, Asset, Sprite, SpriteFrame, resources, Vec3 } from 'cc';
+
+import { DEV } from 'cc/env';
+
+import { hierarchyMgr, loadingState } from '@/loading/script/hierarchyMgr';
+import { gameTypes } from '@/resources/gameType';
+
+
 const { ccclass } = _decorator;
 
 @ccclass('loadingMgr')
@@ -27,9 +31,9 @@ export class loadingMgr extends Component {
     //---
     windowResizeBind! : (data: any) => void;
     public onLoad(): void {
-        
+
         gtmEvent.LOADER_START();
-        
+
         this.hierarchyMgr = find('Canvas/hierarchyMgr')!.getComponent(hierarchyMgr)!;
         this.bgSprite = find('Canvas/PubLoading/Logo')!.getComponent(Sprite)!;
         this.judgeLang();
@@ -39,16 +43,16 @@ export class loadingMgr extends Component {
             //@ts-ignore
             window.devicePixelRatio = 1;
             Logger.debug('This is a Mac with a Retina display.');
-        } 
+        }
         if (DEV) {
             urlHelper.domain = this.testModeDomain;
         }
-        
+
         this.onResize();
         screen.on('window-resize', ()=>{
             this.onResize();
         }, this);
-        
+
         window.addEventListener('resize', this.windowResizeBind);
         this.getGameTypeFromUrl();
     }
@@ -57,22 +61,23 @@ export class loadingMgr extends Component {
         window.removeEventListener('resize',this.windowResizeBind);
         screen.off('window-resize');
     }
+
     /**
      * 判別語系
      */
     private judgeLang():void{
         let lang = '';
         switch (urlHelper.lang) {
-            case "zh_tw":
-            case "zh-tw":
-            case "tw":
+            case 'zh_tw':
+            case 'zh-tw':
+            case 'tw':
                 lang = 'tw';
                 break;
-            case "zh_cn":
-            case "zh-cn":
-            case "cn":
-            case "ug":
-                lang = 'cn'
+            case 'zh_cn':
+            case 'zh-cn':
+            case 'cn':
+            case 'ug':
+                lang = 'cn';
                 break;
             default:
                 lang = 'en';
@@ -85,13 +90,13 @@ export class loadingMgr extends Component {
 
     private windowResize():void{
         this.onResize();
-            if(sys.platform !== sys.Platform.DESKTOP_BROWSER){
-                if(!this.isPortrait()){
-                    this.showPortraitGif();
-                }else{
-                    this.hidePortraitGif();
-                }
+        if(sys.platform !== sys.Platform.DESKTOP_BROWSER){
+            if(!this.isPortrait()){
+                this.showPortraitGif();
+            }else{
+                this.hidePortraitGif();
             }
+        }
     }
 
     private onResize():void{
@@ -112,7 +117,7 @@ export class loadingMgr extends Component {
         }
         updateAdaptResult();
     }
-    
+
     /**
      * 讀取遊戲bundle
      */
@@ -122,30 +127,32 @@ export class loadingMgr extends Component {
         const state = loadingState.GameLoading;
         this.loadLoading(url, state);
     }
+
     /**
      * 抓取遊戲的hash值
      */
     public async loadGameHash(){
         await fetch(this.getGameSettingJson())
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch JSON: ' + response.statusText);
-            }
-            return response.json(); // 解析 JSON 内容
-        })
-        .then((jsonData) => {
-            Logger.debug('Loaded JSON Data:', jsonData);
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch JSON: ' + response.statusText);
+                }
+                return response.json(); // 解析 JSON 内容
+            })
+            .then(jsonData => {
+                Logger.debug('Loaded JSON Data:', jsonData);
 
-            // 读取 JSON 中的某个字段
-            const value:string = jsonData.assets.bundleVers[this.getGameNameStr()];
-            this.gameHash = value;
-            Logger.debug('Value of exampleKey:', value);
-            this.loadGameBundle();
-        })
-        .catch((err) => {
-            console.error(err);
-        });
+                // 读取 JSON 中的某个字段
+                const value:string = jsonData.assets.bundleVers[this.getGameNameStr()];
+                this.gameHash = value;
+                Logger.debug('Value of exampleKey:', value);
+                this.loadGameBundle();
+            })
+            .catch(err => {
+                console.error(err);
+            });
     }
+
     /**
      * 抓取遊戲bundle url
      * @returns 遊戲bundle url
@@ -155,11 +162,12 @@ export class loadingMgr extends Component {
         if(this.isLoadLoaclBundle){
             url = `${this.loaclHost}/dist/${this.getGameNameStr()}/assets/${this.getGameNameStr()}`;
         }else{
-            url = `${urlHelper.domain}/bundle/assets/${this.getGameNameStr()}`
+            url = `${urlHelper.domain}/bundle/assets/${this.getGameNameStr()}`;
         }
         return url;
 
     }
+
     /**
      *  抓取setting.json
      * @returns setting.json
@@ -184,30 +192,35 @@ export class loadingMgr extends Component {
         this.gameTypeName = this.getGameTypeFromResource(this.getGameType());
         this.loadPubversion(url, state);
     }
+
     /**
      * 遊戲背景圖讀取完成CB
      */
     public gameBGLoadingComplete():void{
         this.hierarchyMgr.loadGameLoadingLangSource(`${this.getGameNameStr()}`,urlHelper.lang);
     }
+
     /**
      * 設置gameType
      */
     public setGameType(num : string):void{
         this.gameType = num;
     }
+
     /**
      * 取得gameType
      */
     public getGameType():string{
         return this.gameType;
     }
+
     /**
      * 依gameType取得遊戲名稱
      */
     public getGameNameStr():string{
         return this.gameTypeName;
     }
+
     /**
      * 讀取PubVersion Bundle
      * @param url 
@@ -223,14 +236,14 @@ export class loadingMgr extends Component {
                 this.scheduleOnce(()=>{
                     this.loadAssetFromBundle('textures/gif/portrait','comm');
                 },0.2);
-                
+
             }
-        ).catch(err => { alert(err + ': Pubversion') });
+        ).catch(err => { alert(err + ': Pubversion'); });
     }
-    
+
     private getGameTypeFromResource(gameType: string):string{
         let name = 'undefind';
-        gameTypes.forEach((data)=>{
+        gameTypes.forEach(data=>{
             if(data.type == gameType){
                 name = data.name;
                 return name;
@@ -247,16 +260,16 @@ export class loadingMgr extends Component {
     private loadLoading(url: string, state: number): void {
         this.loadBundle(url).then(
             () => {
-                Logger.debug(`遊戲bundle 讀取成功`);
+                Logger.debug('遊戲bundle 讀取成功');
                 if (this.onPreloadSceneCB) {
                     this.onPreloadSceneCB(state);
                 }
             }
         ).catch(err => {
-            alert(err + ': Gamebundle')
+            alert(err + ': Gamebundle');
         });
     }
-  
+
     /**
      * 讀取公版bundle
      * @param url 
@@ -265,9 +278,9 @@ export class loadingMgr extends Component {
         return new Promise((resolve, reject) => {
             assetManager.loadBundle(url, (err: Error | null, bundle: AssetManager.Bundle) => {
                 if (err) {
-                    reject(err)
+                    reject(err);
                 }
-                resolve(bundle)
+                resolve(bundle);
             });
         });
     }
@@ -278,11 +291,11 @@ export class loadingMgr extends Component {
      */
     private async loadBundle(url: string): Promise<AssetManager.Bundle> {
         return new Promise((resolve, reject) => {
-            assetManager.loadBundle(url,{version : this.gameHash}, (err: Error | null, bundle: AssetManager.Bundle) => {
+            assetManager.loadBundle(url,{ version : this.gameHash }, (err: Error | null, bundle: AssetManager.Bundle) => {
                 if (err) {
-                    reject(err)
+                    reject(err);
                 }
-                resolve(bundle)
+                resolve(bundle);
             });
         });
     }
@@ -295,15 +308,15 @@ export class loadingMgr extends Component {
         const params = new URLSearchParams(new URL(currentUrl).search);
 
         // 確認是否有 GameType 並取得值
-        if (params.has("GameType")) {
-            const gameType = params.get("GameType")!;
+        if (params.has('GameType')) {
+            const gameType = params.get('GameType')!;
             this.setGameType(gameType);
-            Logger.debug("GameType 存在，其值為:", gameType);
+            Logger.debug('GameType 存在，其值為:', gameType);
         } else {
-            Logger.warn("GameType 不存在");
+            Logger.warn('GameType 不存在');
         }
     }
-    
+
     /**
      * 創建一個gif檔塞在html上
      * @param src gif檔路徑
@@ -339,6 +352,7 @@ export class loadingMgr extends Component {
 
         this.hidePortraitGif();
     }
+
     /**
      * 秀出提示'請翻轉手機'
      */
@@ -348,10 +362,11 @@ export class loadingMgr extends Component {
             this.gifContainer.style.display = 'block';
         }
     }
+
     /**
      * 關閉提示'請翻轉手機'
      */
-    private hidePortraitGif():void{ 
+    private hidePortraitGif():void{
         // 隱藏 GIF
         if(this.gifContainer){
             this.gifContainer.style.display = 'none';
@@ -364,35 +379,37 @@ export class loadingMgr extends Component {
      * @param bundleName 
      * @returns 
      */
-     private async loadAssetFromBundle(url : string,bundleName : string): Promise<Asset> {
+    private async loadAssetFromBundle(url : string,bundleName : string): Promise<Asset> {
         return new Promise((resolve, reject) => {
             const bundle = assetManager.getBundle(bundleName)!;
             bundle.load(url,Asset, (err, asset)=>{
                 if(err){
                     Logger.error(`load ${url} fail~~~!`);
-                    reject(err)
+                    reject(err);
                 }
                 if (err) {
-                    reject(err)
+                    reject(err);
                 }
                 this.createPortraitTipGif(asset.nativeUrl);
-                resolve(asset)
+                resolve(asset);
             });
         });
     }
+
     /**
      * 判斷是否直屏
      */
     private isPortrait() {
         return window.innerHeight > window.innerWidth;
     }
+
     /**
      * 更換loading Logo
      */
     private switchBG():void{
         const isDemo = urlHelper.isDemo;
         const siteType = commonStore.storeState.siteType;
-        
+
         switch (siteType) {
             case SiteType.LM:
                 this.setBGLogoToLM();
@@ -409,30 +426,32 @@ export class loadingMgr extends Component {
                 break;
         }
     }
+
     /**
      * 更換logo為試玩
      */
     private async setBGLogoToDemo():Promise<void>{
         this.bgSprite.spriteFrame = await this.loadPicFromRes('demoLoading');
     }
+
     /**
      * 更換logo為XC
      */
     private async setBGLogoToXC():Promise<void>{
         this.setBGLogoTwoPic('xcLoadingLand','xcLoading');
     }
-    
+
     /**
      * 更換logo為LM
      */
-     private async setBGLogoToLM():Promise<void>{
+    private async setBGLogoToLM():Promise<void>{
         this.setBGLogoTwoPic('lmLoadingLand','lmLoadingPort');
     }
 
     /**
      * 更換logo為有兩張，直板與橫版的
      */
-     private async setBGLogoTwoPic(landPicStr : string,portPicStr : string):Promise<void>{
+    private async setBGLogoTwoPic(landPicStr : string,portPicStr : string):Promise<void>{
         const canvas = document.getElementsByTagName('canvas')[0];
         const imageWidth = 1920;//最小寬度
         if (canvas.width > canvas.height) {
@@ -450,9 +469,10 @@ export class loadingMgr extends Component {
     /**
      * 更換logo為BB
      */
-     private async setBGLogoToBB():Promise<void>{
+    private async setBGLogoToBB():Promise<void>{
         this.bgSprite.spriteFrame = await this.loadPicFromRes('BBINLoading');
     }
+
     /**
      * 判斷目前螢幕是否mac retina
      * @returns 是否mac retina
@@ -460,7 +480,7 @@ export class loadingMgr extends Component {
     private isMacRetina() {
         const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
         const isRetina = window.devicePixelRatio > 1;
-    
+
         return isMac && isRetina;
     }
 
@@ -468,13 +488,13 @@ export class loadingMgr extends Component {
         return new Promise((resolve, reject) => {
             resources.load(`texture/logo/${picName}/spriteFrame`, SpriteFrame, (err, spriteFrame) => {
                 if(err){
-                    Logger.error(`load logoPic fail~~~!`);
-                    reject(err)
+                    Logger.error('load logoPic fail~~~!');
+                    reject(err);
                 }
                 if (err) {
-                    reject(err)
+                    reject(err);
                 }
-                resolve(spriteFrame)
+                resolve(spriteFrame);
             });
         });
     }

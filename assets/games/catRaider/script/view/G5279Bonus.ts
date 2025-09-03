@@ -1,26 +1,36 @@
-import { _decorator, Animation, Component, Label, Node, sp, tween, UIOpacity } from 'cc';
-import { awaitSleep } from '@common/utils/tools';
-import { lines } from '../data/G5279Interface';
-import { getAudioManager } from '@common/manager/AudioManager';
-import { G5279AudioName } from '../data/G5279AudioEnum';
-import { formatNumberRound2, playAnimFinish, playSpineFinish } from '../tools/G5279Tools';
-import { getEventManager } from '@common/manager/EventManager';
 import { Comm } from '@common/h5GameTools/GTCommEvents';
-import { getG5279Model, G5279Time } from '../model/G5279Model';
+import { getAudioManager } from '@common/manager/AudioManager';
+import { getEventManager } from '@common/manager/EventManager';
+import { awaitSleep } from '@common/utils/tools';
+import { _decorator, Animation, Component, Label, Node, sp, tween, UIOpacity } from 'cc';
+
+import { G5279AudioName } from '@/games/catRaider/script/data/G5279AudioEnum';
+import { lines } from '@/games/catRaider/script/data/G5279Interface';
+
+
+
+import { getG5279Model, G5279Time } from '@/games/catRaider/script/model/G5279Model';
+import { formatNumberRound2, playAnimFinish, playSpineFinish } from '@/games/catRaider/script/tools/G5279Tools';
+
 const { ccclass, property } = _decorator;
 
 @ccclass('G5279Bonus')
 export class G5279Bonus extends Component {
     @property(Node)
     private getBonusNode: Node = null!;
+
     @property(Node)
     private bonusFinished: Node = null!;
+
     @property(Node)
     private bonusGameUI: Node = null!;
+
     @property(Label)
     private bonusTime: Label = null!;
+
     @property(Label)
     private bonusTotalTime: Label = null!;
+
     @property(Node)
     private bonusTotalWin: Node = null!;
 
@@ -84,7 +94,7 @@ export class G5279Bonus extends Component {
      * @param totalWin 總贏分
      */
     public async showTotalWin(totalWin: number): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             getAudioManager().lowerMusic();//背景音變小
             //totalWin介面顯示
             this.bonusTotalWin.active = true;
@@ -93,7 +103,7 @@ export class G5279Bonus extends Component {
             tween(bonusTotalWinOpacity).to(0.1, { opacity: 255 }).start();
 
             //更新totalWin分數顯示
-            const totalScore = this.bonusTotalWin.getChildByName('totalScore')!
+            const totalScore = this.bonusTotalWin.getChildByName('totalScore')!;
             const totalScoreLabel = totalScore.getChildByName('label')!;
             totalScoreLabel.getComponent(Label)!.string = formatNumberRound2(totalWin);
             totalScore.getComponent(Animation)!.play();
@@ -126,7 +136,7 @@ export class G5279Bonus extends Component {
      * 顯示finished表演
      */
     public async showFinished(): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             getAudioManager().lowerMusic();//背景音變小
             getAudioManager().playSound(G5279AudioName.finished);
             this.bonusFinished.active = true;

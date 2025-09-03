@@ -1,9 +1,11 @@
-import { _decorator, Component, Node, Animation, ParticleSystem, UIOpacity, Label, tween, Vec3, Tween } from 'cc';
 import { Comm } from '@common/h5GameTools/GTCommEvents';
 import { getAudioManager } from '@common/manager/AudioManager';
-import { G5251Utils } from "../tools/G5251Utils";
-import { G5251AudioName } from "../types/G5251AudioEnum";
 import { getEventManager } from '@common/manager/EventManager';
+import { _decorator, Component, Node, Animation, ParticleSystem, UIOpacity, Label, tween, Vec3, Tween } from 'cc';
+
+import { G5251Utils } from '@/games/clearance/script/tools/G5251Utils';
+import { G5251AudioName } from '@/games/clearance/script/types/G5251AudioEnum';
+
 
 const { ccclass, property } = _decorator;
 
@@ -14,12 +16,16 @@ export class G5251TotalWin extends Component {
     //子節點
     @property(Node)
     private finishFx: Node = null!;
+
     @property(Node)
     private scoreFinishFx: Node = null!;
+
     @property(Node)
     private scoreLabel: Node = null!;
+
     @property(Node)
     private particleCoin3D: Node = null!;
+
     @property(Node)
     private particleStarB3D: Node = null!;
 
@@ -42,7 +48,7 @@ export class G5251TotalWin extends Component {
      * @param payTotal 總贏分
      */
     public runTotalWin(payTotal: number): Promise<void> {
-        return new Promise<void>(async (resolve) => {
+        return new Promise<void>(async resolve => {
             this.resolveCallback = resolve;
             this._payTotal = G5251Utils.accAdd(payTotal, 0);//電子數字格式化
             this.node.getComponent(UIOpacity)!.opacity = 0;
@@ -84,7 +90,7 @@ export class G5251TotalWin extends Component {
      * 贏分表演結束
      */
     private async totalWinFinish(): Promise<void> {
-        return new Promise<void>(async (resolve) => {
+        return new Promise<void>(async resolve => {
             getAudioManager().stopSound(G5251AudioName.WinCount);//停止跑分音效
             this.node.off(Node.EventType.TOUCH_END, this.touchFinish, this);
             Tween.stopAllByTarget(this._runScore);

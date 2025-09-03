@@ -1,9 +1,11 @@
-import { urlHelper } from '@common/utils/UrlHelper';
-import { commonStore } from '@common/h5GameTools/CommonStore';
-import { _decorator, Component, Label } from 'cc';
-import { getLanguageManager, LanguageManager } from '@common/manager/LanguageManager';
-import { G5279Config } from '../data/G5279Config';
 import { LocalizedSprite } from '@common/components/localization/LocalizedSprite';
+import { commonStore } from '@common/h5GameTools/CommonStore';
+import { getLanguageManager, LanguageManager } from '@common/manager/LanguageManager';
+import { urlHelper } from '@common/utils/UrlHelper';
+import { _decorator, Component, Label } from 'cc';
+
+import { G5279Config } from '@/games/catRaider/script/data/G5279Config';
+
 
 const { ccclass } = _decorator;
 

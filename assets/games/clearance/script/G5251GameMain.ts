@@ -1,29 +1,34 @@
-import { _decorator, Camera, CCBoolean, Component, find } from 'cc';
 
 import boot from '@common/h5GameTools/Boot';
-import { GameStatus } from '@common/h5GameTools/State';
 import { commonStore } from '@common/h5GameTools/CommonStore';
-import { Logger } from '@common/utils/Logger';
-import { gtmEvent } from '@common/h5GameTools/userAnalysis/GTEvent';
 import { GTLoaderButtonType,Comm, Game, GTAlertPram, GTAlertType } from '@common/h5GameTools/GTCommEvents';
-
-import { WorkTimerManager } from '@common/utils/WorkTimerManager';
-import { WorkOnBlurManager } from '@common/utils/WorkOnBlurManager';
-import { getAudioManager } from '@common/manager/AudioManager';
-import { LanguageManager } from '@common/manager/LanguageManager';
-
-import { G5251Controller } from './controller/G5251Controller';
-import { onBeginGame, onCreditExchange, onGetMachineDetail, onHitJackpot, onOnLoadInfo, UpdateJPData } from './types/G5251Interface';
-import { beginGameData } from './types/G5251FakeDate';
-import { G5251AudioName } from './types/G5251AudioEnum';
-import { getEventManager } from '@common/manager/EventManager';
 import { slotGameConnector,SlotGameEvent } from '@common/h5GameTools/SlotGameConnector';
+import { GameStatus } from '@common/h5GameTools/State';
+import { gtmEvent } from '@common/h5GameTools/userAnalysis/GTEvent';
+import { getAudioManager } from '@common/manager/AudioManager';
+import { getEventManager } from '@common/manager/EventManager';
+import { LanguageManager } from '@common/manager/LanguageManager';
+import { Logger } from '@common/utils/Logger';
+
+import { WorkOnBlurManager } from '@common/utils/WorkOnBlurManager';
+import { WorkTimerManager } from '@common/utils/WorkTimerManager';
+
+import { _decorator, Camera, CCBoolean, Component, find } from 'cc';
+
+import { G5251Controller } from '@/games/clearance/script/controller/G5251Controller';
+
+import { G5251AudioName } from '@/games/clearance/script/types/G5251AudioEnum';
+
+import { beginGameData } from '@/games/clearance/script/types/G5251FakeDate';
+import { onBeginGame, onCreditExchange, onGetMachineDetail, onHitJackpot, onOnLoadInfo, UpdateJPData } from '@/games/clearance/script/types/G5251Interface';
+
 
 const { ccclass, property } = _decorator;
 @ccclass('G5251GameMain')
 export class G5251GameMain extends Component {
     @property(CCBoolean)
     public useFakeData: boolean = false;//模擬資料
+
     @property(G5251Controller)
     private controller: G5251Controller = null!;//控制器
 
@@ -176,7 +181,7 @@ export class G5251GameMain extends Component {
         if (!beginGameMsg.event) return;
 
         // 發送派彩的 GTM 事件
-        gtmEvent.CORE_GAME_PAYOFF(beginGameMsg.data.PayTotal)//【公版】發送派彩 GTM 事件
+        gtmEvent.CORE_GAME_PAYOFF(beginGameMsg.data.PayTotal);//【公版】發送派彩 GTM 事件
 
         // 發送主要免費遊戲開始的 GTM 事件
         if (beginGameMsg.data.FreeGame.HitFree && beginGameMsg.data.RollerNumber === 0) {
@@ -215,7 +220,7 @@ export class G5251GameMain extends Component {
         Logger.debug('收到spin...');
         this.controller.startSlotRun();//開始輪軸轉動
         slotGameConnector.callBeginGame(
-            { "action": "beginGame4", "betInfo": { "BetCredit": commonStore.storeState.bet } });
+            { 'action': 'beginGame4', 'betInfo': { 'BetCredit': commonStore.storeState.bet } });
     }
 
     /**
@@ -312,7 +317,7 @@ export class G5251GameMain extends Component {
             confirmCallback: () => {
                 getEventManager().emit(Game.RESTART_GAME);//呼叫【公版】重新連線
             }
-        }
+        };
         getEventManager().emit(Comm.SHOW_ALERT, alert);//通知【公版】顯示斷線提示
     }
 

@@ -1,6 +1,6 @@
-import { G5251Utils } from '../tools/G5251Utils';
-import { onBeginGame, NewLines, onOnLoadInfo } from '../types/G5251Interface';
-import { REEL_DATA } from '../types/G5251ReelData';
+import { G5251Utils } from '@/games/clearance/script/tools/G5251Utils';
+import { onBeginGame, NewLines } from '@/games/clearance/script/types/G5251Interface';
+import { REEL_DATA } from '@/games/clearance/script/types/G5251ReelData';
 
 export class G5251Model {
     private static _instance: G5251Model;
@@ -10,6 +10,7 @@ export class G5251Model {
         }
         return G5251Model._instance;
     }
+
     private _beginGameData: onBeginGame = null!;
     private _newLines: NewLines[] = [];//表演用Line資料
     private _topSymbols: number[][] = [];//表演用上方預掉落symbol資料
@@ -39,7 +40,7 @@ export class G5251Model {
             const uniqueGrids = [...new Set(flattenGrids)];// 使用 Set 去重複值
             const sortedGrids = uniqueGrids.sort((a, b) => a - b);// 重新排序
             const gridData = sortedGrids.map(n => n - 1);//獲得line所有中獎位置
-            
+
             //將中獎位置一維陣列改成二維陣列
             let newGrids: number[][] = [];
             for (let j = 0; j < REEL_DATA.symbolPosID.length; j++) {

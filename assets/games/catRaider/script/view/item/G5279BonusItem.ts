@@ -1,23 +1,28 @@
-import { _decorator, Animation, Component, Node, Prefab, sp, tween, UIOpacity, Vec3 } from 'cc';
-import { awaitSleep } from '@common/utils/tools';
-import { G5279Model, G5279Time } from '../../model/G5279Model';
 import { getPoolManager } from '@common/manager/PoolManager';
+import { awaitSleep } from '@common/utils/tools';
+import { _decorator, Animation, Component, Node, Prefab, sp, tween, UIOpacity, Vec3 } from 'cc';
+
+import { G5279Model, G5279Time } from '@/games/catRaider/script/model/G5279Model';
+
 const { ccclass, property } = _decorator;
 
 @ccclass('G5279BonusItem')
 export class G5279BonusItem extends Component {
     @property(Prefab)
     private bonusWin: Prefab = null!;
+
     @property(Node)
     private itemWinLayer: Node = null!;
+
     @property(Node)
     private bonusUI: Node = null!;
 
     private bonusPos: Vec3[] = [
         new Vec3(-276, 440, 0),
         new Vec3(-93, 440, 0),
-        new Vec3(90, 440, 0),
+        new Vec3(90, 440, 0)
     ];
+
     private bonusAmount: number = 0;//bonus蒐集數量
 
     /**
@@ -35,7 +40,7 @@ export class G5279BonusItem extends Component {
      * @param showTime 時間
      */
     public async getBonusItem(): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             const timeScale = G5279Model.getInstance().timeScale;
             const bonusWin = getPoolManager().get(this.bonusWin);
             bonusWin.setParent(this.itemWinLayer);

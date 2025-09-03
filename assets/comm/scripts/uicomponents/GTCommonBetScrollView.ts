@@ -1,11 +1,13 @@
 import { commonStore } from '@common/h5GameTools/CommonStore';
-import { NumberUtils } from '@common/utils/NumberUtils';
-import { _decorator, Component, Node, ScrollView, UITransform, Size, Sprite, SpriteFrame, assetManager, Color, Layers, Label, Vec3, Event, sys, tween, UIOpacity, Font } from 'cc';
-import { getDecimalPlaces, geti18nTex } from '../comm/GTCommTools';
+
 import { Comm, GTLoaderButtonType } from '@common/h5GameTools/GTCommEvents';
 import { getEventManager } from '@common/manager/EventManager';
 import { Logger } from '@common/utils/Logger';
+import { NumberUtils } from '@common/utils/NumberUtils';
 import { watch } from '@common/utils/Reactivity';
+import { _decorator, Component, Node, ScrollView, UITransform, Size, Sprite, SpriteFrame, assetManager, Color, Layers, Label, Vec3, Event, sys, tween, UIOpacity, Font } from 'cc';
+
+import { getDecimalPlaces, geti18nTex } from '@/comm/scripts/comm/GTCommTools';
 
 const { ccclass, property } = _decorator;
 
@@ -48,6 +50,7 @@ export class GTCommonBetScrollView extends Component {
     public onDestroy(): void {
         getEventManager().off(Comm.SET_BET_OPTION_NODE_PARAM, this.setBetOptionNodeParam.bind(this));
     }
+
     public async initData(): Promise<void> {
         await this.getPicFromBundle();
         // 延遲到下一幀
@@ -60,11 +63,12 @@ export class GTCommonBetScrollView extends Component {
         if (!this.isSetWatch) {
             this.isSetWatch = true;
             watch(() => commonStore.storeState.totalBet,(_newBet, _oldBet) => {
-                    this.setBetChange();
-                }
+                this.setBetChange();
+            }
             );
         }
     }
+
     /**
      * 初始化注額按鈕區
      * @param betArr 注額列
@@ -73,7 +77,7 @@ export class GTCommonBetScrollView extends Component {
         this.betCreditList = commonStore.storeState.betCreditList;
         const len = this.betCreditList.length;
         if (len <= 0) {
-            Logger.warn(`no betCreditList !!`);
+            Logger.warn('no betCreditList !!');
             return;
         }
         this.clearAllChildern();
@@ -135,6 +139,7 @@ export class GTCommonBetScrollView extends Component {
         }
         return tempNum;
     }
+
     /**
      * 當 + 按鈕按下
      */
@@ -145,6 +150,7 @@ export class GTCommonBetScrollView extends Component {
         }
         this.setBtnClicked();
     }
+
     /**
      * 當 - 按鈕按下
      */
@@ -155,6 +161,7 @@ export class GTCommonBetScrollView extends Component {
         }
         this.setBtnClicked();
     }
+
     /**
      * 取得目前的index
      * @returns 當前index
@@ -162,6 +169,7 @@ export class GTCommonBetScrollView extends Component {
     public getIndex(): number {
         return this.index;
     }
+
     /**
      * 取得目前最大注額長度
      * @returns 目前最大注額長度
@@ -169,6 +177,7 @@ export class GTCommonBetScrollView extends Component {
     public getMaxLen(): number {
         return this.maxLen;
     }
+
     /**
      * 依bet值變動時,直接設置版面
      */
@@ -188,6 +197,7 @@ export class GTCommonBetScrollView extends Component {
         this.saveIndex(currentIndex);
         this.setBtnClicked();
     }
+
     /**
      * 增加按鈕
      * @param count 第幾個按鈕
@@ -204,6 +214,7 @@ export class GTCommonBetScrollView extends Component {
         this.addListener(tempNode);
         this.btnArr.push(tempNode);
     }
+
     /**
      * 增加該按鈕的標籤
      * @param count 第幾個按鈕
@@ -228,6 +239,7 @@ export class GTCommonBetScrollView extends Component {
         label.fontSize = 72;
         label.lineHeight = 44;
     }
+
     /**
      * 轉化Ｋ格式保留小數點
      */
@@ -244,6 +256,7 @@ export class GTCommonBetScrollView extends Component {
     private setLabelColor(tempLabel: Label, colorStr: String): void {
         tempLabel.color = this.hexToColor(colorStr as string);
     }
+
     /**
      * 從bundle取得按鈕圖
      */
@@ -262,7 +275,7 @@ export class GTCommonBetScrollView extends Component {
             this.loadPicFromBundle('/btn_box_hover/spriteFrame'),
             this.loadPicFromBundle('/btn_box_disable/spriteFrame'),
             this.loadPicFromBundle('/btn_box_selected/spriteFrame'),
-            this.loadFontFromBundle('fonts/arial60'),
+            this.loadFontFromBundle('fonts/arial60')
         ]);
 
         this.btnBoxUpPic = btnBoxUpPic;
@@ -272,6 +285,7 @@ export class GTCommonBetScrollView extends Component {
         this.btnBoxSelectPic = btnBoxSelectPic;
         this.labelFont = labelFont;
     }
+
     /**
      * 取得該按鈕要在哪個位置
      * @param count 第幾個按鈕
@@ -290,7 +304,7 @@ export class GTCommonBetScrollView extends Component {
                 x = 0;
                 break;
             case 2:
-                x = 330
+                x = 330;
                 break;
             default:
                 break;
@@ -311,12 +325,12 @@ export class GTCommonBetScrollView extends Component {
                         bundle.load(orginSourcePath + url, SpriteFrame, (err, spriteFrame) => {
                             if (err) {
                                 Logger.error(`load ${url} fail~~~!`);
-                                reject(err)
+                                reject(err);
                             }
-                            resolve(spriteFrame)
+                            resolve(spriteFrame);
                         });
                     } else {
-                        resolve(spriteFrame)
+                        resolve(spriteFrame);
                     }
                 });
             }
@@ -331,12 +345,12 @@ export class GTCommonBetScrollView extends Component {
                 bundle.load(url, Font, (err, font) => {
                     if (err) {
                         Logger.error(`load ${url} fail~~~!`);
-                        reject(err)
+                        reject(err);
                     }
                     if (err) {
-                        reject(err)
+                        reject(err);
                     }
-                    resolve(font)
+                    resolve(font);
                 });
             }
 
@@ -346,14 +360,15 @@ export class GTCommonBetScrollView extends Component {
     // 轉換 16 進制顏色為 Color 對象
     private hexToColor(hex: string) {
         // 去掉井號符號
-        hex = hex.replace('#', '');
+        let tempHex = hex.replace('#', '');
         // 轉換為 RGBA
-        const r = parseInt(hex.substring(0, 2), 16);
-        const g = parseInt(hex.substring(2, 4), 16);
-        const b = parseInt(hex.substring(4, 6), 16);
+        const r = parseInt(tempHex.substring(0, 2), 16);
+        const g = parseInt(tempHex.substring(2, 4), 16);
+        const b = parseInt(tempHex.substring(4, 6), 16);
         const a = 255; // 不透明
         return new Color(r, g, b, a);
     }
+
     /**
      * 增加按鈕屬性
      * @param btn 按鈕
@@ -417,6 +432,7 @@ export class GTCommonBetScrollView extends Component {
             this.onLeave(event);
         }, this);
     }
+
     /** 
      * 直接設定按鈕被按
     */
@@ -431,6 +447,7 @@ export class GTCommonBetScrollView extends Component {
         this.saveCheckedBtn(btn);
         this.setLabelColor(this.isCheckedBtnLabel!.getComponent(Label)!, 'FFFFFF');
     }
+
     /**
      * 點擊該按鈕
      * @param event 
@@ -438,6 +455,7 @@ export class GTCommonBetScrollView extends Component {
     private onClick(event: Event): void {
         this.changeSelectedPic(event.target);
     }
+
     /**
      * 按下該按鈕
      * @param event 
@@ -445,6 +463,7 @@ export class GTCommonBetScrollView extends Component {
     private onPressDown(event: Event): void {
         this.changePressPic(event.target);
     }
+
     /**
      * 鬆開該按鈕
      * @param event 
@@ -452,6 +471,7 @@ export class GTCommonBetScrollView extends Component {
     private onPressUp(event: Event): void {
         this.changeSelectedPic(event.target);
     }
+
     /**
      * 滑入該按鈕
      * @param event 
@@ -459,6 +479,7 @@ export class GTCommonBetScrollView extends Component {
     private onHover(event: Event): void {
         this.changeHoverPic(event.target);
     }
+
     /**
      * 離開該按鈕
      * @param event 
@@ -466,6 +487,7 @@ export class GTCommonBetScrollView extends Component {
     private onLeave(event: Event): void {
         this.changeNormalPic(event.target);
     }
+
     /**
      * 更換成滑入圖
      * @param btn 被滑入的按鈕
@@ -474,6 +496,7 @@ export class GTCommonBetScrollView extends Component {
     private changeHoverPic(btn: Node): void {
         btn.getComponent(Sprite)!.spriteFrame = this.btnBoxHoverPic;
     }
+
     /**
      * 更換成初始圖
      * @param btn 按鈕
@@ -482,6 +505,7 @@ export class GTCommonBetScrollView extends Component {
     private changeNormalPic(btn: Node): void {
         btn.getComponent(Sprite)!.spriteFrame = this.btnBoxUpPic;
     }
+
     /**
      * 更換成被按下的圖
      * @param btn 被按下的按鈕
@@ -492,6 +516,7 @@ export class GTCommonBetScrollView extends Component {
             tempSpriteFrame = this.btnBoxDownPic;
         }
     }
+
     /**
      * 更換成選擇圖
      * @param btn 被按下的按鈕
@@ -499,6 +524,7 @@ export class GTCommonBetScrollView extends Component {
     private changeSelectedPic(btn: Node): void {
         btn.getComponent(Sprite)!.spriteFrame = this.btnBoxSelectPic;
     }
+
     /**
      * 儲存被選擇的按鈕
      * @param btn 被選擇的按鈕
@@ -510,6 +536,7 @@ export class GTCommonBetScrollView extends Component {
         this.saveIndex(count);
         this.saveDataToStoreState();
     }
+
     /**
      * 儲存被選擇的按鈕index
      * @param count 被選擇的按鈕index
@@ -517,6 +544,7 @@ export class GTCommonBetScrollView extends Component {
     private saveIndex(count: number): void {
         this.index = count;
     }
+
     /**
      * 儲存押注值至公版欄位
      * @param count 取得該按鈕label的index
@@ -529,6 +557,7 @@ export class GTCommonBetScrollView extends Component {
         commonStore.storeMutation.setData('bet', betNum);//parseFloat(betNumStr.replace(/,/g, ''))
         commonStore.storeMutation.setData('totalBet', betNum);//parseFloat(betNumStr.replace(/,/g, ''))
     }
+
     /**
      * 還原被選擇的按鈕成初始按鈕圖
      */
@@ -539,6 +568,7 @@ export class GTCommonBetScrollView extends Component {
         this.isCheckedBtn.getComponent(Sprite)!.spriteFrame = this.btnBoxUpPic;
         this.setLabelColor(this.isCheckedBtnLabel!.getComponent(Label)!, 'AA823C');
     }
+
     /**
      * 判斷是否在滾動中
      * @returns 
@@ -551,7 +581,7 @@ export class GTCommonBetScrollView extends Component {
         const nodeOpacity = this.node.getComponent(UIOpacity)!;
         const count = Math.floor(this.maxLen / 3);
         // const limitY = count * 160 + (count * 25) + 400 + 170//400是底部控制區高，100是Title，120是上下空間
-        const limitY = (count * 170) + 100 + 400 + 170//400是底部控制區高，100是Title，170是預設高
+        const limitY = (count * 170) + 100 + 400 + 170;//400是底部控制區高，100是Title，170是預設高
         // 设置初始状态
         nodeOpacity.opacity = 0; // 透明
         this.node.setPosition(this.initialPosition.x, this.initialPosition.y - limitY, this.initialPosition.z); // 向下偏移

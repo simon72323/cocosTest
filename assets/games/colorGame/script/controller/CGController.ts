@@ -1,30 +1,33 @@
-import { _decorator, Button, Component, Node, Animation, sys } from 'cc';
-import { Game } from '@common/h5GameTools/GTCommEvents';
 import { commonStore } from '@common/h5GameTools/CommonStore';
-import { Logger } from '@common/utils/Logger';
-import { urlHelper } from '@common/utils/UrlHelper';
-import { NumberUtils } from '@common/utils/NumberUtils';
-import { getEventManager } from '@common/manager/EventManager';
-
-import { CGView } from '../view/CGView';
-import { CGModel } from '../model/CGModel';
-import { CGZoomView } from '../view/CGZoomView';
-import { CGChipDispatcher } from '../view/CGChipDispatcher';
-import { CGRoundView } from '../view/CGRoundView';
-import { CGChipSetView } from '../view/CGChipSetView';
-import { CGDiceRunView } from '../view/CGDiceRunView';
-import { CGRoadView } from '../view/CGRoadView';
-import { BetInfoList, beginGame, creditExchange, joinGame, loadInfo, player, update, PayInfo, updateCredit } from '../enum/CGInterface';
-import { CGRankView } from '../view/CGRankView';
-import { CGUtils } from '../tools/CGUtils';
-import { CGAudioName } from '../manager/CGAudioName';
-import { BetType, GameState, RebetState } from '../enum/CGEnum';
-import { CGGameData } from '../model/CGGameData';
-import { CGTipMessage } from '../view/CGTipMessage';
-import { colorGameConnector } from '../connector/CGGameConnector';
-import { getAudioManager } from '@common/manager/AudioManager';
-import { gtmEvent } from '@common/h5GameTools/userAnalysis/GTEvent';
+import { Game } from '@common/h5GameTools/GTCommEvents';
 import { GameStatus } from '@common/h5GameTools/State';
+import { gtmEvent } from '@common/h5GameTools/userAnalysis/GTEvent';
+import { getAudioManager } from '@common/manager/AudioManager';
+import { getEventManager } from '@common/manager/EventManager';
+import { Logger } from '@common/utils/Logger';
+import { NumberUtils } from '@common/utils/NumberUtils';
+import { urlHelper } from '@common/utils/UrlHelper';
+import { _decorator, Button, Component, Node, Animation, sys } from 'cc';
+
+import { colorGameConnector } from '@/games/colorGame/script/connector/CGGameConnector';
+import { BetType, GameState, RebetState } from '@/games/colorGame/script/enum/CGEnum';
+import { BetInfoList, beginGame, creditExchange, joinGame, loadInfo, player, update, PayInfo, updateCredit } from '@/games/colorGame/script/enum/CGInterface';
+import { CGAudioName } from '@/games/colorGame/script/manager/CGAudioName';
+import { CGGameData } from '@/games/colorGame/script/model/CGGameData';
+import { CGModel } from '@/games/colorGame/script/model/CGModel';
+import { CGUtils } from '@/games/colorGame/script/tools/CGUtils';
+import { CGChipDispatcher } from '@/games/colorGame/script/view/CGChipDispatcher';
+
+import { CGChipSetView } from '@/games/colorGame/script/view/CGChipSetView';
+import { CGDiceRunView } from '@/games/colorGame/script/view/CGDiceRunView';
+import { CGRankView } from '@/games/colorGame/script/view/CGRankView';
+import { CGRoadView } from '@/games/colorGame/script/view/CGRoadView';
+import { CGRoundView } from '@/games/colorGame/script/view/CGRoundView';
+import { CGTipMessage } from '@/games/colorGame/script/view/CGTipMessage';
+import { CGView } from '@/games/colorGame/script/view/CGView';
+import { CGZoomView } from '@/games/colorGame/script/view/CGZoomView';
+
+
 
 
 const { ccclass, property } = _decorator;
@@ -33,10 +36,13 @@ const { ccclass, property } = _decorator;
 export class CGController extends Component {
     @property(Node)
     public gameView!: Node;//view節點
+
     @property(Node)
     private waitConnect!: Node;//等待連線
+
     @property(Node)
     private waitNewRound!: Node;//等待派獎畫面
+
     @property(Node)
     private betArea!: Node;//押注區
 
@@ -98,13 +104,10 @@ export class CGController extends Component {
      */
     protected onDestroy() {
         this.unscheduleAllCallbacks();//停止所有計時器
-        if (this.chipDispatcher) {
-            this.chipDispatcher.clearPool();//清除預置體
-        }
         this.exitLogin();//還原登入線路紀錄
         window.onbeforeunload = null;// 移除頁面關閉事件監聽
         CGModel.getInstance().init();
-        CGGameData.getInstance().init()
+        CGGameData.getInstance().init();
     }
 
     /**
@@ -240,7 +243,7 @@ export class CGController extends Component {
         this.roadView.updateRoadMap(model.roadMap, model.getRoadMapRate());//更新路紙
         //派彩
         const { localWinArea, betOdds, winNum } = model.calculateWinData();//計算表演所需參數
-        this.roundView.endRound(localWinArea, betOdds, winNum, this._userPayoff)//表演開獎結果
+        this.roundView.endRound(localWinArea, betOdds, winNum, this._userPayoff);//表演開獎結果
 
         await CGUtils.Delay(1.4);
         if (!this.isValid) return;
@@ -289,8 +292,8 @@ export class CGController extends Component {
      * @returns 
      */
     private checkCreditEnough(betCredit: number): Promise<boolean> {
-        return new Promise<boolean>((resolve) => {
-            Logger.debug("請公版判斷餘額是否足夠", betCredit)
+        return new Promise<boolean>(resolve => {
+            Logger.debug('請公版判斷餘額是否足夠', betCredit);
             commonStore.storeMutation.setData('bet', betCredit);//跟公版說下注多少
             getEventManager().emit(Game.PRE_SPIN, {
                 callback: async (success: boolean) => {
@@ -427,7 +430,7 @@ export class CGController extends Component {
      * @main
      */
     public handleLoadInfo(msg: loadInfo) {
-        const { UserID, Balance, Credit, BetCreditList, BetRange, Currency } = msg.data;
+        const { UserID, Balance, Credit, BetCreditList, BetRange } = msg.data;
         const gameData = CGGameData.getInstance();
         const model = CGModel.getInstance();
         model.credit = commonStore.storeState.customConfig.canExchange ? Credit : Balance;
@@ -443,7 +446,7 @@ export class CGController extends Component {
      * @main
      */
     public async handleJoinGame(msg: joinGame) {
-        const { gameState, dice, playerData, countdown, betTotalTime, roundSerial, betData, BetTotal } = msg.data;
+        const { gameState, playerData, countdown, roundSerial, betData, BetTotal } = msg.data;
         const model = CGModel.getInstance();
         model.roundSerial = roundSerial;
         commonStore.storeMutation.setData('wagersID', `${roundSerial}`);
@@ -478,14 +481,14 @@ export class CGController extends Component {
                         this._betType = BetType.RE_BET;//剛進入的下注類型使用續押籌碼(還原下注籌碼)
                         //模擬server回傳beginGame資料(同局回桌下注)
                         this.handleBeginGame({
-                            action: "beginGame",
+                            action: 'beginGame',
                             event: true,
                             data: {
                                 BetTotal: BetTotal!,
                                 Credit: model.credit,
-                                betInfo: { Cards: betInfo },//目前押注注區資料轉換成BetInfo格式
+                                betInfo: { Cards: betInfo }//目前押注注區資料轉換成BetInfo格式
                             },
-                            gameType: urlHelper.gameType,
+                            gameType: urlHelper.gameType
                         });
                         //籌碼移動
                         for (let i = 0; i < localBetCredits.length; i++) {

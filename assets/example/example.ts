@@ -1,15 +1,15 @@
-import { _decorator, assetManager, Component, director, instantiate, Prefab, Node, Toggle, Label, SpriteFrame, Slider, EditBox, sp } from 'cc';
-
-import { getEventManager } from '@common/manager/EventManager';
-import { urlHelper } from '@common/utils/UrlHelper';
-import { commonStore } from '@common/h5GameTools/CommonStore';
-import { getUrlQuery } from '@common/utils/UrlUtils';
-import { disWatchAll, watch, watchFixed } from '@common/utils/Reactivity';
 
 import { getGameName } from '@common/config/gameList';
+// import { commonStore } from '@common/h5GameTools/CommonStore';
+// import { Comm, Game } from '@common/h5GameTools/GTCommEvents';
+// import { GameStatus } from '@common/h5GameTools/State';
+import { getEventManager } from '@common/manager/EventManager';
+// import { disWatchAll, watch, watchFixed } from '@common/utils/Reactivity';
 import { generatePromise } from '@common/utils/tools';
-import { Comm, Game } from '@common/h5GameTools/GTCommEvents';
-import { GameStatus } from '@common/h5GameTools/State';
+import { urlHelper } from '@common/utils/UrlHelper';
+// import { getUrlQuery } from '@common/utils/UrlUtils';
+
+import { _decorator, assetManager, Component, director, instantiate, Prefab, Node, Label, SpriteFrame, sp } from 'cc';
 generatePromise();
 
 const { ccclass, property } = _decorator;
@@ -18,8 +18,10 @@ const { ccclass, property } = _decorator;
 export class example extends Component {
     @property(Label)
     betLabel?: Label | null = null;
+
     @property(Label)
     creditLabel?: Label | null = null;
+
     mainStageNode?: Node;
 
     onEnable(){

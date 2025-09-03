@@ -42,7 +42,7 @@ export interface onOnLoadInfo {
         Rates: { [key: string]: number[] }, // symbol 賠率表(顯示在symbol hint)
         UserAutoExchange: UserAutoExchange,
         Currency: string, // 幣別
-        LoginName: "Player", // 玩家暱稱
+        LoginName: 'Player', // 玩家暱稱
         AutoExchange: boolean, // 是否自動換分
         Credit: number,  // 玩家目前在遊戲中有多少 credit
         BetBase: string, // default 下注比例
@@ -134,7 +134,7 @@ interface userSetting {
     autoCredit: number, // 自動開洗多少分
     auto: boolean, // 自動開洗分
     info: {},
-    rate: "1:1" // 自動開洗分比例
+    rate: '1:1' // 自動開洗分比例
 }
 
 // 表演用line格式資料(轉換原後端格式用於表演)

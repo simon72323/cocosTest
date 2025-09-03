@@ -21,7 +21,7 @@
 
 //     // @property({ type: MarqueeDirection, tooltip: "方向" })
 //     // public readonly direction: MarqueeDirection = MarqueeDirection.LEFT;
-    
+
 //     start() {
 //     }
 //     /** 更新 */

@@ -1,20 +1,21 @@
-import { _decorator, Component, Node, Button, Toggle, input, Input, EventKeyboard, KeyCode, UIOpacity, tween } from 'cc';
-const { ccclass, property } = _decorator;
 
-import { GTSpintBtn } from '../uicomponents/GTSpintBtn';
-import { GTLoaderEventType } from '../comm/GTLoaderEventType';
-import { Comm, GTCommPanelParm, GTLoaderButtonType, GTCommEventMap, GTAlertPram, Game, GTAlertType } from '@common/h5GameTools/GTCommEvents';
 import { commonStore } from '@common/h5GameTools/CommonStore';
+import { Comm, GTCommPanelParm, GTLoaderButtonType, GTCommEventMap, GTAlertPram, Game, GTAlertType } from '@common/h5GameTools/GTCommEvents';
 import { GameStatus } from '@common/h5GameTools/State';
-import { GTCommonBetScrollView } from '../uicomponents/GTCommonBetScrollView';
-import { watch } from '@common/utils/Reactivity';
-import { canAutoExchangeCredit, getAutoExchangeCredit, isCreditEnough } from '../comm/GTCommTools';
+import { gtmEvent } from '@common/h5GameTools/userAnalysis/GTEvent';
+import { getEventManager } from '@common/manager/EventManager';
 import { Logger } from '@common/utils/Logger';
 import { NumberUtils } from '@common/utils/NumberUtils';
-import { gtmEvent } from '@common/h5GameTools/userAnalysis/GTEvent';
-import { GTLoaderCommStore } from '../comm/GTLoderCommStore';
-import { getEventManager } from '@common/manager/EventManager';
+import { watch } from '@common/utils/Reactivity';
+import { _decorator, Component, Node, Button, Toggle, input, Input, EventKeyboard, KeyCode, UIOpacity, tween } from 'cc';
 
+import { canAutoExchangeCredit, getAutoExchangeCredit, isCreditEnough } from '@/comm/scripts/comm/GTCommTools';
+import { GTLoaderEventType } from '@/comm/scripts/comm/GTLoaderEventType';
+import { GTLoaderCommStore } from '@/comm/scripts/comm/GTLoderCommStore';
+import { GTCommonBetScrollView } from '@/comm/scripts/uicomponents/GTCommonBetScrollView';
+import { GTSpintBtn } from '@/comm/scripts/uicomponents/GTSpintBtn';
+
+const { ccclass, property } = _decorator;
 
 @ccclass('GTControlPanelManager')
 export class GTControlPanelManager extends Component {
@@ -49,6 +50,7 @@ export class GTControlPanelManager extends Component {
         settingPanelBtn: false,
         exchangeBtn: false
     };
+
     private _fasterAlert: GTAlertPram = null!;
     // --- 通用防止連點機制 ---
     private _debounceTimers: { [key: string]: number } = {};
@@ -90,10 +92,10 @@ export class GTControlPanelManager extends Component {
             [Game.PRE_BUY_FREEGAME_SPIN]: this._preBuyFreeGameEvent.bind(this),
             [Comm.SET_ONREADY_SPIN_BTN_INTERACTABLE]: this._OnOnReadySpinBtnInteractble.bind(this),
             [Comm.SET_PUBLIC_GAME_PANEL_SWITCH]: this._setPublicGamePanelSwitch.bind(this),
-            [Comm.SET_LOADER_ALL_BUTTON_INTERACTABLE]: this._setAllBtnControl.bind(this),
+            [Comm.SET_LOADER_ALL_BUTTON_INTERACTABLE]: this._setAllBtnControl.bind(this)
         };
 
-        Object.keys(this.eventBindings).forEach((event) => {
+        Object.keys(this.eventBindings).forEach(event => {
             if (event === GTLoaderEventType.SPIN_BTN_CLICK) {
                 getEventManager().on(event, this.eventBindings[event]);
             } else {
@@ -103,7 +105,7 @@ export class GTControlPanelManager extends Component {
     }
 
     private _removeEventListeners(): void {
-        Object.keys(this.eventBindings).forEach((event) => {
+        Object.keys(this.eventBindings).forEach(event => {
             if (event === GTLoaderEventType.SPIN_BTN_CLICK) {
                 getEventManager().off(event, this.eventBindings[event]);
             } else {
@@ -128,7 +130,7 @@ export class GTControlPanelManager extends Component {
             this._setIncreaseBetBtnActive();
         });
 
-        const disWatch = watch(() => commonStore.storeState.gameStatus, (newStatus) => {
+        const disWatch = watch(() => commonStore.storeState.gameStatus, newStatus => {
             if (newStatus === GameStatus.OnReady) {
                 input.on(Input.EventType.KEY_DOWN, this.spaceDown);
                 input.on(Input.EventType.KEY_UP, this.spaceUp);
@@ -310,7 +312,7 @@ export class GTControlPanelManager extends Component {
 
     // 打開/關閉自動遊玩頁面
     public onBetAutoBtnPressed(): void {
-        Logger.debug("onBetAutoBtnPressed");
+        Logger.debug('onBetAutoBtnPressed');
         this._toggleAutoSet();
         this._toggleBetSet(false);
         this.spinBtn.setMaxAutoSpinCount(this._isAutoSetOn ? this._tempMaxAutoSpinCount : 0);
@@ -331,7 +333,7 @@ export class GTControlPanelManager extends Component {
     }
 
     // 調整注額，增加
-    public addBet(event: any, data: any): void {
+    public addBet(): void {
         GTLoaderCommStore.getInstance().setData('amountTarget', GTLoaderButtonType.increaseBetBtn);
         gtmEvent.LOADER_MAIN_ADDBET_CLICK();
         this._commBetSetScript.addIndex();
@@ -339,7 +341,7 @@ export class GTControlPanelManager extends Component {
     }
 
     // 調整注額，減少
-    public minusBet(event: any, data: any): void {
+    public minusBet(): void {
         GTLoaderCommStore.getInstance().setData('amountTarget', GTLoaderButtonType.decreaseBetBtn);
         gtmEvent.LOADER_MAIN_MINUSBET_CLICK();
         this._commBetSetScript.minusIndex();
@@ -427,10 +429,10 @@ export class GTControlPanelManager extends Component {
         const canExchange = commonStore.storeState.customConfig.canExchange;
         const alert: GTAlertPram = {
             type: canExchange ? GTAlertType.BASIC : GTAlertType.BASIC_NONE,
-            title: "SYSTEM_MESSAGE",
+            title: 'SYSTEM_MESSAGE',
             content: 'NOT_ENOUGH_CREDIT_2023',
             cancelBtnText: '',
-            confirmBtnText: "GAME_EXCHANGE",
+            confirmBtnText: 'GAME_EXCHANGE',
             confirmCallback: canExchange ? () => {
                 // 為彈窗的確認按鈕加上獨立的防連點
                 if (this._isActionDebounced('exchangeFromAlert', 1000)) {
@@ -467,8 +469,8 @@ export class GTControlPanelManager extends Component {
 
         const alert: GTAlertPram = {
             type: GTAlertType.DIALOG,
-            title: "FAST_TURBO",
-            content: "OPEN_FASTWHEEL_ALERT",
+            title: 'FAST_TURBO',
+            content: 'OPEN_FASTWHEEL_ALERT',
             cancelBtnText: 'CONTINUE',
             confirmBtnText: 'GOG_CONFIRM',
             cancelCallback: () => { this._fastAlertIsShow = false; this._fasterAlert = null!; callback(); },
@@ -496,9 +498,9 @@ export class GTControlPanelManager extends Component {
         await this._newPreSpin(commonStore.storeState.bet, (success: boolean) => {
             if (success) {
                 this._playSpinAnimate();
-                function sendSpinEvent(): void {
+                const sendSpinEvent = (): void => {
                     getEventManager().emit(Game.SPIN, null);
-                }
+                };
                 this._newCheckBetForFastSpinAlert() ? this._newShowTurnOnFastAlert(() => sendSpinEvent()) : sendSpinEvent();
                 gtmEvent.LOADER_GAME_BET(this.spinBtn.getMaxAutoSpinCount());
             } else {
@@ -521,7 +523,7 @@ export class GTControlPanelManager extends Component {
         }
 
         // 建立一個新的 Promise 並將其儲存起來，作為「狀態鎖」
-        this._preSpinPromise = new Promise(async (resolve) => {
+        this._preSpinPromise = new Promise(async resolve => {
             try {
                 const { gameStatus } = commonStore.storeState;
 
@@ -597,7 +599,7 @@ export class GTControlPanelManager extends Component {
                 callback(context.success);
 
             } catch (error) {
-                Logger.error("Error during _newPreSpin:", error);
+                Logger.error('Error during _newPreSpin:', error);
                 callback(false); // 確保出錯時也呼叫回呼
             } finally {
                 // 無論成功或失敗，最終都要清除 Promise 鎖，並完成 Promise
@@ -653,7 +655,7 @@ export class GTControlPanelManager extends Component {
 
         try {
             // 1. 創建我們的換分 Promise
-            const exchangePromise = new Promise<boolean>((resolve) => {
+            const exchangePromise = new Promise<boolean>(resolve => {
                 const ex_credit = getAutoExchangeCredit();
                 getEventManager().emit(Game.EXCHANGE_CREDIT, {
                     exchangeCredit: ex_credit,

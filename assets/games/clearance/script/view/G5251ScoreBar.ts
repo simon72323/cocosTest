@@ -1,5 +1,6 @@
 import { _decorator, Component, tween, ParticleSystem, Animation, Label, Node, Vec3 } from 'cc';
-import { G5251Utils } from '../tools/G5251Utils';
+
+import { G5251Utils } from '@/games/clearance/script/tools/G5251Utils';
 
 const { ccclass, property } = _decorator;
 
@@ -7,12 +8,16 @@ const { ccclass, property } = _decorator;
 export class G5251ScoreBar extends Component {
     @property(Node)
     private scoreWin: Node = null!;//贏得分數介面
+
     @property(Node)
     private infoTip: Node = null!;//tip節點
+
     @property(Node)
     private winTxNode: Node = null!;//贏得分數
+
     @property(Node)
     private totalTxNode: Node = null!;//總贏得分數
+
     @property(Node)
     private particleStar3D: Node = null!;//特效粒子
 
@@ -57,9 +62,9 @@ export class G5251ScoreBar extends Component {
             this.scoreWinLabel.string = G5251Utils.NumDigits2(endScore);//更新分數
         }).start();
         if (this._saveScore > 0)
-            this.plsyScoreAnim("scoreWinAdd");
+            this.plsyScoreAnim('scoreWinAdd');
         else
-            this.plsyScoreAnim("scoreWin");
+            this.plsyScoreAnim('scoreWin');
     }
 
     /**
@@ -78,8 +83,8 @@ export class G5251ScoreBar extends Component {
      * @param endScore 總贏得分數
      */
     public scoreEnd(endScore: number): Promise<void> {
-        return new Promise(async (resolve) => {
-            this.scoreWin.getComponent(Animation)!.play("scoreEnd");
+        return new Promise(async resolve => {
+            this.scoreWin.getComponent(Animation)!.play('scoreEnd');
             this.updateScore(endScore);//更新分數
             await G5251Utils.Delay(1);//總分顯示時間
             resolve();

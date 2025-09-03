@@ -1,6 +1,6 @@
-import { _decorator, Component, UITransform, tween, Vec3, Tween, Node, UIOpacity, Sprite, CCString } from 'cc';
-import { urlHelper } from '@common/utils/UrlHelper';
 import { LocalizedSprite } from '@common/components/localization/LocalizedSprite';
+import { urlHelper } from '@common/utils/UrlHelper';
+import { _decorator, Component, UITransform, tween, Vec3, Tween, Node, UIOpacity, Sprite, CCString } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('CGTipView')
@@ -11,8 +11,10 @@ export class CGTipView extends Component {
     private tipId = -1;//紀錄執行中的tip編號
     @property({ type: [CCString] })
     public XCTips: string[] = [];//貼圖檔名名稱
+
     @property({ type: [CCString] })
     public BBTips: string[] = [];//貼圖檔名名稱
+
     private tips: string[] = [];
     @property({ tooltip: '是否裁剪貼圖' })
     public trim: boolean = false;

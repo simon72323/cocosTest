@@ -1,14 +1,13 @@
+import { commonStore } from '@common/h5GameTools/CommonStore';
+import { Logger } from '@common/utils/Logger';
+import { urlHelper } from '@common/utils/UrlHelper';
 import { _decorator, assetManager, Component, Sprite, SpriteFrame, Button, sp, Font, Node } from 'cc';
 
+import { getSpritePath, loadSprite } from '@/comm/scripts/comm/GTCommUtils';
+import { GTSpintBtn } from '@/comm/scripts/uicomponents/GTSpintBtn';
+import { GTLoadingCommTool as CommTool } from '@/loading/script/comm/GTLoadingCommTool';
+
 const { ccclass, property } = _decorator;
-
-import { Logger } from '@common/utils/Logger';
-import { GTSpintBtn } from '../uicomponents/GTSpintBtn';
-import { commonStore } from '@common/h5GameTools/CommonStore';
-import { getSpritePath, loadSprite } from '../comm/GTCommUtils';
-import { GTLoadingCommTool as CommTool } from '../../../loading/script/comm/GTLoadingCommTool';
-import { urlHelper } from '@common/utils/UrlHelper';
-
 @ccclass('GTStyleManager')
 export class GTStyleManager extends Component {
     @property(GTSpintBtn) public spinBtn: GTSpintBtn = null!;
@@ -91,7 +90,7 @@ export class GTStyleManager extends Component {
 
     private requitedSpriteImageNames: Record<string, Record<string, string>> = {
         betInfo: {
-            up: 'btn_info_bet_up',
+            up: 'btn_info_bet_up'
         }
     };
 
@@ -149,7 +148,7 @@ export class GTStyleManager extends Component {
             add_bet_btn: this.addBetBtn,
             less_bet_btn: this.lessBetBtn,
             setting_btn: this.settingBtn,
-            exchange_btn: this.exchangeBtn,
+            exchange_btn: this.exchangeBtn
         };
     }
 
@@ -200,14 +199,14 @@ export class GTStyleManager extends Component {
             // 使用 Promise.all 來並行執行所有任務，並等待它們全部完成
             await Promise.all(updateTasks);
             await new Promise(resolve => setTimeout(resolve, 100));
-            Logger.log("所有風格資源已成功並行更新完畢！");
+            Logger.log('所有風格資源已成功並行更新完畢！');
 
         } catch (error) {
             Logger.error('Error loading resources:', error);
         }
     }
 
-    private async loadFallback<T>(first: () => Promise<SpriteFrame[]>, fallback: () => Promise<SpriteFrame[]>): Promise<SpriteFrame[]> {
+    private async loadFallback(first: () => Promise<SpriteFrame[]>, fallback: () => Promise<SpriteFrame[]>): Promise<SpriteFrame[]> {
         const result = await first();
         if (!result || result.length === 0) {
             return await fallback();
@@ -226,7 +225,7 @@ export class GTStyleManager extends Component {
             Logger.error(`無效的 bundle，無法從路徑 "${path}" 載入資源。`);
             return Promise.resolve([]); // 返回一個空的 Promise，避免流程中斷
         }
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             bundle.loadDir(path, SpriteFrame, (err: any, assets: any) => {
                 if (err) {
                     // 不再 reject，而是 log 錯誤並 resolve 一個空陣列，讓流程更健壯
@@ -264,16 +263,15 @@ export class GTStyleManager extends Component {
     }
 
     private async swapSprites(assets: SpriteFrame[]) {
-        for (const buttonType in this.requiredBtnImageNames) {
+        for (const buttonType of Object.keys(this.requiredBtnImageNames)) {
             const states = this.requiredBtnImageNames[buttonType];
             const targetButton = this.buttonMap[buttonType] ?? null;
-
             if (!targetButton) {
                 Logger.warn(`Target button for ${buttonType} not found!`);
                 continue;
             }
 
-            for (const state in states) {
+            for (const state of Object.keys(states)) {
                 const requiredName = states[state];
                 let matchedAsset = assets.find(asset => asset.name === requiredName);
 
@@ -284,7 +282,6 @@ export class GTStyleManager extends Component {
                         Logger.error('替代圖片加載失敗', error);
                     }
                 }
-
                 if (matchedAsset) {
                     this._assignSpriteFrameToButton(state, matchedAsset, targetButton);
                 } else {
@@ -309,7 +306,7 @@ export class GTStyleManager extends Component {
             this.spinBtn.autoLabel.font = font;
             Logger.log('字體更新成功');
         } catch (error) {
-            Logger.error('字體更新失敗');
+            Logger.error('字體更新失敗', error);
         }
     }
 

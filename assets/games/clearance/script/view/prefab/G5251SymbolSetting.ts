@@ -1,6 +1,7 @@
 import { _decorator, Component, Sprite, tween, UIOpacity, Animation, Node, Tween } from 'cc';
-import { G5251Resources } from '../../controller/G5251Resources';
-import { REEL_DATA } from '../../types/G5251ReelData';
+
+import { G5251Resources } from '@/games/clearance/script/controller/G5251Resources';
+import { REEL_DATA } from '@/games/clearance/script/types/G5251ReelData';
 const { ccclass } = _decorator;
 //設置symbol上的符號圖案
 
@@ -24,9 +25,8 @@ export class G5251SymbolSetting extends Component {
 
     /**
      * 初始化symbol顯示
-     * @param symID 符號編號
      */
-    private resetSymbol(symID?: number) {
+    private resetSymbol() {
         this._normal.active = true;//顯示靜態symbol
         // this.blur.active = true;//顯示模糊symbol
         this._scatter.active = false;//隱藏scatter
@@ -44,8 +44,8 @@ export class G5251SymbolSetting extends Component {
         this.resetSymbol();
         this._scatterIsShow = false;//初始化scatter是否已經顯示
         this.symID = symID;//設置本symID
-        this._normal.getComponent(Sprite)!.spriteFrame = symbolSF[symID - 1];;//正常貼圖
-        this._blur.getComponent(Sprite)!.spriteFrame = symbolBlurSF[symID - 1];;//模糊貼圖
+        this._normal.getComponent(Sprite)!.spriteFrame = symbolSF[symID - 1];//正常貼圖
+        this._blur.getComponent(Sprite)!.spriteFrame = symbolBlurSF[symID - 1];//模糊貼圖
     }
 
     /**
@@ -55,7 +55,7 @@ export class G5251SymbolSetting extends Component {
         Tween.stopAllByTarget(this._blur);
         this._blur.getComponent(UIOpacity)!.opacity = 0;
         this._blur.active = true;
-        tween(this._blur.getComponent(UIOpacity)!).to(0.2, { opacity: 255 }, { easing: "cubicIn" }).start();
+        tween(this._blur.getComponent(UIOpacity)!).to(0.2, { opacity: 255 }, { easing: 'cubicIn' }).start();
     }
 
     /**

@@ -1,7 +1,9 @@
-import { BetInfo, BetInfoList, ColorBetInfo, joinGame, PayInfo, PlayerData, RoadMapRate } from '../enum/CGInterface';
-import { ColorID } from '../enum/CGEnum';
 import { Logger } from '@common/utils/Logger';
 import { NumberUtils } from '@common/utils/NumberUtils';
+
+import { ColorID } from '@/games/colorGame/script/enum/CGEnum';
+import { BetInfo, BetInfoList, ColorBetInfo, joinGame, PayInfo, PlayerData, RoadMapRate } from '@/games/colorGame/script/enum/CGInterface';
+
 
 export class CGModel {
     private static _instance: CGModel;
@@ -94,7 +96,7 @@ export class CGModel {
     /**
      * 獲取路紙率
      * @returns 路紙率
-     */ 
+     */
     public getRoadMapRate(): RoadMapRate {
         return this.roadMapRate;
     }
@@ -104,7 +106,7 @@ export class CGModel {
      * @param msg 
      */
     public async updateOnJoinGame(msg: joinGame): Promise<void> {
-        const { roundSerial, roomInfo, countdown, betTotalTime, roadmap, roadmapRate, dice, playerData, startColor } = msg.data;
+        const { roundSerial, roomInfo, countdown, betTotalTime, roadmap, roadmapRate, dice, startColor } = msg.data;
         this.roundSerial = roundSerial;
         this.roadMap = roadmap;
         this.betTotalTime = betTotalTime;
@@ -150,7 +152,7 @@ export class CGModel {
      */
     public async betInfoToBetCredits(betInfo: ColorBetInfo): Promise<number[]> {
         const betCredits = Array(6).fill(0);
-        for (const color in betInfo) {
+        for (const color of Object.keys(betInfo)) {
             const colorIndex = ColorID[color as keyof typeof ColorID]; // 獲取顏色的索引
             betCredits[colorIndex] = betInfo[color]?.BetCredit ?? 0; // 獲取顏色的押注額度
         }
@@ -213,7 +215,7 @@ export class CGModel {
         let betOdds: number[] = Array(6).fill(0);//勝利注區與倍率
         let winColorCount: number[] = Array(6).fill(0);//每個注區的開獎數量
         let localWinArea: number[] = [];//本地勝利注區
-        const winColor = this.winDice.split("-").map(color => ColorID[color as keyof typeof ColorID]);
+        const winColor = this.winDice.split('-').map(color => ColorID[color as keyof typeof ColorID]);
         const winNum = new Set(winColor);//過濾重複數字
         for (let i of winColor) {
             winColorCount[i]++;

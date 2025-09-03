@@ -1,7 +1,7 @@
-import { urlHelper } from '@common/utils/UrlHelper';
 import { commonStore } from '@common/h5GameTools/CommonStore';
-import { _decorator, Component, Label } from 'cc';
 import { LanguageManager, getLanguageManager } from '@common/manager/LanguageManager';
+import { urlHelper } from '@common/utils/UrlHelper';
+import { _decorator, Component, Label } from 'cc';
 
 const { ccclass } = _decorator;
 

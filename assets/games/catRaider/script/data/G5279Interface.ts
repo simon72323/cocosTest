@@ -1,4 +1,4 @@
-import { Node } from "cc";
+import { Node } from 'cc';
 
 export interface onBeginGame {
     event: boolean,

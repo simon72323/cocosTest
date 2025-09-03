@@ -1,19 +1,23 @@
+import { Comm } from '@common/h5GameTools/GTCommEvents';
+import { getEventManager } from '@common/manager/EventManager';
 import { _decorator, Component, Label, Animation, UIOpacity, tween, Node } from 'cc';
 
-import { getEventManager } from '@common/manager/EventManager';
 
-import { G5251Utils } from '../tools/G5251Utils';
-import { Comm } from '@common/h5GameTools/GTCommEvents';
+import { G5251Utils } from '@/games/clearance/script/tools/G5251Utils';
+
 const { ccclass, property } = _decorator;
 
 @ccclass('G5251FreeGame')
 export class G5251FreeGame extends Component {
     @property(Node)
     private freeSpins: Node = null!;//免費遊戲剩餘次數介面
+
     @property(Node)
     private freeGameGet: Node = null!;//免費遊戲獲得介面
+
     @property(Node)
     private freeGameAdd: Node = null!;//免費遊戲獲得增加介面
+
     @property(Node)
     private finished: Node = null!;//免費遊戲表演結束介面(免費遊戲0分時顯示)
 
@@ -43,7 +47,7 @@ export class G5251FreeGame extends Component {
      * @param msg 表演資料
      */
     public async showFreeGameAdd(addFreeGameTime: number, freeGameTime: number): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             const label = this.freeGameAdd.getChildByName('ball')!.getChildByName('label')!.getComponent(Label)!;
             label.string = '+' + addFreeGameTime.toString();
             this.freeGameAdd.active = true;//顯示免費遊戲中途增加，有掛腳本動態播完會自動隱藏
@@ -61,7 +65,7 @@ export class G5251FreeGame extends Component {
      * @param msg 表演資料
      */
     public async showFreeGameGet(addFreeGameTime: number): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             const label = this.freeGameGet.getChildByName('count')!.getChildByName('label')!.getComponent(Label)!;
             label.string = addFreeGameTime.toString();
             this.freeGameGet.active = true;//顯示獲得免費遊戲，有掛腳本動態播完會自動隱藏
@@ -94,7 +98,7 @@ export class G5251FreeGame extends Component {
      * 顯示免費遊戲表演結束介面
      */
     public async showFinished(): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             this.finished.active = true;
             await G5251Utils.PlayAnimResolve(this.finished);
             this.finished.active = false;

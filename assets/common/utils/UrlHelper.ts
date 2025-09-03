@@ -59,7 +59,7 @@ export class UrlHelper {
         try {
             this.parent = (window as any).parent;
             this.parent.testGet; // 測試父窗口是否可訪問
-        } catch (e) {
+        } catch {
             this.parent = window;
         }
     }
@@ -68,28 +68,28 @@ export class UrlHelper {
      * 從 URL 參數獲取值
      */
     private initializeFromUrl(): void {
-        this.gameType = getUrlQuery("GameType") || this.parent.game_id || "";
-        this.sid = getUrlQuery("sid") || this.parent.SessionID || getUrlQuery("SessionID") || "";
-        this.hallId = getUrlQuery("HALLID") || this.parent.HallID || getUrlQuery("HallID") || getUrlQuery("hallID") || "";
-        this.userId = this.parent.UserID || getUrlQuery("UserID") || "";
-        this.exitOption = `${this.parent.ExitOption || getUrlQuery("ExitOption") || ""}`;
-        this.rawLang = getUrlQuery("lang") || this.parent.lang || "";
-        this.lang = this.identifyLang(this.rawLang, "BB");
-        this.rdaLang = this.identifyLang(this.rawLang, "RD");
-        this.site = this.parent.Site || getUrlQuery("Site") || "BBIN";
-        this.subLink = this.parent.subLink || getUrlQuery("subLink") || "";
-        this.playtime = this.parent.playtime || getUrlQuery("playtime") || "";
+        this.gameType = getUrlQuery('GameType') || this.parent.game_id || '';
+        this.sid = getUrlQuery('sid') || this.parent.SessionID || getUrlQuery('SessionID') || '';
+        this.hallId = getUrlQuery('HALLID') || this.parent.HallID || getUrlQuery('HallID') || getUrlQuery('hallID') || '';
+        this.userId = this.parent.UserID || getUrlQuery('UserID') || '';
+        this.exitOption = `${this.parent.ExitOption || getUrlQuery('ExitOption') || ''}`;
+        this.rawLang = getUrlQuery('lang') || this.parent.lang || '';
+        this.lang = this.identifyLang(this.rawLang, 'BB');
+        this.rdaLang = this.identifyLang(this.rawLang, 'RD');
+        this.site = this.parent.Site || getUrlQuery('Site') || 'BBIN';
+        this.subLink = this.parent.subLink || getUrlQuery('subLink') || '';
+        this.playtime = this.parent.playtime || getUrlQuery('playtime') || '';
         this.gameLoaderEnterTime = (window as any).gameLoaderEnterTime || 0;
-        this.memberDomain = this.parent.memberDomain || getUrlQuery("memberDomain") || "";
-        this.exitUrl = this.parent.exitUrl || getUrlQuery("exitUrl") || getUrlQuery("ExitUrl") || "";
-        this.JpOpen = getUrlQuery("JP") ? getUrlQuery("JP") == "1" : true;
-        this.channel = this.parent.pdChannel || getUrlQuery("channel") || 0;
-        this.pdIngress = this.parent.pdIngress || getUrlQuery("ingress") || "PC";
-        this.pdIngressToken = this.parent.pdIngressToken || getUrlQuery("ingressToken") || "";
-        this.isDemo = getUrlQuery("demo") === "1" || this.parent.Demo || getUrlQuery("Demo") === "true" || getUrlQuery("demo") === "true";
-        this.isSDK = location.protocol == "file:";
-        this.useProxy = getUrlQuery("useProxy") === "true";
-        this.CDNIP = this.parent.CDNIP || getUrlQuery("CDNIP") || getUrlQuery("IP");
+        this.memberDomain = this.parent.memberDomain || getUrlQuery('memberDomain') || '';
+        this.exitUrl = this.parent.exitUrl || getUrlQuery('exitUrl') || getUrlQuery('ExitUrl') || '';
+        this.JpOpen = getUrlQuery('JP') ? getUrlQuery('JP') == '1' : true;
+        this.channel = this.parent.pdChannel || getUrlQuery('channel') || 0;
+        this.pdIngress = this.parent.pdIngress || getUrlQuery('ingress') || 'PC';
+        this.pdIngressToken = this.parent.pdIngressToken || getUrlQuery('ingressToken') || '';
+        this.isDemo = getUrlQuery('demo') === '1' || this.parent.Demo || getUrlQuery('Demo') === 'true' || getUrlQuery('demo') === 'true';
+        this.isSDK = location.protocol == 'file:';
+        this.useProxy = getUrlQuery('useProxy') === 'true';
+        this.CDNIP = this.parent.CDNIP || getUrlQuery('CDNIP') || getUrlQuery('IP');
         this.firstPage = window.history.length;
     }
 
@@ -108,13 +108,13 @@ export class UrlHelper {
      * 獲取 SDK 環境的域名信息
      */
     private async getDomainInfoSDK(): Promise<void> {
-        const domain = getUrlQuery("domain");
+        const domain = getUrlQuery('domain');
         if (!domain) {
-            console.warn("UrlHelper.getDomainInfoSDK Error : 網址沒有domain參數");
+            console.warn('UrlHelper.getDomainInfoSDK Error : 網址沒有domain參數');
             return;
         }
         if (!/^http[s]?:/.test(domain)) {
-            console.warn("UrlHelper.getDomainInfoSDK Error : domain參數需要包含http or https protocol");
+            console.warn('UrlHelper.getDomainInfoSDK Error : domain參數需要包含http or https protocol');
             return;
         }
         const parser = new URL(domain);
@@ -134,8 +134,8 @@ export class UrlHelper {
     public get isSecure(): boolean {
         try {
             const domainUrl = new URL(this.domain);
-            return domainUrl.protocol === "https:";
-        } catch (e) {
+            return domainUrl.protocol === 'https:';
+        } catch {
             return false;
         }
     }
@@ -148,10 +148,10 @@ export class UrlHelper {
             const domainUrl = new URL(this.domain);
             const url = `${domainUrl.origin}/ipl/app/flash/pig/game/casinoH5/GameAPI/FxDataApi.php?gtype=${this.gameType}&dm=${domainUrl.host}`;
             const data = await (await fetch(url)).json();
-            return data.link || "";
+            return data.link || '';
         } catch (e) {
             Logger.warn(e as any);
-            return "";
+            return '';
         }
     }
 
@@ -178,27 +178,27 @@ export class UrlHelper {
     /**
      * 識別語言
      */
-    public identifyLang(lang: string, type: "BB" | "RD" = "BB"): string {
+    public identifyLang(lang: string, type: 'BB' | 'RD' = 'BB'): string {
         const commonLang = {
-            ja: "ja",
-            vi: "vi",
-            th: "th",
-            id: "id",
-            es: "es"
+            ja: 'ja',
+            vi: 'vi',
+            th: 'th',
+            id: 'id',
+            es: 'es'
         };
 
         const specialLang = {
             BB: {
-                tw: "tw",
-                cn: "cn",
-                kr: "kr",
-                en: "us"
+                tw: 'tw',
+                cn: 'cn',
+                kr: 'kr',
+                en: 'us'
             },
             RD: {
-                tw: "zh-tw",
-                cn: "zh-cn",
-                kr: "ko",
-                en: "en"
+                tw: 'zh-tw',
+                cn: 'zh-cn',
+                kr: 'ko',
+                en: 'en'
             }
         };
 
@@ -208,31 +208,31 @@ export class UrlHelper {
         };
 
         switch (lang) {
-            case "zh_tw":
-            case "zh-tw":
-            case "tw":
+            case 'zh_tw':
+            case 'zh-tw':
+            case 'tw':
                 return finalLang.tw;
-            case "zh_cn":
-            case "zh-cn":
-            case "cn":
-            case "ug":
+            case 'zh_cn':
+            case 'zh-cn':
+            case 'cn':
+            case 'ug':
                 return finalLang.cn;
-            case "jp":
-            case "ja":
+            case 'jp':
+            case 'ja':
                 return finalLang.ja;
-            case "vi":
-            case "vn":
+            case 'vi':
+            case 'vn':
                 return finalLang.vi;
-            case "th":
+            case 'th':
                 return finalLang.th;
-            case "id":
+            case 'id':
                 return finalLang.id;
-            case "es":
+            case 'es':
                 return finalLang.es;
-            case "kr":
-            case "ko":
+            case 'kr':
+            case 'ko':
                 return finalLang.kr;
-            case "en":
+            case 'en':
             default:
                 return finalLang.en;
         }
@@ -242,20 +242,20 @@ export class UrlHelper {
      * 獲取研 A 的 domain
      */
     public getDomainRdA(): string {
-        let subDomain = "www.";
+        let subDomain = 'www.';
 
         switch (true) {
-            case this.domain.includes("vir888"):
-                subDomain = "ts-m.";
+            case this.domain.includes('vir888'):
+                subDomain = 'ts-m.';
                 break;
-            case this.domain.includes("vir999"):
-                subDomain = "www.";
+            case this.domain.includes('vir999'):
+                subDomain = 'www.';
                 break;
-            case this.domain.includes("04vip"):
-                subDomain = "test.";
+            case this.domain.includes('04vip'):
+                subDomain = 'test.';
                 break;
-            case this.domain.includes("//888."):
-                subDomain = "777.";
+            case this.domain.includes('//888.'):
+                subDomain = '777.';
                 break;
         }
 
@@ -273,7 +273,7 @@ export class UrlHelper {
     //     return `GameType=${this.gameType}&lang=${this.rawLang}&rnd=${Date.now()}&site=${this.site}&JpOpen=${enableJP}&uiversion=2${additionalParams}`;
     // }
 
-    private _getCommonUrlParams(additionalParams: string = "", enableJP: boolean = true): string {
+    private _getCommonUrlParams(additionalParams: string = '', enableJP: boolean = true): string {
         return `GameType=${this.gameType}&lang=${this.rawLang}&rnd=${Date.now()}&site=${this.site}&JpOpen=${enableJP}&uiversion=2${additionalParams}`;
     }
 
@@ -305,14 +305,14 @@ export class UrlHelper {
      * 獲取 CDN URL
      */
     public async getCdnUrl(): Promise<string> {
-        const origin = location.href.split("index")[0];
+        const origin = location.href.split('index')[0];
         Logger.log(`[Origin Root] ${origin}`);
 
         if (this.CDNIP) {
             Logger.log(`[CDNIP] ${this.CDNIP}`);
-            const projectRootPath = location.pathname.split("index.")[0];
-            const cdnRootPath = projectRootPath.includes("flash/pig/")
-                ? projectRootPath.replace("ipl/", "")
+            const projectRootPath = location.pathname.split('index.')[0];
+            const cdnRootPath = projectRootPath.includes('flash/pig/')
+                ? projectRootPath.replace('ipl/', '')
                 : `app/flash/pig/game/casinoH5${projectRootPath}`;
             const cdnUrl = `${this.CDNIP}${cdnRootPath}`;
 
@@ -357,26 +357,26 @@ export class UrlHelper {
      */
     public leaveGame(): void {
         switch (this.exitOption) {
-            case "1":
+            case '1':
                 window.close();
                 setTimeout(() => {
                     getEventManager().emit('SHOW_ALERT', {
                         type: 'BASIC_NONE',
-                        title: "",
-                        content: "close fail",
-                        cancelBtnText: "",
-                        confirmBtnText: ""
+                        title: '',
+                        content: 'close fail',
+                        cancelBtnText: '',
+                        confirmBtnText: ''
                     });
                 }, 5000);
                 break;
-            case "2":
+            case '2':
                 if ((window as any).top) {
-                    (window as any).top.location.href = this.exitUrl || "";
+                    (window as any).top.location.href = this.exitUrl || '';
                 }
                 break;
-            case "3":
+            case '3':
                 break;
-            case "4":
+            case '4':
                 window.history.go(-1);
                 break;
             default:
@@ -394,21 +394,21 @@ export class UrlHelper {
      * 開啟下注紀錄視窗
      */
     public gotoBetHistory(): void {
-        window.open(this.getBetHistoryURL(), "_blank");
+        window.open(this.getBetHistoryURL(), '_blank');
     }
 
     /**
      * 開啟規則說明視窗
      */
     public gotoRulePage(): void {
-        window.open(this.getRulePageURL(), "_blank");
+        window.open(this.getRulePageURL(), '_blank');
     }
 
     /**
      * 開啟存款頁面
      */
     public gotoBankerPage(): void {
-        if (typeof this.parent.DepositUrl === "function") {
+        if (typeof this.parent.DepositUrl === 'function') {
             this.parent.DepositUrl({
                 sid: this.sid,
                 lang: this.rdaLang,
@@ -416,7 +416,7 @@ export class UrlHelper {
             });
         } else {
             const url = `${this.getDomainRdA()}/infe/macenter/common/basicinfocontroller/redirect.json?identityCode=${this.sid}&langx=${this.rdaLang}&&other=depositPlus&rnd${Date.now()}`;
-            window.open(url, "_blank");
+            window.open(url, '_blank');
         }
     }
 
@@ -426,28 +426,28 @@ export class UrlHelper {
     public exitByError(error: string): void {
         const exitMethod = (() => {
             switch (error) {
-                case "NOT_ENOUGH_BALANCE":
-                case "MAXIMUN_EXCHANGE":
-                    return "none";
-                case "CHOOSE_MAINTAIN":
-                case "SYSTEM_MAINTAIN":
-                    return "maintain";
-                case "SID_IS_NOT_EXIST":
-                case "API_EC_INVALID_USER_DATA":
-                case "API_EC_ACC_SID_INVALID":
-                case "API_EC_USER_DATA_ERROR":
-                    return "logout";
-                case "ACCOUNT_HAS_BEEN_SUSPENDED":
-                case "API_EC_ACC_STOP_BETTING":
-                case "API_EC_ACC_USER_STOP_BETTING":
-                case "API_EC_ACC_USER_ALL_STOP_BETTING":
-                    return "accountSuspended";
+                case 'NOT_ENOUGH_BALANCE':
+                case 'MAXIMUN_EXCHANGE':
+                    return 'none';
+                case 'CHOOSE_MAINTAIN':
+                case 'SYSTEM_MAINTAIN':
+                    return 'maintain';
+                case 'SID_IS_NOT_EXIST':
+                case 'API_EC_INVALID_USER_DATA':
+                case 'API_EC_ACC_SID_INVALID':
+                case 'API_EC_USER_DATA_ERROR':
+                    return 'logout';
+                case 'ACCOUNT_HAS_BEEN_SUSPENDED':
+                case 'API_EC_ACC_STOP_BETTING':
+                case 'API_EC_ACC_USER_STOP_BETTING':
+                case 'API_EC_ACC_USER_ALL_STOP_BETTING':
+                    return 'accountSuspended';
                 default:
-                    return "exit";
+                    return 'exit';
             }
         })();
 
-        if (exitMethod !== "none") {
+        if (exitMethod !== 'none') {
             this.exitGame(exitMethod);
         }
     }
@@ -455,7 +455,7 @@ export class UrlHelper {
     /**
      * 退出遊戲
      */
-    public exitGame(exitMethod: string = "exit"): void {
+    public exitGame(exitMethod: string = 'exit'): void {
         // 這裡需要實現 AppTalking.shared.exit(exitMethod);
         console.log(`Exiting game with method: ${exitMethod}`);
         this.leaveGame();
@@ -469,7 +469,7 @@ export const urlHelper = new Proxy({} as UrlHelper, {
         if (!UrlHelper._instance) {
             UrlHelper._instance = UrlHelper.getInstance();
         }
-        
+
         // 返回實例的屬性或方法
         const instance = UrlHelper._instance;
         return instance[prop as keyof UrlHelper];

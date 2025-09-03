@@ -1,6 +1,5 @@
-import { _decorator, Toggle, SpriteFrame, __private, Button, Component, EventHandler, Sprite, } from 'cc';
-const { ccclass, property, type } = _decorator;
-const { Transition } = Button;
+import { _decorator, Toggle, SpriteFrame, Component, EventHandler, Sprite } from 'cc';
+const { ccclass, property } = _decorator;
 
 const ClassName: string = 'TogglePlugin';
 
@@ -9,6 +8,7 @@ export class TogglePlugin extends Component {
 
     @property(Toggle)
     toggleButton: Toggle = null!;
+
     protected _normalSprite: SpriteFrame = null!;
     protected _pressedSprite: SpriteFrame = null!;
     protected _hoverSprite: SpriteFrame = null!;
@@ -16,37 +16,48 @@ export class TogglePlugin extends Component {
 
     @property(SpriteFrame)
     get normalSprite(): SpriteFrame { return this.toggleButton?.normalSprite!; }
-    set normalSprite(value: SpriteFrame) { 
-        if (this.toggleButton) this.toggleButton.normalSprite = value; 
+
+    set normalSprite(value: SpriteFrame) {
+        if (this.toggleButton) this.toggleButton.normalSprite = value;
     }
+
     @property(SpriteFrame)
     get pressedSprite(): SpriteFrame { return this.toggleButton?.pressedSprite!; }
+
     set pressedSprite(value: SpriteFrame) {
         if (this.toggleButton) this.toggleButton.pressedSprite = value;
     }
+
     @property(SpriteFrame)
     get hoverSprite(): SpriteFrame { return this.toggleButton?.hoverSprite!; }
+
     set hoverSprite(value: SpriteFrame) {
         if (this.toggleButton) this.toggleButton.hoverSprite = value;
     }
+
     @property(SpriteFrame)
     get disabledSprite(): SpriteFrame { return this.toggleButton?.disabledSprite!; }
+
     set disabledSprite(value: SpriteFrame) {
         if (this.toggleButton) this.toggleButton.disabledSprite = value;
     }
 
     @property(SpriteFrame)
     protected checkedNormalSprite: SpriteFrame = null!;
+
     @property(SpriteFrame)
     protected checkedPressedSprite: SpriteFrame = null!;
+
     @property(SpriteFrame)
     protected checkedHoverSprite: SpriteFrame = null!;
+
     @property(SpriteFrame)
     protected checkedDisabledSprite: SpriteFrame = null!;
 
     public set checked(bool: boolean) {
         this.toggleButton.isChecked = bool;
     }
+
     public get checked(): boolean {
         return this.toggleButton.isChecked;
     }
@@ -66,6 +77,7 @@ export class TogglePlugin extends Component {
 
         toggle.checkEvents.push(checkEventHandler);
     }
+
     setup() {
         const toggle = this.node.getComponent(Toggle)!;
         this.toggleButton = toggle;
@@ -75,16 +87,17 @@ export class TogglePlugin extends Component {
         this._disabledSprite = toggle.disabledSprite!;
     }
 
-    onCheckedToggle(event: Toggle, customEventData: string) {
+    onCheckedToggle(event: Toggle) {
         if (!this._normalSprite) {
             this.setup();
         }
 
-        const { toggleButton, 
+        const {
+            // toggleButton,
             checkedNormalSprite, checkedHoverSprite, checkedDisabledSprite, checkedPressedSprite,
             _normalSprite, _hoverSprite, _disabledSprite, _pressedSprite
         } = this;
-        
+
         if (event.isChecked) {
             event.target.getComponent(Sprite)!.spriteFrame = checkedNormalSprite;
             event.normalSprite = checkedNormalSprite;

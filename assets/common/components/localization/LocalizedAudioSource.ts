@@ -15,14 +15,17 @@
  * - 節點必須包含 cc.AudioSource 組件
  * - 依賴 LanguageManager 的正確初始化
  */
+
+import { getLanguageManager } from '@common/manager/LanguageManager';
 import { _decorator, AudioSource, Component } from 'cc';
-import { LanguageManager } from '@common/manager/LanguageManager';
+
 const { ccclass, property } = _decorator;
 
 @ccclass('LocalizedAudioSource')
 export class LocalizedAudioSource extends Component {
     @property({ tooltip: 'audioName' })
     public audioName: string = '';
+
     @property({ tooltip: 'loadingPage' })
     public isLoading: boolean = false;
 
@@ -39,7 +42,7 @@ export class LocalizedAudioSource extends Component {
         const audioSource = this.getComponent(AudioSource);
         if (audioSource) {
             const folderName = this.isLoading ? 'loadingPage' : 'gameCore';
-            audioSource.clip = await LanguageManager.getAudioClip(this.audioName, folderName);
+            audioSource.clip = await getLanguageManager().getAudioClip(this.audioName, folderName);
         }
     }
 }

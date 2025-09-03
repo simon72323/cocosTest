@@ -1,28 +1,26 @@
-import { _decorator, Component, easing, Node } from 'cc';
-
-import { getEventManager } from '@common/manager/EventManager';
-import { GameStatus } from '@common/h5GameTools/State';
+import { commonStore } from '@common/h5GameTools/CommonStore';
 import { Comm, Game } from '@common/h5GameTools/GTCommEvents';
+import { GameStatus } from '@common/h5GameTools/State';
+import { getAudioManager } from '@common/manager/AudioManager';
+import { getEventManager } from '@common/manager/EventManager';
 import { Logger } from '@common/utils/Logger';
 import { watch } from '@common/utils/Reactivity';
+import { _decorator, Component, easing, Node } from 'cc';
 
-import { getAudioManager } from '@common/manager/AudioManager';
-
-import { G5251Utils } from '../tools/G5251Utils';
-import { NewLines, onBeginGame, onHitJackpot } from '../types/G5251Interface';
-import { G5251TopMultiple } from '../view/G5251TopMultiple';
-import { REEL_DATA } from '../types/G5251ReelData';
-import { G5251FreeGame } from '../view/G5251FreeGame';
-import { G5251ScoreBar } from '../view/G5251ScoreBar';
-import { G5251BigWin } from '../view/G5251BigWin';
-import { G5251TotalWin } from '../view/G5251TotalWin';
-import { G5251AudioName } from '../types/G5251AudioEnum';
-import { g5251Model } from '../model/G5251Model';
-import { G5251SlotMain } from '../view/G5251SlotMain';
-import { G5251SlotReady } from '../view/G5251SlotReady';
-import { G5251SlotReel } from '../view/G5251SlotReel';
-import { G5251SymbolOdds } from '../view/G5251SymbolOdds';
-import { commonStore } from '@common/h5GameTools/CommonStore';
+import { g5251Model } from '@/games/clearance/script/model/G5251Model';
+import { G5251Utils } from '@/games/clearance/script/tools/G5251Utils';
+import { G5251AudioName } from '@/games/clearance/script/types/G5251AudioEnum';
+import { NewLines, onBeginGame, onHitJackpot } from '@/games/clearance/script/types/G5251Interface';
+import { REEL_DATA } from '@/games/clearance/script/types/G5251ReelData';
+import { G5251BigWin } from '@/games/clearance/script/view/G5251BigWin';
+import { G5251FreeGame } from '@/games/clearance/script/view/G5251FreeGame';
+import { G5251ScoreBar } from '@/games/clearance/script/view/G5251ScoreBar';
+import { G5251SlotMain } from '@/games/clearance/script/view/G5251SlotMain';
+import { G5251SlotReady } from '@/games/clearance/script/view/G5251SlotReady';
+import { G5251SlotReel } from '@/games/clearance/script/view/G5251SlotReel';
+import { G5251SymbolOdds } from '@/games/clearance/script/view/G5251SymbolOdds';
+import { G5251TopMultiple } from '@/games/clearance/script/view/G5251TopMultiple';
+import { G5251TotalWin } from '@/games/clearance/script/view/G5251TotalWin';
 
 const { ccclass, property } = _decorator;
 
@@ -49,20 +47,28 @@ export class G5251Controller extends Component {
     //view免費遊戲相關節點
     @property({ type: G5251SlotMain, group: { name: 'View', id: '2' } })
     private slotMainView: G5251SlotMain = null!;//slot轉動層
+
     @property({ type: G5251SlotReel, group: { name: 'View', id: '2' } })
     private slotReelView: G5251SlotReel = null!;//輪軸層
+
     @property({ type: G5251TopMultiple, group: { name: 'View', id: '2' } })
     private topMultipleView: G5251TopMultiple = null!;//上方倍率介面
+
     @property({ type: G5251ScoreBar, group: { name: 'View', id: '2' } })
     private scoreBarView: G5251ScoreBar = null!;//贏得分數介面
+
     @property({ type: G5251SlotReady, group: { name: 'View', id: '2' } })
     private slotReadyView: G5251SlotReady = null!;//聽牌相關介面
+
     @property({ type: G5251FreeGame, group: { name: 'View', id: '2' } })
     private freeGameView: G5251FreeGame = null!;//免費遊戲剩餘次數介面
+
     @property({ type: G5251BigWin, group: { name: 'View', id: '2' } })
     private bigWinView: G5251BigWin = null!;//大獎介面
+
     @property({ type: G5251TotalWin, group: { name: 'View', id: '2' } })
     private totalWinView: G5251TotalWin = null!;//總贏分介面
+
     @property({ type: G5251SymbolOdds, group: { name: 'View', id: '2' } })
     private symbolOdds: G5251SymbolOdds = null!;//賠率按鈕介面
 
@@ -128,7 +134,7 @@ export class G5251Controller extends Component {
      * @param jackpotMsg // 彩金表演資料
      */
     public async handleBeginGame(beginGameMsg: onBeginGame, jackpotMsg?: onHitJackpot) {
-        Logger.debug('onBeginGame msg', beginGameMsg)
+        Logger.debug('onBeginGame msg', beginGameMsg);
         this._getBeginGameData = true;//紀錄已獲得beginGame資料
         getEventManager().emit('getBeginGameData');//通知獲得beginGame資料
         g5251Model.setBeginGameData(beginGameMsg);//設定表演資料
@@ -139,7 +145,7 @@ export class G5251Controller extends Component {
         }
 
         //監聽等待slotRunOver
-        await new Promise<void>((resolve) => {
+        await new Promise<void>(resolve => {
             const onSlotRunOver = () => {
                 getEventManager().off('slotRunOver', onSlotRunOver);
                 resolve();
@@ -190,7 +196,7 @@ export class G5251Controller extends Component {
         }
         //等待獲得beginGame資料
         if (!this._getBeginGameData) {
-            await new Promise<void>((resolve) => {
+            await new Promise<void>(resolve => {
                 const onGetBeginGameData = () => {
                     getEventManager().off('getBeginGameData', onGetBeginGameData);
                     resolve();
@@ -203,7 +209,7 @@ export class G5251Controller extends Component {
         this.scheduleOnce(() => {
             commonStore.storeMutation.setData('gameStatus', GameStatus.OnReadyToStop);//【公版】啟用立即停止
             this.handStopBtn.active = true;//啟用立即停止按鈕
-        }, 0.1)
+        }, 0.1);
 
         await G5251Utils.Delay(runTime);//等待一個轉動時間
         this.stopSlot(0);//停止轉動(第0行)
@@ -267,7 +273,7 @@ export class G5251Controller extends Component {
      * slot轉動結果
      */
     private async slotResult(): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             const { creditEnd, payTotal, freeGamePayTotal, scatterPayOff } = g5251Model.getResultScore();//結果分數相關資料
             const newLines = g5251Model.getNewLines();//表演用Line資料
             const isFreeMode = g5251Model.getFreeMode();//是否為免費模式
@@ -388,7 +394,7 @@ export class G5251Controller extends Component {
      * @param jackpotMsg 
      */
     private async handleJackpot(jackpotMsg: onHitJackpot): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             //發送彩金表演
             const { JPAmount, JPType } = jackpotMsg.data;
             getEventManager().emit(Comm.HIT_JACKPOT, {
@@ -408,7 +414,7 @@ export class G5251Controller extends Component {
      * @param newLine 該次中獎資料
      */
     private async createWinSymbol(newLines: NewLines): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             const symbolPromises = [];
             for (let i = 0; i < newLines.Grids.length; i++) {
                 for (let j = 0; j < newLines.Grids[i].length; j++) {

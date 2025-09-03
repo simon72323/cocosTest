@@ -1,7 +1,7 @@
-import { Node, Animation, UIOpacity, Vec3, v3, Director, director, Label, sp, tween } from 'cc';
-import { getUrlQuery } from '@common/utils/UrlUtils';
 import { commonStore } from '@common/h5GameTools/CommonStore';
 import { NumberUtils } from '@common/utils/NumberUtils';
+import { getUrlQuery } from '@common/utils/UrlUtils';
+import { Node, Animation, UIOpacity, Vec3, v3, Director, director, Label, sp, tween } from 'cc';
 
 import { DEV } from 'cc/env';
 
@@ -54,7 +54,7 @@ export async function fadeNode(node: Node, type: 'in' | 'out', duration = 0.3) {
 
     uiOpacity.opacity = type === 'in' ? 0 : 255;
 
-    return new Promise<void>((resolve) => {
+    return new Promise<void>(resolve => {
         tween(uiOpacity)
             .to(duration, { opacity: type === 'in' ? 255 : 0 })
             .call(() => resolve())
@@ -152,7 +152,7 @@ export function shuffleArray<T>(array: T[]): T[] {
  * @param anim 動畫名稱
  */
 export function playAnimFinish(animation: Animation, anim: string): Promise<void> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
         if (!animation) {
             resolve();
             return;
@@ -180,7 +180,7 @@ export function playAnimFinish(animation: Animation, anim: string): Promise<void
  * @param anim 動畫名稱
  */
 export function playSpineFinish(skeleton: sp.Skeleton, anim: string): Promise<void> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
         if (!skeleton) {
             resolve();
             return;
@@ -206,7 +206,7 @@ export function playSpineFinish(skeleton: sp.Skeleton, anim: string): Promise<vo
  * 等待下一個 frame
  */
 export function waitNextFrame(): Promise<void> {
-    return new Promise<void>((resolve) => {
+    return new Promise<void>(resolve => {
         director.once(Director.EVENT_AFTER_UPDATE, resolve);
     });
 }
@@ -219,7 +219,7 @@ export function waitNextFrame(): Promise<void> {
  * @param label 分數 label
  */
 export function runScore(time: number, startScore: number, endScore: number, label: Label): Promise<void> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
         const runScore = { score: startScore };//設置起始分
         tween(runScore).to(time, { score: endScore }, {
             onUpdate: () => {

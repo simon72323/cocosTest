@@ -10,12 +10,6 @@ export default class CGButtonEvent extends Component {
     @property(CCString)
     public param: string = '';
 
-    private eventEmitter: EventManager = null!;
-
-    onLoad() {
-        this.eventEmitter = getEventManager().getInstance();
-    }
-
     public start(): void {
         const polygon = this.getComponent(PolygonCollider2D);
         const toggle = this.getComponent(Toggle);
@@ -31,7 +25,7 @@ export default class CGButtonEvent extends Component {
             this.node.on(Node.EventType.TOUCH_END, this.onButtonTouchEnd, this);
         else
             Logger.debug('ButtonEvent:腳本:未找到相關屬性');
-        
+
     }
 
     public onPolygonTouchEnd(event: EventTouch): void {
@@ -41,26 +35,26 @@ export default class CGButtonEvent extends Component {
         if (this.hitTest(subPos)) {
             if (this.getComponent(Button)!.interactable) {
                 // Logger.debug("Polygon點擊 ")
-                this.getEventManager().emit('OnButtonEventPressed', this.param);
+                getEventManager().emit('OnButtonEventPressed', this.param);
             } else
-                this.getEventManager().emit('OnButtonEventPressFailed', this.param);
+                getEventManager().emit('OnButtonEventPressFailed', this.param);
         }
     }
 
     public onToggleTouchEnd(event: EventTouch): void {
         if (this.getComponent(Toggle)!.interactable) {
             // Logger.debug("Toggle點擊 ")
-            this.getEventManager().emit('OnButtonEventPressed', this.param);
+            getEventManager().emit('OnButtonEventPressed', this.param);
         } else
-            this.getEventManager().emit('OnButtonEventPressFailed', this.param);
+            getEventManager().emit('OnButtonEventPressFailed', this.param);
     }
 
     public onButtonTouchEnd(event: EventTouch): void {
         if (this.getComponent(Button)!.interactable) {
             // Logger.debug("Button點擊 ")
-            this.getEventManager().emit('OnButtonEventPressed', this.param);
+            getEventManager().emit('OnButtonEventPressed', this.param);
         } else
-            this.getEventManager().emit('OnButtonEventPressFailed', this.param);
+            getEventManager().emit('OnButtonEventPressFailed', this.param);
     }
 
     private hitTest(point: Vec2): boolean {

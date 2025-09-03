@@ -1,6 +1,7 @@
-import { _decorator } from 'cc';
-import { GTCustomButton } from './GTCustomButton';
 import { NumberUtils } from '@common/utils/NumberUtils';
+import { _decorator } from 'cc';
+
+import { GTCustomButton } from '@/comm/scripts/uicomponents/GTCustomButton';
 const { ccclass } = _decorator;
 
 @ccclass('GTSelectCreditBtn')
@@ -8,8 +9,9 @@ export class GTSelectCreditBtn extends GTCustomButton {
     private _credit: number = 0;
 
     protected onLoad(): void {
-        
+
     }
+
     /**
      * 
      * @param credit 
@@ -25,11 +27,12 @@ export class GTSelectCreditBtn extends GTCustomButton {
                 thousandth: true,           // 使用千位分隔符
                 keepDecimal: true,         // 不保留小數部分，轉為整數
                 isKFormat: true            // 使用"K"格式顯示
-              };
+            };
 
             this.setLabelStrings(NumberUtils.formatNumber(param));
         }
     }
+
     public getCredit():number{
         return this._credit;
     }

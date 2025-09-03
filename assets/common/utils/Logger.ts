@@ -27,15 +27,15 @@ export class Logger {
     }
 
     public static log(...param: any[]): void {
-        console.log(`[LOG]`, ...param);
+        console.log('[LOG]', ...param);
     }
 
     public static warn(...params: any[]): void {
-        console.warn(`[WARN]`, ...params);
+        console.warn('[WARN]', ...params);
     }
 
     public static error(...params: any[]): void {
-        console.error(`[ERROR]`, ...params);
+        console.error('[ERROR]', ...params);
     }
 
     public static getAt(): string {

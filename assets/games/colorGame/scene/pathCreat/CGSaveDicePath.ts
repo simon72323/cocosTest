@@ -30,14 +30,15 @@ export class CGSaveDicePath extends Component {
     onLoad() {
         PhysicsSystem.instance.fixedTimeStep = 1 / 50;  // 將更新頻率設置為50次每秒
     }
+
     async start() {
-        await new Promise<void>((resolve) => {
-            assetManager.loadBundle("colorGame", (err, bundle) => {
+        await new Promise<void>(resolve => {
+            assetManager.loadBundle('colorGame', (err, bundle) => {
                 if (err) {
                     console.error('Failed to load pako:', err);
                     return;
                 }
-                bundle.load(`script/tools/pako/pakoMin`, TextAsset, async (err: Error | null, asset) => {
+                bundle.load('script/tools/pako/pakoMin', TextAsset, async (err: Error | null, asset) => {
                     const pakoScript = asset.text;
                     const scriptElement = document.createElement('script');
                     scriptElement.textContent = pakoScript;
@@ -64,7 +65,7 @@ export class CGSaveDicePath extends Component {
 
         this.scheduleOnce(() => {
             this.createDice();
-        }, 1)
+        }, 1);
     }
 
     /**
@@ -84,7 +85,7 @@ export class CGSaveDicePath extends Component {
             this.node.removeAllChildren();//移除所有盒子
             this.scheduleOnce(() => {
                 this.createDice();//重新生成顏色盒子
-            }, 0.5)
+            }, 0.5);
         }
     }
 
@@ -92,7 +93,7 @@ export class CGSaveDicePath extends Component {
      * 開始運行錄製
      */
     async startRun(): Promise<void> {
-        return new Promise<void>((resolve) => {
+        return new Promise<void>(resolve => {
             // this.schedule(async () => {
             this.pathData = [];//清空資料
             //初始化所有骰子位置
@@ -137,7 +138,7 @@ export class CGSaveDicePath extends Component {
 
                 let newPos = this.roundVector3(diceNode.children[0].getPosition(), diceNode.children[1].getPosition(), diceNode.children[2].getPosition());
                 let newRotate = this.roundQuat(diceNode.children[0].getRotation(), diceNode.children[1].getRotation(), diceNode.children[2].getRotation());
-                let pathDataMain: PathInfo = { pos: [], rotate: [], diceNumber: [] }
+                let pathDataMain: PathInfo = { pos: [], rotate: [], diceNumber: [] };
                 pathDataMain.pos.push(newPos);//寫入初始位置
                 pathDataMain.rotate.push(newRotate);//寫入初始旋轉
                 this.pathData.push(pathDataMain);
@@ -146,7 +147,7 @@ export class CGSaveDicePath extends Component {
                 boxMove.setRotationFromEuler(new Vec3(-90, 180, 0));//初始化翻板動畫
                 this.scheduleOnce(() => {
                     boxMove.getComponent(Animation)!.play();//播放翻板動畫
-                }, 0.2)
+                }, 0.2);
             }
             // this.boxMove.setRotationFromEuler(new Vec3(-90, 180, 0));//初始化翻板動畫
             this.scheduleOnce(() => {
@@ -172,7 +173,7 @@ export class CGSaveDicePath extends Component {
                         this.node.children[i].children[j].getComponent(RigidBody)!.setAngularVelocity(randomAngular);
                     }
                 }
-            }, 0.3)
+            }, 0.3);
             // this.boxMove.getComponent(Animation).play();//播放翻板動畫
             this.scheduleOnce(() => {
                 this.stopRecording();
@@ -197,17 +198,18 @@ export class CGSaveDicePath extends Component {
                 // if (this.idNum > 999)
                 // this.saveDataAsJson();
                 resolve();
-            }, 5)
+            }, 5);
         });
         // }, 5.5, 9, 0.01)
     }
 
     // 確保四元數一致性
     ensureQuaternionConsistency(q1: Quat, q2: Quat): Quat {
+        let tempQ2 = q2;
         if (Quat.dot(q1, q2) < 0) {
-            q2 = new Quat(-q2.x, -q2.y, -q2.z, -q2.w);
+            tempQ2 = new Quat(-q2.x, -q2.y, -q2.z, -q2.w);
         }
-        return q2;
+        return tempQ2;
     }
 
     //停止錄製
@@ -220,7 +222,7 @@ export class CGSaveDicePath extends Component {
         }
     }
 
-    update(deltaTime: number) {
+    update() {
         if (this.isRecording) {
             // this.timer += deltaTime;
             // if (this.timer > this.saveFrameTime) {
@@ -276,7 +278,7 @@ export class CGSaveDicePath extends Component {
 
     //  -0 轉 0
     normalizeZero(value: number): number {
-        return value === -0 ? 0 : value;
+        return Object.is(value, -0) ? 0 : value;
     }
 
     //朝上點數判斷(回傳點數)
@@ -300,7 +302,7 @@ export class CGSaveDicePath extends Component {
             this.normalizeZero(Math.round(vec3.x * 100)),
             this.normalizeZero(Math.round(vec3.y * 100)),
             this.normalizeZero(Math.round(vec3.z * 100))
-        ]
+        ];
     }
 
     //Quat轉換至小數點第2位
@@ -318,7 +320,7 @@ export class CGSaveDicePath extends Component {
             this.normalizeZero(Math.round(quat3.y * 1000)),
             this.normalizeZero(Math.round(quat3.z * 1000)),
             this.normalizeZero(Math.round(quat3.w * 1000))
-        ]
+        ];
     }
 
     //保存json格式
@@ -335,11 +337,11 @@ export class CGSaveDicePath extends Component {
         });
         const saveJson = false;
         if (saveJson) {
-            const fileName = "CGPath" + id + ".json";
+            const fileName = 'CGPath' + id + '.json';
             this.saveToJsonFile(jsonData, fileName);
             //Json壓縮Gzip格式
         } else {
-            const fileName = "CGPath" + id + ".bin";
+            const fileName = 'CGPath' + id + '.bin';
             // 使用 pako 進行 gzip 壓縮
             const uint8Array = new TextEncoder().encode(jsonData);
             const compressedData = this.pako.deflate(uint8Array);

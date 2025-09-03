@@ -1,14 +1,15 @@
-import { _decorator, Animation, EventTouch, Label, Node, Sprite, sp, UIOpacity, tween } from 'cc';
-import { GTCustomButton } from './GTCustomButton';
-import { GTLoaderEventType } from '../comm/GTLoaderEventType';
 import { commonStore } from '@common/h5GameTools/CommonStore';
+import { Game } from '@common/h5GameTools/GTCommEvents';
+import { GameStatus } from '@common/h5GameTools/State';
+import { getEventManager } from '@common/manager/EventManager';
 import { Logger } from '@common/utils/Logger';
 import { NumberUtils } from '@common/utils/NumberUtils';
 import { watch } from '@common/utils/Reactivity';
 import { urlHelper } from '@common/utils/UrlHelper';
-import { getEventManager } from '@common/manager/EventManager';
-import { GameStatus } from '@common/h5GameTools/State';
-import { Game } from '@common/h5GameTools/GTCommEvents';
+import { _decorator, Animation, Label, Node, Sprite, sp, UIOpacity, tween } from 'cc';
+
+import { GTLoaderEventType } from '@/comm/scripts/comm/GTLoaderEventType';
+import { GTCustomButton } from '@/comm/scripts/uicomponents/GTCustomButton';
 
 
 const { ccclass, property } = _decorator;
@@ -111,7 +112,7 @@ export class GTSpintBtn extends GTCustomButton {
      * 開始旋轉
      */
     public async startSpin(): Promise<void> {
-        Logger.debug("開始旋轉");
+        Logger.debug('開始旋轉');
         this.isSpinning = true;
         this._spinAnimation(true);
         this._resetSpinSpine();
@@ -137,7 +138,7 @@ export class GTSpintBtn extends GTCustomButton {
      * 停止自動旋轉
      */
     public stopAutoSpin(): void {
-        Logger.debug("關閉自動旋轉");
+        Logger.debug('關閉自動旋轉');
         this._maxAutoSpinCount = 0;
         this._updateAutoLabel(0);
         this._updateInfiniteSprite();
@@ -164,7 +165,7 @@ export class GTSpintBtn extends GTCustomButton {
 
         this.setInteractableTrue();
         this._spinAnimation(false);
-        
+
         await this._resetSpinSpine();
         this._playSpinSpineIdle();
 
@@ -176,7 +177,7 @@ export class GTSpintBtn extends GTCustomButton {
      * 處理按下旋轉按鈕的邏輯
      * @param event 觸摸事件
      */
-    protected _onTouchEnded(event?: EventTouch): void {
+    protected _onTouchEnded(): void {
         Logger.debug(`按下按鈕 --- GTSpintBtn, 可交互: ${this.interactable}`);
         if (this.interactable) {
             getEventManager().emit(GTLoaderEventType.SPIN_BTN_CLICK, this);
@@ -230,7 +231,7 @@ export class GTSpintBtn extends GTCustomButton {
             return Promise.resolve();
         }
 
-        this._resettingPromise = new Promise<void>(async (resolve) => {
+        this._resettingPromise = new Promise<void>(async resolve => {
             try {
                 const uiOpacity = this.spinSpine.getComponent(UIOpacity)! || this.spinSpine.addComponent(UIOpacity)!;
 
@@ -245,10 +246,10 @@ export class GTSpintBtn extends GTCustomButton {
                 this.spinSpine.animation = null!;
                 this.spinSpine.enabled = false;
                 uiOpacity.opacity = 255;
-                
+
                 resolve();
             } catch (error) {
-                Logger.error("Error during _resetSpinSpine:", error);
+                Logger.error('Error during _resetSpinSpine:', error);
                 resolve();
             } finally {
                 this._resettingPromise = null;
@@ -332,7 +333,7 @@ export class GTSpintBtn extends GTCustomButton {
             }else {
                 animState.speed = commonStore.storeState.isTurbo ? 9 : 6;
             }
-            
+
             // animation.pause();
             animation.resume();
         } else {

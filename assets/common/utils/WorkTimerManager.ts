@@ -21,7 +21,7 @@
  * - 通過消息傳遞機制與主線程通信
  * - 自動管理計時器的創建和清理
  */
-import { _decorator, Component, Node, director } from "cc";
+import { _decorator, Component, Node, director } from 'cc';
 const { ccclass } = _decorator;
 
 @ccclass('WorkTimerManager')
@@ -54,6 +54,7 @@ export class WorkTimerManager extends Component {
             }
         });
     `;
+
     private worker: Worker | null = null;
 
     /**
@@ -110,14 +111,14 @@ export class WorkTimerManager extends Component {
         // 檢查瀏覽器是否支援必要的 API
         if (window.URL && window.Blob && window.Worker && !this.worker) {
             // 將 Worker 程式碼轉換為 Blob 物件
-            const blob = new Blob([this.workerContent], { type: "text/javascript" });
+            const blob = new Blob([this.workerContent], { type: 'text/javascript' });
             const url = URL.createObjectURL(blob);
             const worker = new Worker(url);
             // 釋放 URL 物件
             URL.revokeObjectURL(url);
 
             // 監聽來自 Worker 的消息
-            worker.addEventListener("message", ({ data }) => {
+            worker.addEventListener('message', ({ data }) => {
                 const { id } = data;
                 const timeout = this.timeouts.get(id);
                 if (timeout) {
@@ -159,7 +160,7 @@ export class WorkTimerManager extends Component {
         // 儲存回調函數和參數
         this.timeouts.set(id, { fn: handler, args });
         // 向 Worker 發送消息，通知其設置定時器
-        this.worker?.postMessage({ command: "setTimeout", id, timeout });
+        this.worker?.postMessage({ command: 'setTimeout', id, timeout });
         return id;
     }
 
@@ -169,7 +170,7 @@ export class WorkTimerManager extends Component {
      */
     private _clearTimeout(id: number) {
         // 向 Worker 發送消息，通知其清除定時器
-        this.worker?.postMessage({ command: "clearTimeout", id });
+        this.worker?.postMessage({ command: 'clearTimeout', id });
         // 刪除定時器
         this.timeouts.delete(id);
     }

@@ -9,20 +9,20 @@ export enum GameStatus {
     // OnGamePlaying = 'OnGamePlaying',
     // OnGameEnd = 'OnGameEnd',
     /** 準備換分 */
-    OnExchangeCredit = "OnExchangeCredit",
+    OnExchangeCredit = 'OnExchangeCredit',
 
     /** 遊戲設置準備完成 */
-    OnGameSetupReady = "OnGameSetupReady",
+    OnGameSetupReady = 'OnGameSetupReady',
     /** 遊戲準備就緒 */
-    OnReady = "OnGameReady",
+    OnReady = 'OnGameReady',
     /** 收到遊戲開始結果 */
-    OnGetBeginGameResult = "OnGetBeginGameResult",
+    OnGetBeginGameResult = 'OnGetBeginGameResult',
     /** 準備停止遊戲 */
-    OnReadyToStop = "OnReadyToStop",
+    OnReadyToStop = 'OnReadyToStop',
     /** 所有轉輪停止 */
-    OnReelAllStop = "OnReelAllStop",
+    OnReelAllStop = 'OnReelAllStop',
     /** 餘額不足 */
-    OnNotEnough = "OnNotEnough"
+    OnNotEnough = 'OnNotEnough'
 }
 
 /**
@@ -52,13 +52,13 @@ export enum SiteType {
  */
 function getSiteType(site: string): SiteType {
     switch (site) {
-        case "XC":
+        case 'XC':
             return SiteType.XC;
-        case "LM":
+        case 'LM':
             return SiteType.LM;
-        case "BBIN":
+        case 'BBIN':
             return SiteType.BB;
-        case "BBGP":
+        case 'BBGP':
             return SiteType.BBGP;
         default:
             return SiteType.BB;
@@ -70,7 +70,7 @@ function getSiteType(site: string): SiteType {
  * @param siteType 站點類型
  * @returns 自定義配置對象
  */
-function getCustomConfig(siteType: SiteType): any {
+function getCustomConfig(_siteType: SiteType): any {
     // 這裡可以根據不同的站點類型返回不同的配置
     // 暫時返回空對象，您可以根據需要擴展
     return {};
@@ -130,28 +130,28 @@ export interface StoreState {
  */
 export function getBaseStoreState(): StoreState {
     const siteType = getSiteType(urlHelper.site);
-    
+
     return {
-        gameCoreVersion: "1.0.0",
-        userName: "",
+        gameCoreVersion: '1.0.0',
+        userName: '',
         bgAudioOn: true,
         effectAudioOn: true,
         isTurbo: false,
         gameStatus: GameStatus.OnGameInit,
-        hallID: "",
+        hallID: '',
         userID: 0,
-        gameCode: "",
+        gameCode: '',
         jackpot: 0,
         balance: 0,
         credit: 0,
-        wagersID: "",
+        wagersID: '',
         payoff: 0,
         bet: 0,
         totalBet: 0,
         betCreditList: [],
         isCash: false,
         isGCP: false,
-        isXC: urlHelper.site === "XC",
+        isXC: urlHelper.site === 'XC',
         siteType,
         customConfig: getCustomConfig(siteType),
         noExchange: false,
@@ -161,19 +161,19 @@ export function getBaseStoreState(): StoreState {
         isReSpin: false,
         isExtraBet: false,
         showBuyFreeGameDialog: false,
-        currency: "",
+        currency: '',
         i18n: {},
         autoExchange: false,
         exchangeCredit: 0,
         exchangeAll: false,
         enableJP: urlHelper.JpOpen,
         exchangeRecord: [],
-        base: "1:1",
+        base: '1:1',
         baseList: [],
         betLevel: 1,
         maxBetLevel: 10,
         betLevelBase: 50,
-        direction: "P"
+        direction: 'P'
     };
 }
 

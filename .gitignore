@@ -3,10 +3,10 @@
 # Cocos Creator 3D Project
 #///////////////////////////
 library/
-#node_modules/
+node_modules/
 temp/
 local/
-#build/
+build/
 profiles/
 native
 #//////////////////////////

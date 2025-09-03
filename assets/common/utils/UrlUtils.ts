@@ -3,22 +3,22 @@
  * 提供 URL 參數解析和 Cookie 操作功能
  */
 export class UrlUtils {
-    
+
     /**
      * 獲取 URL 查詢參數值
      * @param name 參數名稱
      * @returns 參數值，如果不存在則返回空字符串
      */
     public static getUrlQuery(name: string): string {
-        const formatName = name.replace(/([[\]])/g, "\\$1");
+        const formatName = name.replace(/([[\]])/g, '\\$1');
         const reg = new RegExp(`[\\?&]${formatName}=([^&#]*)`);
         const result = reg.exec(location.search);
-        
+
         if (result && result[1]) {
-            return decodeURIComponent(result[1].replace(/\+/g, " "));
+            return decodeURIComponent(result[1].replace(/\+/g, ' '));
         }
-        
-        return "";
+
+        return '';
     }
 
     /**
@@ -30,12 +30,12 @@ export class UrlUtils {
         const decodedCookie = decodeURIComponent(document.cookie);
         const reg = new RegExp(`(^|;\\s?)${cookieName}=([^;]*)(;|$)`);
         const result = reg.exec(decodedCookie);
-        
+
         if (result && result[2]) {
             return result[2];
         }
-        
-        return "";
+
+        return '';
     }
 
     /**
@@ -52,27 +52,27 @@ export class UrlUtils {
         sameSite?: 'Strict' | 'Lax' | 'None';
     } = {}): void {
         let cookieString = `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
-        
+
         if (options.expires) {
             cookieString += `; expires=${options.expires.toUTCString()}`;
         }
-        
+
         if (options.path) {
             cookieString += `; path=${options.path}`;
         }
-        
+
         if (options.domain) {
             cookieString += `; domain=${options.domain}`;
         }
-        
+
         if (options.secure) {
             cookieString += '; secure';
         }
-        
+
         if (options.sameSite) {
             cookieString += `; samesite=${options.sameSite}`;
         }
-        
+
         document.cookie = cookieString;
     }
 
@@ -86,7 +86,7 @@ export class UrlUtils {
         this.setCookie(name, '', {
             expires: new Date(0),
             path: path || '/',
-            domain: domain
+            domain
         });
     }
 
@@ -96,7 +96,7 @@ export class UrlUtils {
      * @returns 是否包含該參數
      */
     public static hasUrlParam(name: string): boolean {
-        return this.getUrlQuery(name) !== "";
+        return this.getUrlQuery(name) !== '';
     }
 
     /**
@@ -106,11 +106,11 @@ export class UrlUtils {
     public static getAllUrlParams(): Record<string, string> {
         const params: Record<string, string> = {};
         const searchParams = new URLSearchParams(location.search);
-        
+
         for (const [key, value] of searchParams.entries()) {
-            params[key] = decodeURIComponent(value.replace(/\+/g, " "));
+            params[key] = decodeURIComponent(value.replace(/\+/g, ' '));
         }
-        
+
         return params;
     }
 
@@ -121,13 +121,13 @@ export class UrlUtils {
      */
     public static buildQueryString(params: Record<string, any>): string {
         const searchParams = new URLSearchParams();
-        
+
         for (const [key, value] of Object.entries(params)) {
             if (value !== null && value !== undefined) {
                 searchParams.append(key, String(value));
             }
         }
-        
+
         return searchParams.toString();
     }
 
@@ -139,11 +139,11 @@ export class UrlUtils {
     public static parseQueryString(queryString: string): Record<string, string> {
         const params: Record<string, string> = {};
         const searchParams = new URLSearchParams(queryString);
-        
+
         for (const [key, value] of searchParams.entries()) {
-            params[key] = decodeURIComponent(value.replace(/\+/g, " "));
+            params[key] = decodeURIComponent(value.replace(/\+/g, ' '));
         }
-        
+
         return params;
     }
 }

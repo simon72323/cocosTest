@@ -1,19 +1,26 @@
-import { _decorator, Component, Label, Node, Prefab, UITransform, Sprite, Vec3, UIOpacity, Button, tween, Tween } from 'cc';
-import { REEL_DATA } from '../types/G5251ReelData';
-import { getPoolManager } from '@common/manager/PoolManager';
-import { G5251Resources } from '../controller/G5251Resources';
 import { getAudioManager } from '@common/manager/AudioManager';
-import { G5251AudioName } from '../types/G5251AudioEnum';
+import { getPoolManager } from '@common/manager/PoolManager';
+import { _decorator, Component, Label, Node, Prefab, UITransform, Sprite, Vec3, UIOpacity, Button, tween, Tween } from 'cc';
+
+import { G5251Resources } from '@/games/clearance/script/controller/G5251Resources';
+
+
+import { G5251AudioName } from '@/games/clearance/script/types/G5251AudioEnum';
+
+import { REEL_DATA } from '@/games/clearance/script/types/G5251ReelData';
 const { ccclass, property } = _decorator;
 
 @ccclass('G5251SymbolOdds')
 export class G5251SymbolOdds extends Component {
     @property(Prefab)
     private oddsSymbol: Prefab = null!;//賠率符號
+
     @property(Prefab)
     private oddsWild: Prefab = null!;//賠率Wild
+
     @property(Prefab)
     private oddsScatter: Prefab = null!;//賠率Scatter
+
     @property(Node)
     private allBlack: Node = null!;//所有黑色節點
 
@@ -62,8 +69,8 @@ export class G5251SymbolOdds extends Component {
                 symbolBtn.addComponent(Button);
                 const eventHandler = new Component.EventHandler();
                 eventHandler.target = this.node;
-                eventHandler.component = "G5251SymbolOdds";
-                eventHandler.handler = "showOddsInfo";
+                eventHandler.component = 'G5251SymbolOdds';
+                eventHandler.handler = 'showOddsInfo';
                 eventHandler.customEventData = posID.toString();
                 symbolBtn.getComponent(Button)!.clickEvents.push(eventHandler);
             }
@@ -130,7 +137,7 @@ export class G5251SymbolOdds extends Component {
         this._oddNode.getChildByName('btn')!.scale = posID > 11 ? new Vec3(-1, 1, 1) : new Vec3(1, 1, 1);
         this._oddNode.parent = this._oddsShow;
         this._oddNode.position = this._oddsBtns.children[posID].position;
-        
+
         //彈出動態
         this._oddNode.scale = new Vec3(0.9, 0.9, 1);
         this._oddNode.getComponent(UIOpacity)!.opacity = 0;
@@ -142,8 +149,8 @@ export class G5251SymbolOdds extends Component {
         if (button.clickEvents.length === 0) {
             const eventHandler = new Component.EventHandler();
             eventHandler.target = this.node;
-            eventHandler.component = "G5251SymbolOdds";
-            eventHandler.handler = "exitOdds";
+            eventHandler.component = 'G5251SymbolOdds';
+            eventHandler.handler = 'exitOdds';
             button.clickEvents.push(eventHandler);
         }
     }
@@ -179,7 +186,7 @@ export class G5251SymbolOdds extends Component {
      * 隱藏遮黑
      */
     private async hideBlack(): Promise<void> {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             tween(this.allBlack.getComponent(UIOpacity)!).to(0.1, { opacity: 0 })
                 .call(() => {
                     this.allBlack.active = false;//隱藏遮黑
@@ -192,7 +199,7 @@ export class G5251SymbolOdds extends Component {
      * 顯示遮黑
      */
     private showBlack() {
-        this.allBlack.getComponent(UIOpacity)!.opacity = 0
+        this.allBlack.getComponent(UIOpacity)!.opacity = 0;
         this.allBlack.active = true;//顯示遮黑
         tween(this.allBlack.getComponent(UIOpacity)!).to(0.1, { opacity: 255 }).start();//淡入
     }

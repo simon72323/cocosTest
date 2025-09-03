@@ -1,16 +1,18 @@
-import { _decorator, Component } from 'cc';
-
-import { getEventManager } from '@common/manager/EventManager';
 import { commonStore } from '@common/h5GameTools/CommonStore';
+import { Comm } from '@common/h5GameTools/GTCommEvents';
+import { getEventManager } from '@common/manager/EventManager';
 import { Logger } from '@common/utils/Logger';
 import { watch } from '@common/utils/Reactivity';
+import { _decorator, Component } from 'cc';
 
-import { onBeginGame, onHitJackpot } from '../data/G5279Interface';
-import { G5279BetState, G5279GameState } from '../data/G5279Enum';
-import { getG5279Model } from '../model/G5279Model';
-import { G5279ReelController } from './G5279ReelController';
-import { G5279SkipController } from './G5279SkipController';
-import { Comm } from '@common/h5GameTools/GTCommEvents';
+
+import { G5279ReelController } from '@/games/catRaider/script/controller/G5279ReelController';
+import { G5279SkipController } from '@/games/catRaider/script/controller/G5279SkipController';
+import { G5279BetState, G5279GameState } from '@/games/catRaider/script/data/G5279Enum';
+import { onBeginGame, onHitJackpot } from '@/games/catRaider/script/data/G5279Interface';
+import { getG5279Model } from '@/games/catRaider/script/model/G5279Model';
+
+
 
 const { ccclass, property } = _decorator;
 
@@ -20,6 +22,7 @@ export class G5279MainController extends Component {
 
     @property(G5279ReelController)
     private reelController: G5279ReelController = null!;//輪軸控制器
+
     @property(G5279SkipController)
     private skipController: G5279SkipController = null!;//跳過控制器
 
@@ -55,7 +58,7 @@ export class G5279MainController extends Component {
      */
     private setupWatchers() {
         watch(() => commonStore.storeState.isTurbo,
-            (isTurbo) => this.updateTimeScale(isTurbo)
+            isTurbo => this.updateTimeScale(isTurbo)
         );
     }
 
@@ -72,8 +75,8 @@ export class G5279MainController extends Component {
      * @param jackpotMsg // 彩金表演資料
      */
     public async handleBeginGame(beginGameMsg: onBeginGame, jackpotMsg?: onHitJackpot) {
-        Logger.debug('onBeginGame msg', beginGameMsg)
-        const { cards, chanceCards, floors } = beginGameMsg.data;
+        Logger.debug('onBeginGame msg', beginGameMsg);
+        const { cards, floors } = beginGameMsg.data;
 
         //需要等盤面清除完畢
         // this.skipController.showSkipBtn();//顯示跳過按鈕
@@ -128,7 +131,7 @@ export class G5279MainController extends Component {
                             await this.reelController.handleChanceResult(nextCards);//使用機會卡
                             break;
                         case 'party':
-                            await this.reelController.handlePartyResult(nextCards)
+                            await this.reelController.handlePartyResult(nextCards);
                             break;
                         case 'hitFree':
                             floorIndex++;//地板資料index++
@@ -163,7 +166,7 @@ export class G5279MainController extends Component {
      * @param jackpotMsg 
      */
     private async handleJackpot(jackpotMsg: onHitJackpot): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             //發送彩金表演
             const { JPAmount, JPType } = jackpotMsg.data;
             getEventManager().emit(Comm.HIT_JACKPOT, {

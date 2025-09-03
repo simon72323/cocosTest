@@ -1,16 +1,17 @@
 
-import { urlHelper } from "@common/utils/UrlHelper";
-import { Logger } from "@common/utils/Logger";
-import { director, resources, SpriteFrame, sys, Vec3, view, screen, tween, Node, Sprite, UIOpacity, ResolutionPolicy, game } from "cc";
-import { gameTypes } from "../../../resources/gameType";
-import { GTLoadingTool } from "./GTLoadingTool";
+import { Logger } from '@common/utils/Logger';
+import { urlHelper } from '@common/utils/UrlHelper';
+import { director, resources, SpriteFrame, sys, Vec3, view, screen, tween, Node, Sprite, UIOpacity, ResolutionPolicy, game } from 'cc';
+
+import { GTLoadingTool } from '@/loading/script/comm/GTLoadingTool';
+import { gameTypes } from '@/resources/gameType';
 
 /**
  * 一個工具類，封裝了所有與 Loading 過程相關的通用方法。
  */
 export class GTLoadingCommTool {
     private static _gifContainer: HTMLDivElement | null = null;
-    
+
     /**
      * 根據 gameType 字串，從 gameTypes 陣列中查找並返回對應的完整遊戲物件。
      * @param gameType 要查找的遊戲類型代碼 (例如 '5030')。
@@ -41,16 +42,16 @@ export class GTLoadingCommTool {
     public static judgeLang(): void {
         let lang = '';
         switch (urlHelper.lang) {
-            case "zh_tw":
-            case "zh-tw":
-            case "tw":
+            case 'zh_tw':
+            case 'zh-tw':
+            case 'tw':
                 lang = 'tw';
                 break;
-            case "zh_cn":
-            case "zh-cn":
-            case "cn":
-            case "ug":
-                lang = 'cn'
+            case 'zh_cn':
+            case 'zh-cn':
+            case 'cn':
+            case 'ug':
+                lang = 'cn';
                 break;
             default:
                 lang = 'en';
@@ -93,7 +94,7 @@ export class GTLoadingCommTool {
         gifContainer.appendChild(gifImage);
         document.body.appendChild(gifContainer);
         gifContainer.style.display = 'none';
-        
+
         GTLoadingCommTool._gifContainer = gifContainer;
         return gifContainer;
     }
@@ -126,57 +127,58 @@ export class GTLoadingCommTool {
         }
         Logger.debug(`handleWindowResize height = ${window.innerHeight} w = ${window.innerWidth}`);
     }
+
     /**
      * 處理視窗大小變化的核心邏輯，特別是針對桌面瀏覽器和行動裝置的適配。
      */
-    public static onResize(): void { 
-        const isDesktop = sys.platform === sys.Platform.DESKTOP_BROWSER; 
-        const w = view.getDesignResolutionSize().width; 
-        const h = view.getDesignResolutionSize().height; 
-        const canvasSize = GTLoadingCommTool.getCanvas()!; 
-        const aspectRatio = canvasSize.height / canvasSize.width; 
-        let policy: number; 
+    public static onResize(): void {
+        const isDesktop = sys.platform === sys.Platform.DESKTOP_BROWSER;
+        const w = view.getDesignResolutionSize().width;
+        const h = view.getDesignResolutionSize().height;
+        const canvasSize = GTLoadingCommTool.getCanvas()!;
+        const aspectRatio = canvasSize.height / canvasSize.width;
+        let policy: number;
         let policyName: string = ''; // 初始化變數
-        
-        if (isDesktop) { 
+
+        if (isDesktop) {
             // 桌面端保持原有的 resize 邏輯，不主動設定適配策略 
             director.root!.resize(screen.windowSize.width, screen.windowSize.height);
-            view.setDesignResolutionSize(w, h, view.getResolutionPolicy()); 
+            view.setDesignResolutionSize(w, h, view.getResolutionPolicy());
         } else{
             // --- 行動裝置適配邏輯 --- 
             // 2. 判斷長寬比是否在安全區間內，透過位移物件來進行適配 
-            if (GTLoadingCommTool.checkNeedRefixNode() || !GTLoadingCommTool.canAutoFix()) { 
+            if (GTLoadingCommTool.checkNeedRefixNode() || !GTLoadingCommTool.canAutoFix()) {
                 // 在安全區間內，使用 Fit Width 
-                policy = ResolutionPolicy.FIXED_WIDTH; 
-                policyName = 'FIXED_WIDTH'; 
-            } else { 
+                policy = ResolutionPolicy.FIXED_WIDTH;
+                policyName = 'FIXED_WIDTH';
+            } else {
                 // 超出安全區間（例如 iPad 或過長的螢幕），切換到 Fit Height 
                 // 以確保核心內容完整顯示，避免過度裁切 
-                policy = ResolutionPolicy.FIXED_HEIGHT; 
-                policyName = 'FIXED_HEIGHT'; 
+                policy = ResolutionPolicy.FIXED_HEIGHT;
+                policyName = 'FIXED_HEIGHT';
             }
-                // view.emit('design-resolution-changed'); 
+            // view.emit('design-resolution-changed'); 
             // 3. 應用解析度策略 // 取 WKWebView 可見範圍（比 screen 準確） 
-            const cw = document.documentElement.clientWidth; 
-            const ch = document.documentElement.clientHeight; 
+            const cw = document.documentElement.clientWidth;
+            const ch = document.documentElement.clientHeight;
             // 設定 canvas CSS 
-            game.canvas!.style.position = "absolute"; 
-            game.canvas!.style.left = "0px"; 
-            game.canvas!.style.top = "0px"; 
+            game.canvas!.style.position = 'absolute';
+            game.canvas!.style.left = '0px';
+            game.canvas!.style.top = '0px';
             game.canvas!.style.width = `${cw}px`;
-            game.canvas!.style.height = `${ch}px`; 
+            game.canvas!.style.height = `${ch}px`;
             director.root!.resize( screen.windowSize.width, screen.windowSize.height );
 
-            view.setDesignResolutionSize(1080, 1920, policy); 
-            view.resizeWithBrowserSize(true); 
+            view.setDesignResolutionSize(1080, 1920, policy);
+            view.resizeWithBrowserSize(true);
             // 4. 觸發視圖更新事件
-            view.emit('canvas-resize'); 
-            Logger.debug(`Mobile set DesignResolutionSize w:${cw} h:${ch}`); 
-        }    
+            view.emit('canvas-resize');
+            Logger.debug(`Mobile set DesignResolutionSize w:${cw} h:${ch}`);
+        }
         Logger.debug(`onResize [ResolutionPolicy] sys.platform: ${sys.platform} resize. 
             Screen: ${canvasSize.width}x${canvasSize.height}, 
             Ratio: ${aspectRatio.toFixed(3)}, 
-            Policy set to: ${policyName},sys.platform: ${sys.platform}`); 
+            Policy set to: ${policyName},sys.platform: ${sys.platform}`);
     }
 
     /**
@@ -261,15 +263,15 @@ export class GTLoadingCommTool {
      * @returns 如果需要修正，則返回 true；否則返回 false。
      */
     public static checkNeedRefixNode(): boolean {
-        
+
         const policy = view.getResolutionPolicy();
         const canvasSize = this.getCanvas()!;
         const aspectRatio = canvasSize.height / canvasSize.width;
-         // 該區間由使用者定義的「寬度」和「高度」安全範圍共同決定
-        const minRatio = 16 / 9.4; 
+        // 該區間由使用者定義的「寬度」和「高度」安全範圍共同決定
+        const minRatio = 16 / 9.4;
         // 桌面端或FixHeight不需要調整上下
         const needRefix = ((aspectRatio >= minRatio));
-        
+
         Logger.debug(`checkNeedRefixNode aspectRatio:${aspectRatio} canvasHeight:${canvasSize.height} canvasWidth:${canvasSize.width} policy:${policy.getContentStrategy().strategy} `);
         return needRefix;
     }
@@ -277,17 +279,17 @@ export class GTLoadingCommTool {
     public static canAutoFix(): boolean{
         const isDesktop = sys.platform === sys.Platform.DESKTOP_BROWSER;
         const isDevMode = this.checkIsDevMode();
-        
+
         // 添加调试信息
         Logger.debug(`canAutoFix - gameType: ${urlHelper.gameType}`);
         const gameTypeObject = this.getGameTypeObject(urlHelper.gameType);
-        Logger.debug(`canAutoFix - gameTypeObject:`, gameTypeObject);
-        
+        Logger.debug('canAutoFix - gameTypeObject:', gameTypeObject);
+
         if (!gameTypeObject) {
             Logger.warn(`canAutoFix - 找不到游戏类型 ${urlHelper.gameType}，使用默认值 false`);
             return false;
         }
-        
+
         const gameAutoFix = gameTypeObject.autoFixView;
         const autoFix = !isDesktop &&( isDevMode || gameAutoFix );
         Logger.debug(`canAutoFix autoFix:${autoFix}  `);
@@ -342,9 +344,9 @@ export class GTLoadingCommTool {
         }
         return false;
     }
-    
+
     private static _extractDomain(url: string): string {
-        const regex = /^(?:https?:\/\/)?(?:www\.)?([^\/:]+)/;
+        const regex = /^(?:https?:\/\/)?(?:www\.)?([^/:]+)/;
         const match = url.match(regex);
         if (match) {
             const domainParts = match[1].split('.');

@@ -10,11 +10,11 @@ const toTypeString = (value: any): string => objectToString.call(value);
  * 類型檢查函數
  */
 export const isArray = Array.isArray;
-export const isMap = (val: any): boolean => toTypeString(val) === "[object Map]";
-export const isSet = (val: any): boolean => toTypeString(val) === "[object Set]";
-export const isFunction = (val: any): boolean => typeof val === "function";
-export const isObject = (val: any): boolean => val !== null && typeof val === "object";
-export const isPlainObject = (val: any): boolean => toTypeString(val) === "[object Object]";
+export const isMap = (val: any): boolean => toTypeString(val) === '[object Map]';
+export const isSet = (val: any): boolean => toTypeString(val) === '[object Set]';
+export const isFunction = (val: any): boolean => typeof val === 'function';
+export const isObject = (val: any): boolean => val !== null && typeof val === 'object';
+export const isPlainObject = (val: any): boolean => toTypeString(val) === '[object Object]';
 export const isPromise = (val: any): boolean => isObject(val) && isFunction(val.then) && isFunction(val.catch);
 
 /**
@@ -25,7 +25,7 @@ export const hasChanged = (value: any, oldValue: any): boolean => !Object.is(val
 /**
  * 常量定義
  */
-const __DEVELOPMENT__ = getUrlQuery("isDev") === "true";
+const __DEVELOPMENT__ = getUrlQuery('isDev') === 'true';
 export const EMPTY_OBJ = __DEVELOPMENT__ ? Object.freeze({}) : {};
 export const NOOP = (): void => { };
 export const INITIAL_WATCHER_VALUE = {};
@@ -34,41 +34,41 @@ export const INITIAL_WATCHER_VALUE = {};
  * 錯誤代碼枚舉
  */
 export enum ErrorCodes {
-    WATCH_GETTER = "watcher getter",
-    WATCH_CALLBACK = "watcher callback",
-    WATCH_CLEANUP = "watcher cleanup function"
+    WATCH_GETTER = 'watcher getter',
+    WATCH_CALLBACK = 'watcher callback',
+    WATCH_CLEANUP = 'watcher cleanup function'
 }
 
 /**
  * 錯誤處理函數
  */
-function callWithErrorHandling(fn: Function, type: string, args?: any[]): any {
-    let res: any;
-    try {
-        res = args ? fn(...args) : fn();
-    } catch (err) {
-        console.warn(type, err);
-    }
-    return res;
-}
+// function callWithErrorHandling(fn: Function, type: string, args?: any[]): any {
+//     let res: any;
+//     try {
+//         res = args ? fn(...args) : fn();
+//     } catch (err) {
+//         console.warn(type, err);
+//     }
+//     return res;
+// }
 
-function callWithAsyncErrorHandling(fn: Function | Function[], type: string, args?: any[]): any {
-    if (isFunction(fn)) {
-        const res = callWithErrorHandling(fn as Function, type, args);
-        if (res && isPromise(res)) {
-            res.catch((err: any) => {
-                console.warn(err);
-            });
-        }
-        return res;
-    }
+// function callWithAsyncErrorHandling(fn: Function | Function[], type: string, args?: any[]): any {
+//     if (isFunction(fn)) {
+//         const res = callWithErrorHandling(fn as Function, type, args);
+//         if (res && isPromise(res)) {
+//             res.catch((err: any) => {
+//                 console.warn(err);
+//             });
+//         }
+//         return res;
+//     }
 
-    const values: any[] = [];
-    for (let i = 0; i < (fn as Function[]).length; i++) {
-        values.push(callWithAsyncErrorHandling((fn as Function[])[i], type, args));
-    }
-    return values;
-}
+//     const values: any[] = [];
+//     for (let i = 0; i < (fn as Function[]).length; i++) {
+//         values.push(callWithAsyncErrorHandling((fn as Function[])[i], type, args));
+//     }
+//     return values;
+// }
 
 /**
  * 清理包管理
@@ -164,7 +164,7 @@ export class SimpleReactiveSystem {
      * 觸發監聽器
      */
     private triggerWatchers(key: string, newValue: any, oldValue: any): void {
-        this.watchers.forEach((watchers) => {
+        this.watchers.forEach(watchers => {
             watchers.forEach(watcher => {
                 try {
                     watcher(newValue, oldValue);
@@ -179,21 +179,15 @@ export class SimpleReactiveSystem {
 /**
  * 導出簡化的響應式函數
  */
-export const reactive = <T extends object>(obj: T): T => {
-    return SimpleReactiveSystem.getInstance().reactive(obj);
-};
+export const reactive = <T extends object>(obj: T): T => SimpleReactiveSystem.getInstance().reactive(obj);
 
-export const ref = <T>(value: T): { value: T } => {
-    return SimpleReactiveSystem.getInstance().ref(value);
-};
+export const ref = <T>(value: T): { value: T } => SimpleReactiveSystem.getInstance().ref(value);
 
 export const watch = <T>(
     source: (() => T) | { value: T },
     callback: (newValue: T, oldValue: T) => void,
     options: { immediate?: boolean; deep?: boolean } = {}
-): (() => void) => {
-    return SimpleReactiveSystem.getInstance().watch(source, callback, options);
-};
+): (() => void) => SimpleReactiveSystem.getInstance().watch(source, callback, options);
 
 /**
  * 計算屬性
@@ -252,20 +246,18 @@ export const unref = <T>(ref: T | { value: T }): T => {
     return ref;
 };
 
-export const toRef = <T extends object, K extends keyof T>(object: T, key: K) => {
-    return {
-        get value() {
-            return object[key];
-        },
-        set value(newValue: T[K]) {
-            object[key] = newValue;
-        }
-    };
-};
+export const toRef = <T extends object, K extends keyof T>(object: T, key: K) => ({
+    get value() {
+        return object[key];
+    },
+    set value(newValue: T[K]) {
+        object[key] = newValue;
+    }
+});
 
 export const toRefs = <T extends object>(object: T) => {
     const ret: Record<string, any> = {};
-    for (const key in object) {
+    for (const key of Object.keys(object)) {
         ret[key] = toRef(object, key as keyof T);
     }
     return ret;
@@ -297,14 +289,12 @@ export function disWatchAll(): void {
  * 其他必要的導出（保持兼容性）
  */
 export const ITERATE_KEY = Symbol('iterate');
-export const awaitRefChanged = <T>(refValue: { value: T }): Promise<{ newValue: T; oldValue: T }> => {
-    return new Promise((resolve) => {
-        const clearWatch = watch(refValue, (newValue, oldValue) => {
-            resolve({ newValue, oldValue });
-            clearWatch();
-        });
+export const awaitRefChanged = <T>(refValue: { value: T }): Promise<{ newValue: T; oldValue: T }> => new Promise(resolve => {
+    const clearWatch = watch(refValue, (newValue, oldValue) => {
+        resolve({ newValue, oldValue });
+        clearWatch();
     });
-};
+});
 
 // 導出簡化版本的函數
 export const computedFixed = computed;

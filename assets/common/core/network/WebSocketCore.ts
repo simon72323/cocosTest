@@ -1,4 +1,4 @@
-import { WebSocketEvent } from "./WebSocketEvent";
+import { WebSocketEvent } from '@/common/core/network/WebSocketEvent';
 
 // assets/common/core/webSocket/WebSocketCore.ts
 export class WebSocketCore {
@@ -78,31 +78,32 @@ export class WebSocketCore {
             this.emit(WebSocketEvent.NETWORK_STATUS, { status: 'open' });
         };
 
-        this.ws.onmessage = (event) => {
+        this.ws.onmessage = event => {
             try {
                 let data = event.data;
-                
+
                 // 如果使用加密，先解密
                 if (this.useCrypto) {
                     data = this.useCrypto.decrypt(data);
                 }
-                
+
                 const parsedData = JSON.parse(data);
                 this.emit(WebSocketEvent.NETWORK_RESULT, parsedData);
             } catch (error) {
+                console.error('WebSocket onmessage error:', error);
                 this.emit(WebSocketEvent.NETWORK_RESULT, { raw: event.data });
             }
         };
 
-        this.ws.onerror = (error) => {
+        this.ws.onerror = error => {
             this.isConnecting = false;
             this.emit(WebSocketEvent.NETWORK_STATUS, { status: 'error', error });
         };
 
-        this.ws.onclose = (event) => {
+        this.ws.onclose = event => {
             this.isConnecting = false;
             this.emit(WebSocketEvent.NETWORK_STATUS, { status: 'close', code: event.code, reason: event.reason });
-            
+
             if (!event.wasClean && this.reconnectAttempts < this.maxReconnectAttempts) {
                 this.scheduleReconnect();
             }
@@ -116,12 +117,12 @@ export class WebSocketCore {
     public callServer(data: any): void {
         if (this.isConnected) {
             let message = JSON.stringify(data);
-            
+
             // 如果使用加密，先加密
             if (this.useCrypto) {
                 message = this.useCrypto.encrypt(message);
             }
-            
+
             this.ws!.send(message);
         } else {
             console.error('WebSocket is not connected');
@@ -163,7 +164,7 @@ export class WebSocketCore {
     private scheduleReconnect(): void {
         this.reconnectAttempts++;
         const delay = this.reconnectDelay * Math.pow(2, this.reconnectAttempts - 1);
-        
+
         setTimeout(() => {
             if (!this.isConnected) {
                 this.connect(this.url);

@@ -117,7 +117,7 @@ export class GTMEvent {
     public CORE_GAME_CALLBET_CLICK(): void {
         this.updateBetBaseData();
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_MAIN_CALLBET-CLICK`);
+        Logger.debug('GTM Event: GT_CASINO_MAIN_CALLBET-CLICK');
     }
 
     /**
@@ -129,7 +129,7 @@ export class GTMEvent {
     public CORE_GAME_CALLBET(): void {
         this.updateBetBaseData();
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_MAIN_CALLBET`);
+        Logger.debug('GTM Event: GT_CASINO_MAIN_CALLBET');
     }
 
     /**
@@ -142,7 +142,7 @@ export class GTMEvent {
     public CORE_GAME_BET(): void {
         this.updateBetBaseData();
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_MAIN_BET`);
+        Logger.debug('GTM Event: GT_CASINO_MAIN_BET');
     }
 
     /**
@@ -166,7 +166,7 @@ export class GTMEvent {
     public CORE_GAME_FG_START(): void {
         this.updateBetBaseData();
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_FREEGAME_START`);
+        Logger.debug('GTM Event: GT_CASINO_FREEGAME_START');
     }
 
     /**
@@ -189,7 +189,7 @@ export class GTMEvent {
      */
     public LOADER_START(): void {
         // TODO: 實作 LoadingInfo.push 和 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_LOADPAGE_LOADSTART`);
+        Logger.debug('GTM Event: GT_CASINO_LOADPAGE_LOADSTART');
     }
 
     /**
@@ -237,7 +237,7 @@ export class GTMEvent {
      */
     public LOADER_GAME_ALL_RESOURCE_FINISHED(): void {
         // TODO: 實作 LoadingInfo.push
-        Logger.debug(`GTM Event: LOADER_GAME_ALL_RESOURCE_FINISHED`);
+        Logger.debug('GTM Event: LOADER_GAME_ALL_RESOURCE_FINISHED');
     }
 
     /**
@@ -247,7 +247,7 @@ export class GTMEvent {
     public LOADER_GAME_ON_READY(): void {
         this.updateBetBaseData();
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_MAIN_ON-READY`);
+        Logger.debug('GTM Event: GT_CASINO_MAIN_ON-READY');
     }
 
     /**
@@ -257,7 +257,7 @@ export class GTMEvent {
     public LOADER_GAME_ON_GET_BEGIN_GAME_RESULT(): void {
         this.updateBetBaseData();
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_MAIN_ON-GET-BEGIN-GAME-RESULT`);
+        Logger.debug('GTM Event: GT_CASINO_MAIN_ON-GET-BEGIN-GAME-RESULT');
     }
 
     /**
@@ -267,7 +267,7 @@ export class GTMEvent {
      */
     public LOADER_GAME_ON_READY_TO_STOP(): void {
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_MAIN_ON-READY-TO-STOP (deprecated)`);
+        Logger.debug('GTM Event: GT_CASINO_MAIN_ON-READY-TO-STOP (deprecated)');
     }
 
     /**
@@ -287,7 +287,7 @@ export class GTMEvent {
     public LOADER_GAME_STOP_SPIN_CLICK(): void {
         this.updateBetBaseData();
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_MAIN_STOP-SPIN-CLICK`);
+        Logger.debug('GTM Event: GT_CASINO_MAIN_STOP-SPIN-CLICK');
     }
 
     /**
@@ -306,7 +306,7 @@ export class GTMEvent {
      */
     public LOADER_GAME_JP_CLICK(): void {
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_MAIN_JP-CLICK`);
+        Logger.debug('GTM Event: GT_CASINO_MAIN_JP-CLICK');
     }
 
     /**
@@ -314,7 +314,7 @@ export class GTMEvent {
      */
     public LOADER_GAME_JP_CLOSE_CLICK(): void {
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_MAIN_JP-CLOSE-CLICK`);
+        Logger.debug('GTM Event: GT_CASINO_MAIN_JP-CLOSE-CLICK');
     }
 
     /**
@@ -343,16 +343,16 @@ export class GTMEvent {
      * @param to 新下注金額
      * @param target 目標按鈕
      */
-    public LOADER_MAIN_BETAMOUNT_SWITCH(from: number, to: number, target: string = "none"): void {
+    public LOADER_MAIN_BETAMOUNT_SWITCH(from: number, to: number, target: string = 'none'): void {
         this.updateBetBaseData();
         let amountTarget = target;
-        
+
         if (this.isBuyFreeGame && to > from) {
-            amountTarget = "buyFreeGameIncreaseBetBtn";
+            amountTarget = 'buyFreeGameIncreaseBetBtn';
         } else if (this.isBuyFreeGame && to < from) {
-            amountTarget = "buyFreeGameDescreaseBetBtn";
+            amountTarget = 'buyFreeGameDescreaseBetBtn';
         }
-        
+
         // TODO: 實作 UserBehavior.sendGTMEvent
         Logger.debug(`GTM Event: GT_CASINO_MAIN_BETAMOUNT-SWITCH - from: ${from}, to: ${to}, target: ${amountTarget}`);
     }
@@ -363,7 +363,7 @@ export class GTMEvent {
     public LOADER_MAIN_ADDBET_CLICK(): void {
         this.updateBetBaseData();
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_MAIN_ADDBET_CLICK`);
+        Logger.debug('GTM Event: GT_CASINO_MAIN_ADDBET_CLICK');
     }
 
     /**
@@ -372,7 +372,7 @@ export class GTMEvent {
     public LOADER_MAIN_MINUSBET_CLICK(): void {
         this.updateBetBaseData();
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_MAIN_MINUSBET_CLICK`);
+        Logger.debug('GTM Event: GT_CASINO_MAIN_MINUSBET_CLICK');
     }
 
     /**
@@ -442,7 +442,7 @@ export class GTMEvent {
     public LOADER_MAIN_SHORTCUT_EXCHANGE_CLICK(): void {
         this.updateBetBaseData();
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_MAIN_SHORTCUT-EXCHANGE-CLICK`);
+        Logger.debug('GTM Event: GT_CASINO_MAIN_SHORTCUT-EXCHANGE-CLICK');
     }
 
     /**
@@ -451,7 +451,7 @@ export class GTMEvent {
      */
     public LOADER_MAIN_SETTING(): void {
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_MAIN_SETTING-CLICK`);
+        Logger.debug('GTM Event: GT_CASINO_MAIN_SETTING-CLICK');
     }
 
     /* SETTING PAGE */
@@ -461,7 +461,7 @@ export class GTMEvent {
      */
     public LOADER_SETTING_GAMERULE_CLICK(): void {
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_SETTING_GAMERULE-CLICK`);
+        Logger.debug('GTM Event: GT_CASINO_SETTING_GAMERULE-CLICK');
     }
 
     /**
@@ -470,7 +470,7 @@ export class GTMEvent {
      */
     public LOADER_SETTING_BETHISTORY_CLICK(): void {
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_SETTING_BETHISTORY-CLICK`);
+        Logger.debug('GTM Event: GT_CASINO_SETTING_BETHISTORY-CLICK');
     }
 
     /**
@@ -479,7 +479,7 @@ export class GTMEvent {
     public LOADER_SETTING_EXCHANGE_CLICK(): void {
         this.updateBetBaseData();
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_SETTING_EXCHANGE-CLICK`);
+        Logger.debug('GTM Event: GT_CASINO_SETTING_EXCHANGE-CLICK');
     }
 
     /**
@@ -488,7 +488,7 @@ export class GTMEvent {
      */
     public LOADER_SETTING_SOUNDSET_CLICK(): void {
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_SETTING_SOUNDSET-CLICK`);
+        Logger.debug('GTM Event: GT_CASINO_SETTING_SOUNDSET-CLICK');
     }
 
     /**
@@ -497,7 +497,7 @@ export class GTMEvent {
      */
     public LOADER_SETTING_EXIT_CLICK(): void {
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_SETTING_EXIT-CLICK`);
+        Logger.debug('GTM Event: GT_CASINO_SETTING_EXIT-CLICK');
     }
 
     /**
@@ -505,7 +505,7 @@ export class GTMEvent {
      */
     public LOADER_SETTING_EXITSETTING_CLICK(): void {
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_SETTING_EXITSETTING-CLICK`);
+        Logger.debug('GTM Event: GT_CASINO_SETTING_EXITSETTING-CLICK');
     }
 
     /**
@@ -514,7 +514,7 @@ export class GTMEvent {
      */
     public LOADER_SETTING_HELP_CLICK(): void {
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_SETTING_HELP-CLICK`);
+        Logger.debug('GTM Event: GT_CASINO_SETTING_HELP-CLICK');
     }
 
     /**
@@ -561,7 +561,7 @@ export class GTMEvent {
      */
     public LOADER_MAIN_RECONNECT_ALERT(): void {
         // TODO: 實作 UserBehavior.sendGTMEvent
-        Logger.debug(`GTM Event: GT_CASINO_MAIN_RECONNECT-ALERT`);
+        Logger.debug('GTM Event: GT_CASINO_MAIN_RECONNECT-ALERT');
     }
 
     /**

@@ -1,8 +1,8 @@
-import { getEventManager } from '@common/manager/EventManager';
-import { SlotGameEvent } from '@common/h5GameTools/SlotGameConnector';
-import { reactive } from '@common/utils/Reactivity';
 import { useMutations } from '@common/h5GameTools/Mutations';
+import { SlotGameEvent } from '@common/h5GameTools/SlotGameConnector';
 import { getBaseStoreState, useStoreState } from '@common/h5GameTools/State';
+import { getEventManager } from '@common/manager/EventManager';
+import { reactive } from '@common/utils/Reactivity';
 
 /**
  * 通用存儲類
@@ -86,9 +86,7 @@ export class CommonStore {
     private processPattern(keyWithPattern: any): any {
         if (typeof keyWithPattern === 'string') {
             // 簡單的字符串替換
-            return keyWithPattern.replace(/\{(\w+)\}/g, (match: string, key: string) => {
-                return this.storeGetter[key] || match;
-            });
+            return keyWithPattern.replace(/\{(\w+)\}/g, (match: string, key: string) => this.storeGetter[key] || match);
         }
         return keyWithPattern;
     }
@@ -105,7 +103,7 @@ export class CommonStore {
      */
     public resetStoreStateState(): void {
         const baseState = getBaseStoreState();
-        Object.keys(baseState).forEach((key) => {
+        Object.keys(baseState).forEach(key => {
             (this._storeState as any)[key] = (baseState as any)[key];
         });
     }
@@ -184,7 +182,7 @@ export const commonStore = new Proxy({} as CommonStore, {
         if (!CommonStore._instance) {
             CommonStore._instance = CommonStore.getInstance();
         }
-        
+
         // 返回實例的屬性或方法
         const instance = CommonStore._instance;
         return instance[prop as keyof CommonStore];

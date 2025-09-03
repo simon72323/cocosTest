@@ -1,19 +1,22 @@
-import { getEventManager } from '@common/manager/EventManager';
-import { _decorator, Color, Component, Node, ParticleSystem, sp, Sprite, tween, UIOpacity } from 'cc';
-import { awaitSleep } from '@common/utils/tools';
-import { getG5279Model, G5279Time } from '../model/G5279Model';
 import { Comm } from '@common/h5GameTools/GTCommEvents';
+import { getEventManager } from '@common/manager/EventManager';
+import { awaitSleep } from '@common/utils/tools';
+import { _decorator, Color, Component, Node, ParticleSystem, sp, Sprite, tween, UIOpacity } from 'cc';
+
+import { getG5279Model, G5279Time } from '@/games/catRaider/script/model/G5279Model';
 const { ccclass, property } = _decorator;
 
 @ccclass('G5279ZombieParty')
 export class G5279ZombieParty extends Component {
     @property(Node)
     private getZombieParty: Node = null!;
+
     @property(Node)
     private zombiePartyFx: Node = null!;
 
     @property(Sprite)
     private topBg: Sprite[] = [];
+
     @property(UIOpacity)
     private back2DBlack: UIOpacity = null!;
 
@@ -43,7 +46,7 @@ export class G5279ZombieParty extends Component {
      * 顯示進入殭屍派對
      */
     public async showZombieParty(): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             this.setTopNode();
             const opacityTime = 0.3 / getG5279Model().timeScale;
 

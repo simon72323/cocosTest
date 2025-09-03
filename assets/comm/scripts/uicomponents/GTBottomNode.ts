@@ -29,6 +29,7 @@ export class GTBottomNode extends Component {
             this.wagerID.node.active = !urlHelper.isDemo;
         }
     }
+
     start() {
         watch(() => commonStore.storeState.userID, (_newA, _oldA) => {
             this._setUserID();
@@ -39,6 +40,7 @@ export class GTBottomNode extends Component {
         this._setGameType();
         this._setUserID();
     }
+
     /**
      * 設定userID
      */
@@ -49,6 +51,7 @@ export class GTBottomNode extends Component {
         userID = tempId.length > 1 ? tempId[1] : userID;
         this.userID.string = (userID === '0') ? '' : userID;
     }
+
     /**
      * 設定gameType
      */
@@ -56,6 +59,7 @@ export class GTBottomNode extends Component {
         if (!this.gameType) return;
         this.gameType.string = urlHelper.gameType;
     }
+
     /**
      * 設定WagerID
      */

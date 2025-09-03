@@ -38,10 +38,10 @@
  *    audioManager.restoreMusic();
  */
 
-import { _decorator, AudioSource, game, Game, tween, Component, assetManager, AudioClip, AssetManager, Tween, Node, director } from 'cc';
-import { Logger } from '@common/utils/Logger';
 import { commonStore } from '@common/h5GameTools/CommonStore';
+import { Logger } from '@common/utils/Logger';
 import { watch } from '@common/utils/Reactivity';
+import { _decorator, AudioSource, game, Game, tween, Component, assetManager, AudioClip, AssetManager, Tween, Node, director } from 'cc';
 
 interface AudioInfo {
     startTime: number;//紀錄播放當下時間(讓後台來回切換時正常接續播放音效)
@@ -81,7 +81,7 @@ export class AudioManager extends Component {
             return;
         }
         // 釋放音效資源
-        for (const [name, audioInfo] of this.soundMap) {
+        for (const [_name, audioInfo] of this.soundMap) {
             audioInfo.audioSource.stop();
             audioInfo.audioSource.destroy();
             if (audioInfo.audioClip) {
@@ -91,7 +91,7 @@ export class AudioManager extends Component {
         this.soundMap.clear();
 
         // 釋放音樂資源
-        for (const [name, audioInfo] of this.musicMap) {
+        for (const [_name, audioInfo] of this.musicMap) {
             audioInfo.audioSource.stop();
             audioInfo.audioSource.destroy();
             if (audioInfo.audioClip) {
@@ -139,7 +139,7 @@ export class AudioManager extends Component {
      * @returns bundle
      */
     private getBundle(bundleName: string): Promise<AssetManager.Bundle> {
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
             assetManager.loadBundle(bundleName, (err, bundle) => {
                 if (err) {
                     Logger.error(`無法獲取${bundleName} bundle: ${err}`);
@@ -155,7 +155,7 @@ export class AudioManager extends Component {
      * @param bundle 遊戲 bundle
      */
     private async loadAudio(bundle: AssetManager.Bundle): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
+        return new Promise<void>(resolve => {
             let loadedCount = 0;
             const checkComplete = () => {
                 loadedCount++;
@@ -177,7 +177,7 @@ export class AudioManager extends Component {
                         startTime: 0,
                         duration: audioSource.duration,
                         audioClip: clip,
-                        audioSource: audioSource,
+                        audioSource,
                         musicPlaying: false
                     });
                 });
@@ -200,7 +200,7 @@ export class AudioManager extends Component {
                         startTime: 0,
                         duration: audioSource.duration,
                         audioClip: clip,
-                        audioSource: audioSource
+                        audioSource
                     });
                 });
                 Logger.debug(`已加載 ${audioClips.length} 個音效`);
@@ -341,8 +341,8 @@ export class AudioManager extends Component {
         for (const audioInfo of this.musicMap.values()) {
             if (!audioInfo) continue;
             tween(audioInfo.audioSource).to(0.3, { volume: 0.2 }).tag(99).start();
-        };
-    };
+        }
+    }
 
     /**
      * 音樂恢復
@@ -353,8 +353,8 @@ export class AudioManager extends Component {
         for (const audioInfo of this.musicMap.values()) {
             if (!audioInfo) continue;
             tween(audioInfo.audioSource).to(0.3, { volume: 1 }).tag(99).start();
-        };
-    };
+        }
+    }
 
     /**
      * 停止音效(淡出)
@@ -385,11 +385,11 @@ export class AudioManager extends Component {
         //音效暫停
         for (const audioInfo of this.soundMap.values()) {
             audioInfo.audioSource.volume = 0;
-        };
+        }
         //音樂統一靜音
         for (const audioInfo of this.musicMap.values()) {
             audioInfo.audioSource.volume = 0;
-        };
+        }
     }
 
     // 恢復音效
@@ -407,17 +407,15 @@ export class AudioManager extends Component {
                 audioInfo.audioSource.play();
                 tween(audioInfo.audioSource).to(0.2, { volume: 1 }).tag(99).start();//聲音淡入
             }
-        };
+        }
         //音樂聲音恢復
         const musicVolume = this.isLowerMusic ? 0.2 : 1;
         for (const audioInfo of this.musicMap.values()) {
             if (audioInfo.musicPlaying) {
                 tween(audioInfo.audioSource).to(0.2, { volume: musicVolume }).tag(99).start();//聲音淡入
             }
-        };
+        }
     }
 }
 
-export const getAudioManager = () => {
-    return AudioManager.getInstance();
-}
+export const getAudioManager = () => AudioManager.getInstance();

@@ -15,19 +15,20 @@
  * - 節點必須包含 cc.Sprite 組件
  * - 依賴 LanguageManager 的正確初始化
  */
+import { getLanguageManager } from '@common/manager/LanguageManager';
 import { _decorator, Component, Sprite } from 'cc';
-import { LanguageManager } from '@common/manager/LanguageManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('LocalizedSprite')
 export class LocalizedSprite extends Component {
     @property({ tooltip: 'spriteName' })
     public spriteName: string = '';
+
     @property({ tooltip: 'loadingPage' })
     public isLoading: boolean = false;
 
     onEnable() {
-        console.warn("啟動時設置圖片語系")
+        console.warn('啟動時設置圖片語系');
         this.setSpriteFrame();//啟動時設置圖片語系
     }
 
@@ -40,7 +41,7 @@ export class LocalizedSprite extends Component {
         const sprite = this.getComponent(Sprite);
         if (sprite) {
             const folderName = this.isLoading ? 'loadingPage' : 'gameCore';
-            sprite.spriteFrame = await LanguageManager.getSpriteFrame(this.spriteName, folderName);
+            sprite.spriteFrame = await getLanguageManager().getSpriteFrame(this.spriteName, folderName);
         }
     }
 }

@@ -1,15 +1,18 @@
-import { _decorator, Component, Node, Animation, ParticleSystem, UIOpacity, Label, tween, Vec3, Tween, sp } from 'cc';
-import { NumberUtils } from '@common/utils/NumberUtils';
-
+import { commonStore } from '@common/h5GameTools/CommonStore';
+// import { Comm } from '@common/h5GameTools/GTCommEvents';
 import { getAudioManager } from '@common/manager/AudioManager';
 import { getEventManager } from '@common/manager/EventManager';
-import { formatNumberRound2, playSpineFinish } from '../tools/G5279Tools';
+import { NumberUtils } from '@common/utils/NumberUtils';
 import { awaitSleep } from '@common/utils/tools';
-import { G5279Config } from '../data/G5279Config';
-import { G5279Event } from '../data/G5279Event';
-import { G5279AudioName } from '../data/G5279AudioEnum';
-import { commonStore } from '@common/h5GameTools/CommonStore';
-import { Comm } from '@common/h5GameTools/GTCommEvents';
+import { _decorator, Component, Node, Animation, ParticleSystem, UIOpacity, Label, tween, Vec3, Tween, sp } from 'cc';
+
+
+import { G5279AudioName } from '@/games/catRaider/script/data/G5279AudioEnum';
+import { G5279Config } from '@/games/catRaider/script/data/G5279Config';
+import { G5279Event } from '@/games/catRaider/script/data/G5279Event';
+
+import { formatNumberRound2, playSpineFinish } from '@/games/catRaider/script/tools/G5279Tools';
+
 
 const { ccclass, property } = _decorator;
 
@@ -18,6 +21,7 @@ export class G5279BigWin extends Component {
     //子節點
     @property(Node)
     private bigWin: Node = null!;
+
     private bigWinScore: Node = null!;
     private finishFx: Node = null!;
     private spine: sp.Skeleton = null!;
@@ -76,7 +80,7 @@ export class G5279BigWin extends Component {
      * @param collectPayTotal 收集贏分
      */
     public runBigWin(collectPayTotal: number): Promise<void> {
-        return new Promise<void>(async (resolve) => {
+        return new Promise<void>(async resolve => {
             const bet = commonStore.storeState.bet;//當前下注額度
             //如果贏分小於最小大獎贏分，則直接返回
             const bigWinScore = NumberUtils.accMul(bet, G5279Config.bigWinRange[0]);
@@ -102,23 +106,16 @@ export class G5279BigWin extends Component {
             this.starParticleS.play();
             this.gemBlueParticle.play();
 
-            let runScoreTime = 0;//跑分時間
-
             if (this._payTotal >= this._bigWinScore[4]) {
                 this._soundName = G5279AudioName.catWin;
-                runScoreTime = 15;
             } else if (this._payTotal >= this._bigWinScore[3]) {
                 this._soundName = G5279AudioName.epicWin;
-                runScoreTime = 12;
             } else if (this._payTotal >= this._bigWinScore[2]) {
                 this._soundName = G5279AudioName.superWin;
-                runScoreTime = 9;
             } else if (this._payTotal >= this._bigWinScore[1]) {
                 this._soundName = G5279AudioName.megaWin;
-                runScoreTime = 6;
             } else {
                 this._soundName = G5279AudioName.bigWin;
-                runScoreTime = 3;
             }
             getAudioManager().playSound(this._soundName);//播放大獎背景音
             this.bigWinScore.getComponent(Animation)!.play('bigWinScoreShow');//顯示分數
@@ -132,7 +129,7 @@ export class G5279BigWin extends Component {
                 { score: this._bigWinScore[1], changeAnim: () => this.changeMegaWinAnim() },
                 { score: this._bigWinScore[2], changeAnim: () => this.changeSuperWinAnim() },
                 { score: this._bigWinScore[3], changeAnim: () => this.changeEpicWinAnim() },
-                { score: this._bigWinScore[4], changeAnim: () => this.changeCatWinAnim() },
+                { score: this._bigWinScore[4], changeAnim: () => this.changeCatWinAnim() }
             ];
 
             if (this._payTotal >= this._bigWinScore[4]) {
@@ -165,7 +162,7 @@ export class G5279BigWin extends Component {
      * @param endScore 結束分數
      */
     private runScore(endScore: number): Promise<void> {
-        return new Promise<void>(async (resolve) => {
+        return new Promise<void>(async resolve => {
             const scoreLabel = this.bigWinScore.getChildByName('label')!.getComponent(Label)!;
             let tweenInstance: Tween<any>;
 
@@ -220,7 +217,7 @@ export class G5279BigWin extends Component {
      * 贏分表演結束
      */
     private async bigWinFinish(): Promise<void> {
-        return new Promise<void>(async (resolve) => {
+        return new Promise<void>(async resolve => {
             getAudioManager().stopSound(G5279AudioName.winCount);//停止跑分音效
             this.bigWin.off(Node.EventType.TOUCH_END, this.touchFinish, this);
             Tween.stopAllByTarget(this._runScore);

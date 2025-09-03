@@ -7,6 +7,7 @@ export class G5279Resources extends Component {
     //symbol素材
     @property([SpriteFrame])
     public symSF: SpriteFrame[] = []!;//symbol圖
+
     @property([SpriteFrame])
     public symBlurSF: SpriteFrame[] = []!;//symbol模糊圖
 

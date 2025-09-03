@@ -1,6 +1,7 @@
-import { assetManager, BufferAsset, TextAsset } from "cc";
-import { PathInfo } from "../enum/CGInterface";
-import { Logger } from "@common/utils/Logger";
+import { Logger } from '@common/utils/Logger';
+import { assetManager, BufferAsset, TextAsset } from 'cc';
+
+import { PathInfo } from '@/games/colorGame/script/enum/CGInterface';
 
 export class CGPathManager {
     private static _instance: CGPathManager | null = null;
@@ -9,20 +10,20 @@ export class CGPathManager {
     private _rawPathData: Map<number, any> = new Map(); // 存儲原始解壓數據
     private _pako: any;
     // constructor() {
-        // this.init();
+    // this.init();
     // }
 
     /**
      * 初始化
      */
     public async init(): Promise<void> {
-        return new Promise<void>(async (resolve) => {
+        return new Promise<void>(async resolve => {
             CGPathManager._instance = this;
             try {
                 //pakoMin.txt檔轉換成js檔
-                await new Promise<void>((resolve) => {
-                    assetManager.loadBundle("colorGame", (err, bundle) => {
-                        bundle.load(`script/tools/pako/pakoMin`, TextAsset, async (err: Error | null, asset) => {
+                await new Promise<void>(resolve => {
+                    assetManager.loadBundle('colorGame', (err, bundle) => {
+                        bundle.load('script/tools/pako/pakoMin', TextAsset, async (err: Error | null, asset) => {
                             const pakoScript = asset.text;
                             const scriptElement = document.createElement('script');
                             scriptElement.textContent = pakoScript;
@@ -51,16 +52,16 @@ export class CGPathManager {
 
                 await Promise.all(loadPromises);
                 resolve();
-                Logger.debug("路徑資料加載完成", this._rawPathData);
+                Logger.debug('路徑資料加載完成', this._rawPathData);
             } catch (error) {
-                Logger.error("初始化失敗:", error);
+                Logger.error('初始化失敗:', error);
             }
         });
     }
 
     private loadBundle(): Promise<any> {
         return new Promise((resolve, reject) => {
-            assetManager.loadBundle("colorGame", (err, bundle) => {
+            assetManager.loadBundle('colorGame', (err, bundle) => {
                 if (err) reject(err);
                 else resolve(bundle);
             });
@@ -96,13 +97,13 @@ export class CGPathManager {
 
     // 只在需要時才處理具體路徑數據
     public async getPathData(dataID: number, pathIndex: number): Promise<PathInfo> {
-        return new Promise<PathInfo>((resolve, reject) => {
+        return new Promise<PathInfo>(resolve => {
             const rawData = this._rawPathData.get(dataID);
             const pathData = rawData[pathIndex];
             resolve({
                 pos: pathData.pos.map((posArray: number[]) => posArray.map(pos => pos / 100)),
                 rotate: pathData.rotate.map((rotateArray: number[]) => rotateArray.map(rotate => rotate / 1000)),
-                diceNumber: pathData.diceNumber,
+                diceNumber: pathData.diceNumber
             });
         });
     }
@@ -113,21 +114,17 @@ export class CGPathManager {
      * @returns 
      */
     async decompressData(uint8Array: Uint8Array) {
-        try {
-            //pako解壓縮
-            const decompressed = this._pako.inflate(uint8Array);
-            const jsonString = new TextDecoder().decode(decompressed);
-            const jsonData = JSON.parse(jsonString);
-            //CompressionStream解壓縮Gzip資料
-            // const ds = new DecompressionStream('gzip');
-            // const decompressedStream = new Blob([uint8Array]).stream().pipeThrough(ds);
-            // const decompressedBlob = await new Response(decompressedStream).blob();
-            // const jsonString = await decompressedBlob.text();
-            // const jsonData = JSON.parse(jsonString);
-            return jsonData;
-        } catch (error) {
-            throw error; //
-        }
+        //pako解壓縮
+        const decompressed = this._pako.inflate(uint8Array);
+        const jsonString = new TextDecoder().decode(decompressed);
+        const jsonData = JSON.parse(jsonString);
+        //CompressionStream解壓縮Gzip資料
+        // const ds = new DecompressionStream('gzip');
+        // const decompressedStream = new Blob([uint8Array]).stream().pipeThrough(ds);
+        // const decompressedBlob = await new Response(decompressedStream).blob();
+        // const jsonString = await decompressedBlob.text();
+        // const jsonData = JSON.parse(jsonString);
+        return jsonData;
     }
 
     public static getInstance(): CGPathManager {

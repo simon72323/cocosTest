@@ -1,10 +1,11 @@
-import { getEventManager } from '@common/manager/EventManager';
-import { _decorator, Button, Component, Label, Node } from 'cc';
-import { geti18nTex } from '../comm/GTCommTools';
-import { GTLoaderEventType } from '../comm/GTLoaderEventType';
-import { Logger } from '@common/utils/Logger';
-import { gtmEvent } from '@common/h5GameTools/userAnalysis/GTEvent';
 import { GTAlertPram, GTAlertType } from '@common/h5GameTools/GTCommEvents';
+import { gtmEvent } from '@common/h5GameTools/userAnalysis/GTEvent';
+import { getEventManager } from '@common/manager/EventManager';
+import { Logger } from '@common/utils/Logger';
+import { _decorator, Button, Component, Label, Node } from 'cc';
+
+import { geti18nTex } from '@/comm/scripts/comm/GTCommTools';
+import { GTLoaderEventType } from '@/comm/scripts/comm/GTLoaderEventType';
 
 const { ccclass, property } = _decorator;
 
@@ -36,7 +37,7 @@ export class GTAlert extends Component {
 
         // 設置按鈕監聽器
         const listeners = this._getButtonListeners(alert);
-        listeners.forEach(({button, callback}) => {
+        listeners.forEach(({ button, callback }) => {
             if(button) this._setupButtonListener(button, callback);
         });
 
@@ -46,10 +47,10 @@ export class GTAlert extends Component {
         }
 
         this._alert = alert;
-        
+
         this.node.active = true;
         getEventManager().emit(GTLoaderEventType.ALERT_IS_SHOW, true);
-        
+
     }
 
     /**
@@ -67,7 +68,7 @@ export class GTAlert extends Component {
             this.cancelBtnLabel.string = geti18nTex(alert.cancelBtnText);
             this.reloadBtn(this.cancelBtn);
         }
-        
+
     }
 
     /**
@@ -76,69 +77,67 @@ export class GTAlert extends Component {
      * @returns 返回按鈕與其回調的對應列表。
      */
     private _getButtonListeners(alert: GTAlertPram) {
-        const wrapCallback = (callback: Function | undefined, buttonType: string) => {
-            return () => {
-                // 根據按鈕類型發送不同的 GTM 事件
-                switch (buttonType) {
-                    case 'confirm':
-                        gtmEvent.LOADER_MAIN_ALERT_CONFIRM_CLICK(alert.confirmBtnText);
-                        break;
-                    case 'cancel':
-                        gtmEvent.LOADER_MAIN_ALERT_CANCEL_CLICK(alert.cancelBtnText);
-                        break;
-                    case 'close':
-                        gtmEvent.LOADER_MAIN_ALERT_CLOSE_CLICK('關閉');
-                        break;
-                }
-                
-                // 執行原始的 callback
-                if (callback) {
-                    callback();
-                }
-            };
+        const wrapCallback = (callback: Function | undefined, buttonType: string) => () => {
+            // 根據按鈕類型發送不同的 GTM 事件
+            switch (buttonType) {
+                case 'confirm':
+                    gtmEvent.LOADER_MAIN_ALERT_CONFIRM_CLICK(alert.confirmBtnText);
+                    break;
+                case 'cancel':
+                    gtmEvent.LOADER_MAIN_ALERT_CANCEL_CLICK(alert.cancelBtnText);
+                    break;
+                case 'close':
+                    gtmEvent.LOADER_MAIN_ALERT_CLOSE_CLICK('關閉');
+                    break;
+            }
+
+            // 執行原始的 callback
+            if (callback) {
+                callback();
+            }
         };
 
         switch (alert.type) {
             case GTAlertType.BASIC_NONE:
-                return [{ 
-                    button: this.closeBtn, 
-                    callback: wrapCallback(alert.cancelCallback, 'close') 
+                return [{
+                    button: this.closeBtn,
+                    callback: wrapCallback(alert.cancelCallback, 'close')
                 }];
-            
+
             case GTAlertType.BASIC:
-                return [{ 
-                    button: this.confirmBtn, 
-                    callback: wrapCallback(alert.confirmCallback, 'confirm') 
+                return [{
+                    button: this.confirmBtn,
+                    callback: wrapCallback(alert.confirmCallback, 'confirm')
                 }];
-            
+
             case GTAlertType.DIALOG:
                 return [
-                    { 
-                        button: this.cancelBtn, 
-                        callback: wrapCallback(alert.cancelCallback, 'cancel') 
+                    {
+                        button: this.cancelBtn,
+                        callback: wrapCallback(alert.cancelCallback, 'cancel')
                     },
-                    { 
-                        button: this.confirmBtn, 
-                        callback: wrapCallback(alert.confirmCallback, 'confirm') 
+                    {
+                        button: this.confirmBtn,
+                        callback: wrapCallback(alert.confirmCallback, 'confirm')
                     },
-                    { 
-                        button: this.closeBtn, 
-                        callback: wrapCallback(alert.cancelCallback, 'close') 
+                    {
+                        button: this.closeBtn,
+                        callback: wrapCallback(alert.cancelCallback, 'close')
                     }
                 ];
-            
+
             case GTAlertType.ICON_ALERT_DIALOG:
                 return [
-                    { 
-                        button: this.cancelBtn, 
-                        callback: wrapCallback(alert.cancelCallback, 'cancel') 
+                    {
+                        button: this.cancelBtn,
+                        callback: wrapCallback(alert.cancelCallback, 'cancel')
                     },
-                    { 
-                        button: this.confirmBtn, 
-                        callback: wrapCallback(alert.confirmCallback, 'confirm') 
+                    {
+                        button: this.confirmBtn,
+                        callback: wrapCallback(alert.confirmCallback, 'confirm')
                     }
                 ];
-            
+
             default:
                 return [];
         }
@@ -187,7 +186,7 @@ export class GTAlert extends Component {
         this._alert = null!;
         this.unscheduleAllCallbacks();
         getEventManager().emit(GTLoaderEventType.ALERT_IS_SHOW, false);
-        
+
     }
 
     private reloadBtn(btn: Button) {

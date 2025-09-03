@@ -1,7 +1,9 @@
-import { commonStore } from "@common/h5GameTools/CommonStore";
-import { GTLoaderCommStore } from "./GTLoderCommStore";
-import { NumberUtils } from "@common/utils/NumberUtils";
-import { Logger } from "@common/utils/Logger";
+import { commonStore } from '@common/h5GameTools/CommonStore';
+
+import { Logger } from '@common/utils/Logger';
+import { NumberUtils } from '@common/utils/NumberUtils';
+
+import { GTLoaderCommStore } from '@/comm/scripts/comm/GTLoderCommStore';
 
 
 export function geti18nTex(str : string):string{
@@ -45,7 +47,7 @@ export function canAutoExchangeCredit( ): boolean {
     if (commonStore.storeState.customConfig.canExchange == false){
         return false;
     }else {
-        return autoExchange && balance >= 1 && balance >= actualLimit;        
+        return autoExchange && balance >= 1 && balance >= actualLimit;
     }
 }
 

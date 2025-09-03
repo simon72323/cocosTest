@@ -1,6 +1,6 @@
-import { onBeginGame, onOnLoadInfo } from '../data/G5279Interface';
-import { G5279Config, G5279TimeConfig } from '../data/G5279Config';
-import { G5279BetState, G5279GameState } from '../data/G5279Enum';
+import { G5279Config, G5279TimeConfig } from '@/games/catRaider/script/data/G5279Config';
+import { G5279BetState, G5279GameState } from '@/games/catRaider/script/data/G5279Enum';
+import { onBeginGame, onOnLoadInfo } from '@/games/catRaider/script/data/G5279Interface';
 
 // 创建当前时间配置的副本（用于动态调整）
 export const G5279Time: G5279TimeConfig = { ...G5279Config.timeConfig };
@@ -22,6 +22,7 @@ export class G5279Model {
     get timeScale() {
         return this._timeScale;
     }
+
     set timeScale(scale: number) {
         this._timeScale = scale;
         this.updateScaleTime();//更新時間倍率
@@ -52,7 +53,7 @@ export class G5279Model {
         G5279Time.zombiePartyTime = G5279Config.timeConfig.zombiePartyTime / (0.5 + 0.5 * this.timeScale);//加速加一半
 
         //以下不受速度影響
-        
+
         // G5279Time.totalWinShowTime = G5279Config.timeConfig.totalWinShowTime / this.timeScale;
     }
 
@@ -87,6 +88,7 @@ export class G5279Model {
     get currentLv() {
         return this._currentLv;
     }
+
     set currentLv(lv: number) {
         this._currentLv = lv;
     }
@@ -98,6 +100,7 @@ export class G5279Model {
     get gameState() {
         return this._gameState;
     }
+
     set gameState(state: G5279GameState) {
         this._gameState = state;
     }
@@ -109,6 +112,7 @@ export class G5279Model {
     get betState() {
         return this._betState;
     }
+
     set betState(state: G5279BetState) {
         this._betState = state;
     }
@@ -120,6 +124,7 @@ export class G5279Model {
     get movedCards() {
         return this._movedCards;
     }
+
     set movedCards(cards: number[]) {
         this._movedCards = [...cards];
     }
@@ -131,6 +136,7 @@ export class G5279Model {
     get ratGemIDs() {
         return this._ratGemIDs;
     }
+
     set ratGemIDs(ids: number[]) {
         this._ratGemIDs = [...ids];
     }
@@ -310,6 +316,4 @@ export class G5279Model {
     //==================== 資料獲取與換算 ====================
 }
 // 使用 Proxy 實現懶加載
-export const getG5279Model = () => {
-    return G5279Model.getInstance();
-}
+export const getG5279Model = () => G5279Model.getInstance();

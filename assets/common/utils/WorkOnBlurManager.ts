@@ -20,7 +20,7 @@
  * - 自動監聽遊戲的 hide/show 事件進行處理
  */
 
-import { _decorator, Component, Game, Node, director, game } from "cc";
+import { _decorator, Component, Game, Node, director, game } from 'cc';
 const { ccclass } = _decorator;
 
 @ccclass('WorkOnBlurManager')

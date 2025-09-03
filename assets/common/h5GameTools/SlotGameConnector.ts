@@ -1,41 +1,43 @@
-import { Logger } from '@common/utils/Logger';
-import { DetectDevice } from '@common/utils/DetectDevice';
+import { AESCrypto } from '@common/core/crypto/AESCrypto';
+import { WebSocketCore } from '@common/core/network/WebSocketCore';
+import { WebSocketEvent } from '@common/core/network/WebSocketEvent';
 import { commonStore } from '@common/h5GameTools/CommonStore';
 import { Comm, GTAlertType } from '@common/h5GameTools/GTCommEvents';
-import { urlHelper } from '@common/utils/UrlHelper';
-import { loadingInfo, TimeLabelKeys } from './userAnalysis/LoadingInfo';
-import { WebSocketCore } from '@common/core/network/WebSocketCore';
-import { AESCrypto } from '@common/core/crypto/AESCrypto';
 import { getEventManager } from '@common/manager/EventManager';
-import { WebSocketEvent } from '@common/core/network/WebSocketEvent';
+import { DetectDevice } from '@common/utils/DetectDevice';
+import { Logger } from '@common/utils/Logger';
+import { urlHelper } from '@common/utils/UrlHelper';
+
+import { loadingInfo, TimeLabelKeys } from '@/common/h5GameTools/userAnalysis/LoadingInfo';
+
 
 /**
  * 老虎机游戏事件枚举
  */
 export enum SlotGameEvent {
-    CLOSE = "slotGameEvent_close",
-    CONNECTED = "slotGameEvent_connected",
-    RECONNECTED = "slotGameEvent_reconnected",
-    READY = "slotGameEvent_ready",
-    UPDATE_JP = "slotGameEvent_updateJP",
-    UPDATE_MARQUEE = "slotGameEvent_updateMarquee",
-    LOGIN = "slotGameEvent_onLogin",
-    TAKE_MACHINE = "slotGameEvent_onTakeMachine",
-    LOAD_INFO = "slotGameEvent_onOnLoadInfo2",
-    GET_MACHINE_LIST = "slotGameEvent_onGetMachineList",
-    GET_MACHINE_DETAIL = "slotGameEvent_onGetMachineDetail",
-    CREDIT_EXCHANGE = "slotGameEvent_onCreditExchange",
-    BALANCE_EXCHANGE = "slotGameEvent_onBalanceExchange",
-    HIT_JACKPOT = "slotGameEvent_onHitJackpot",
-    BEGIN_GAME = "slotGameEvent_onBeginGame",
-    DOUBLE_GAME = "slotGameEvent_onDoubleGame",
-    END_GAME = "slotGameEvent_onEndGame",
-    HIT_BONUS = "slotGameEvent_onHitBonus",
-    END_BONUS = "slotGameEvent_onEndBonus",
-    KEEP_MACHINE_STATUS = "slotGameEvent_onKeepMachineStatus",
-    MACHINE_LEAVE = "slotGameEvent_machineLeave",
-    ON_ERROR = "slotGameEvent_onError",
-    SAVE_USER_AUTO_EXCHANGE = "slotGameEvent_onSaveUserAutoExchange"
+    CLOSE = 'slotGameEvent_close',
+    CONNECTED = 'slotGameEvent_connected',
+    RECONNECTED = 'slotGameEvent_reconnected',
+    READY = 'slotGameEvent_ready',
+    UPDATE_JP = 'slotGameEvent_updateJP',
+    UPDATE_MARQUEE = 'slotGameEvent_updateMarquee',
+    LOGIN = 'slotGameEvent_onLogin',
+    TAKE_MACHINE = 'slotGameEvent_onTakeMachine',
+    LOAD_INFO = 'slotGameEvent_onOnLoadInfo2',
+    GET_MACHINE_LIST = 'slotGameEvent_onGetMachineList',
+    GET_MACHINE_DETAIL = 'slotGameEvent_onGetMachineDetail',
+    CREDIT_EXCHANGE = 'slotGameEvent_onCreditExchange',
+    BALANCE_EXCHANGE = 'slotGameEvent_onBalanceExchange',
+    HIT_JACKPOT = 'slotGameEvent_onHitJackpot',
+    BEGIN_GAME = 'slotGameEvent_onBeginGame',
+    DOUBLE_GAME = 'slotGameEvent_onDoubleGame',
+    END_GAME = 'slotGameEvent_onEndGame',
+    HIT_BONUS = 'slotGameEvent_onHitBonus',
+    END_BONUS = 'slotGameEvent_onEndBonus',
+    KEEP_MACHINE_STATUS = 'slotGameEvent_onKeepMachineStatus',
+    MACHINE_LEAVE = 'slotGameEvent_machineLeave',
+    ON_ERROR = 'slotGameEvent_onError',
+    SAVE_USER_AUTO_EXCHANGE = 'slotGameEvent_onSaveUserAutoExchange'
 }
 
 /**
@@ -112,8 +114,8 @@ export class SlotGameConnector {
         this.wsCore = new WebSocketCore();
         this.wsCore.setupWs({
             protocolMap: {
-                BINARY: "casino.bin",
-                STRING: "casino.op"
+                BINARY: 'casino.bin',
+                STRING: 'casino.op'
             }
         });
         this.wsCore.on(WebSocketEvent.NETWORK_STATUS, (e: any) => this.wsStatusHandler(e));
@@ -132,14 +134,14 @@ export class SlotGameConnector {
     private wsStatusHandler(event: any): void {
         Logger.log(`[NetStatus]::${event.status}`);
         switch (event.status) {
-            case "open":
+            case 'open':
                 loadingInfo.push(TimeLabelKeys.WS);
                 getEventManager().emit(SlotGameEvent.CONNECTED, { event: true });
                 this.wsCore.on(WebSocketEvent.NETWORK_RESULT, (e: any) => this.wsResultHandler(e));
                 break;
-            case "error":
-            case "close":
-                Logger.log("Disconnected, try again.");
+            case 'error':
+            case 'close':
+                Logger.log('Disconnected, try again.');
                 this.wsCore.off(WebSocketEvent.NETWORK_RESULT);
                 this.dispatchDisconnectEvent();
                 break;
@@ -152,7 +154,7 @@ export class SlotGameConnector {
     private wsResultHandler(event: any): void {
         const eventResult = event.result;
         if (eventResult?.NetStatusEvent) {
-            Logger.debug("[NetStatusEvent]", eventResult);
+            Logger.debug('[NetStatusEvent]', eventResult);
             return;
         }
 
@@ -168,7 +170,7 @@ export class SlotGameConnector {
             }
 
             if (eventResult.result.event == null) {
-                if (eventResult.result.error != null && eventResult.result.error != "" || eventResult.result.falutCode != null) {
+                if (eventResult.result.error != null && eventResult.result.error != '' || eventResult.result.falutCode != null) {
                     eventParam.event = false;
                 } else {
                     eventParam.event = true;
@@ -231,17 +233,17 @@ export class SlotGameConnector {
      */
     private handleConnectorFailEvent(eventObject: EventParam): void {
         Logger.warn(`[SlotConnector] handleConnectorFailEvent [${eventObject.eventName}]`, eventObject.data);
-        const errorDictString = eventObject.data?.error || eventObject.data?.errCode || "SYSTEM_BUSY_55670144";
+        const errorDictString = eventObject.data?.error || eventObject.data?.errCode || 'SYSTEM_BUSY_55670144';
         const errorId = eventObject.data?.ErrorID;
 
         if (errorId) {
             switch (errorId) {
-                case "5550000141":
-                case "5554000510":
-                case "5554000290":
+                case '5550000141':
+                case '5554000510':
+                case '5554000290':
                     this.showErrorAlert({
-                        message: `${commonStore.i18n["DUPLICATE_ERROR"]}（${errorDictString}）（${errorId}）`,
-                        errorKey: "DUPLICATE_ERROR"
+                        message: `${commonStore.i18n['DUPLICATE_ERROR']}（${errorDictString}）（${errorId}）`,
+                        errorKey: 'DUPLICATE_ERROR'
                     });
                     break;
                 default:
@@ -250,7 +252,7 @@ export class SlotGameConnector {
             }
         } else {
             const showAlert = () => {
-                if (errorDictString === "ACCUMULATION_NOT_EXIST") {
+                if (errorDictString === 'ACCUMULATION_NOT_EXIST') {
                     this.showErrorAlert({
                         message: `${commonStore.i18n[errorDictString]}（${eventObject.data?.errCode}）`,
                         errorKey: errorDictString
@@ -268,7 +270,7 @@ export class SlotGameConnector {
                     showAlert();
                     break;
                 case SlotGameEvent.CREDIT_EXCHANGE:
-                    if (errorDictString !== "TRANSFER_FAILED") this.callGetMachineDetail();
+                    if (errorDictString !== 'TRANSFER_FAILED') this.callGetMachineDetail();
                     showAlert();
                     break;
                 default:
@@ -284,13 +286,13 @@ export class SlotGameConnector {
     private showErrorAlert(param: ErrorAlertParam): void {
         const { message, errorKey } = param;
         const content = commonStore.i18n[message] || message;
-        
+
         getEventManager().emit(Comm.SHOW_ALERT, {
             type: GTAlertType.ERROR,
-            title: commonStore.i18n["SYSTEM_MESSAGE"],
+            title: commonStore.i18n['SYSTEM_MESSAGE'],
             content,
-            cancelBtnText: "",
-            confirmBtnText: "",
+            cancelBtnText: '',
+            confirmBtnText: '',
             cancelCallback: () => {
                 urlHelper.exitByError(errorKey || message);
             }
@@ -307,7 +309,7 @@ export class SlotGameConnector {
 
             if (this.useEncryption) {
                 this.wsCore.setupWs({
-                    useCrypto: new AESCrypto("OTNlODQ0YTkzNGQ3MWU4ODY3Yjg3NWI4NjVkN2U0ODcuODMwMGU1YjQ5MTdjMjhmNw")
+                    useCrypto: new AESCrypto('OTNlODQ0YTkzNGQ3MWU4ODY3Yjg3NWI4NjVkN2U0ODcuODMwMGU1YjQ5MTdjMjhmNw')
                 });
             }
 
@@ -351,7 +353,7 @@ export class SlotGameConnector {
      * 等待 API 结果
      */
     async awaitApiResult(eventName: string): Promise<any> {
-        return await new Promise((resolve) => {
+        return await new Promise(resolve => {
             getEventManager().once(eventName, (e: any) => {
                 resolve(e);
             });
@@ -370,7 +372,7 @@ export class SlotGameConnector {
      */
     async callLoadInfo(): Promise<any> {
         this.wsCore.callServer({
-            action: "onLoadInfo2"
+            action: 'onLoadInfo2'
         });
         const result = await this.awaitApiResult(SlotGameEvent.LOAD_INFO);
         loadingInfo.push(TimeLabelKeys.LOAD_INFO);
@@ -382,7 +384,7 @@ export class SlotGameConnector {
      */
     async callLoginBySid(): Promise<any> {
         const param: any = {
-            action: "loginBySid",
+            action: 'loginBySid',
             sid: urlHelper.sid,
             gtype: urlHelper.gameType,
             lang: urlHelper.lang,
@@ -408,7 +410,7 @@ export class SlotGameConnector {
     async callGetMachineDetail(): Promise<any> {
         loadingInfo.push(TimeLabelKeys.MACHINE_DETAIL_START);
         this.wsCore.callServer({
-            action: "getMachineDetail"
+            action: 'getMachineDetail'
         });
         const result = await this.awaitApiResult(SlotGameEvent.GET_MACHINE_DETAIL);
         loadingInfo.push(TimeLabelKeys.MACHINE_DETAIL_END);
@@ -420,7 +422,7 @@ export class SlotGameConnector {
      */
     async callLeaveMachine(): Promise<any> {
         this.wsCore.callServer({
-            action: "leaveMachine"
+            action: 'leaveMachine'
         });
         const result = await this.awaitApiResult(SlotGameEvent.MACHINE_LEAVE);
         return result;
@@ -431,7 +433,7 @@ export class SlotGameConnector {
      */
     async callDoubleGame(wagersID: string): Promise<any> {
         this.wsCore.callServer({
-            action: "doubleGame",
+            action: 'doubleGame',
             sid: urlHelper.sid,
             wagersID
         });
@@ -443,7 +445,7 @@ export class SlotGameConnector {
      */
     async callBeginGame(param: BeginGameParam): Promise<any> {
         this.wsCore.callServer({
-            action: "beginGame4",
+            action: 'beginGame4',
             ...param
         });
         return this.awaitApiResult(SlotGameEvent.BEGIN_GAME);
@@ -454,7 +456,7 @@ export class SlotGameConnector {
      */
     async callCreditExchange(rate: number, credit: number): Promise<any> {
         this.wsCore.callServer({
-            action: "creditExchange",
+            action: 'creditExchange',
             rate,
             credit
         });
@@ -466,7 +468,7 @@ export class SlotGameConnector {
      */
     async callBalanceExchange(): Promise<any> {
         this.wsCore.callServer({
-            action: "balanceExchange"
+            action: 'balanceExchange'
         });
         return this.awaitApiResult(SlotGameEvent.BALANCE_EXCHANGE);
     }
@@ -476,7 +478,7 @@ export class SlotGameConnector {
      */
     async callKeepMachineStatus(): Promise<any> {
         this.wsCore.callServer({
-            action: "keepMachineStatus",
+            action: 'keepMachineStatus',
             sid: urlHelper.sid
         });
         return this.awaitApiResult(SlotGameEvent.KEEP_MACHINE_STATUS);
@@ -494,7 +496,7 @@ export class SlotGameConnector {
             });
         } else {
             this.wsCore.callServer({
-                action: "endGame",
+                action: 'endGame',
                 sid: urlHelper.sid,
                 wagersID
             });
@@ -507,7 +509,7 @@ export class SlotGameConnector {
      */
     callUpdateUserAnalysis(data: any): void {
         this.wsCore.callServer({
-            action: "updateUserAnalysis",
+            action: 'updateUserAnalysis',
             data
         });
     }
@@ -524,7 +526,7 @@ export class SlotGameConnector {
         };
 
         this.wsCore.callServer({
-            action: "saveUserAutoExchange",
+            action: 'saveUserAutoExchange',
             exchangeRecord: useData
         });
 

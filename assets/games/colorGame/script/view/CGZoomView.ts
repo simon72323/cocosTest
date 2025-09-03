@@ -1,7 +1,8 @@
-import { _decorator, Component, Node, Vec3, tween, Tween } from 'cc';
-import { CGUtils } from '../tools/CGUtils';
-import { CGAudioName } from '../manager/CGAudioName';
 import { getAudioManager } from '@common/manager/AudioManager';
+import { _decorator, Component, Node, Vec3, tween, Tween } from 'cc';
+
+import { CGAudioName } from '@/games/colorGame/script/manager/CGAudioName';
+import { CGUtils } from '@/games/colorGame/script/tools/CGUtils';
 const { ccclass, property } = _decorator;
 
 @ccclass('CGZoomView')
@@ -12,24 +13,30 @@ export class CGZoomView extends Component {
         new Vec3(0, 16.3, 9.8),
         new Vec3(0, -0.18, 12),
         new Vec3(-9.8, 7.3, 9),
-        new Vec3(9.8, 7.3, 9),
-    ]
+        new Vec3(9.8, 7.3, 9)
+    ];
+
     //攝影機角度，依次為：正、上、下、左、右
     private readonly CAMERA_EULER: Vec3[] = [
         new Vec3(-20, 0, 0),
         new Vec3(-45, 0, 0),
         new Vec3(20, 0, 0),
         new Vec3(-10, -40, 10),
-        new Vec3(-10, 40, -10),
-    ]
+        new Vec3(-10, 40, -10)
+    ];
+
     @property(Node)
     private btnZoom!: Node;//zoom按鈕
+
     @property(Node)
     private zoomPopup!: Node;//zoom視窗
+
     @property(Node)
     private btnClose!: Node;//關閉彈窗按鈕
+
     @property(Node)
     private zoomCamera!: Node;//zoom攝影機
+
     @property([Node])
     private btnChange: Node[] = [];//change按鈕(上下左右，1~4)
 
@@ -140,6 +147,6 @@ export class CGZoomView extends Component {
             Tween.stopAllByTarget(this.zoomCamera);
             if (this._isBet)
                 this.btnZoom.active = true;
-        }, 200)
+        }, 200);
     }
 }

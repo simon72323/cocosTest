@@ -1,8 +1,9 @@
-import { _decorator, Component, tween, Node, Vec3, Prefab, Material, MeshRenderer, ParticleSystem, UIOpacity, Color, Tween } from 'cc';
 import { getPoolManager } from '@common/manager/PoolManager';
 import { awaitSleep } from '@common/utils/tools';
-import { G5279Config } from '../data/G5279Config';
-import { getG5279Model, G5279Time } from '../model/G5279Model';
+import { _decorator, Component, tween, Node, Vec3, Prefab, Material, MeshRenderer, ParticleSystem, UIOpacity, Color, Tween } from 'cc';
+
+import { G5279Config } from '@/games/catRaider/script/data/G5279Config';
+import { getG5279Model, G5279Time } from '@/games/catRaider/script/model/G5279Model';
 const { ccclass, property } = _decorator;
 
 @ccclass('G5279Ground')
@@ -24,13 +25,16 @@ export class G5279Ground extends Component {
 
     @property(Node)
     private reel: Node = null!;
+
     @property(Node)
     private groundLayer: Node = null!;
+
     @property(Node)
     private sceneBlack: Node = null!;
 
     @property(ParticleSystem)
     private groundSmoke: ParticleSystem = null!;
+
     @property(Prefab)
     private ground: Prefab = null!;
 
@@ -151,7 +155,7 @@ export class G5279Ground extends Component {
      * @returns
      */
     private groundUp(): Promise<void> {
-        return new Promise<void>(async (resolve) => {
+        return new Promise<void>(async resolve => {
             const currentLv = getG5279Model().currentLv;
             const upTime = G5279Time.groundUpTime;
 
@@ -256,7 +260,7 @@ export class G5279Ground extends Component {
         const position = new Vec3(ground.position.x, ground.position.y, 0);
         tween(ground)
             .to(shakeTime / 1666, { position: new Vec3(position.x, position.y, 50) }, { easing: 'cubicOut' })
-            .to(shakeTime / 1666, { position: position }, { easing: 'cubicIn' })
+            .to(shakeTime / 1666, { position }, { easing: 'cubicIn' })
             .start();
         const meshRenderer = ground.getComponent(MeshRenderer)!;
         const isEvenRow = Math.floor(posID / column) % 2 === 0;//判斷是否為偶數行

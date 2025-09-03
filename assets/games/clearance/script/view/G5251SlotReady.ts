@@ -1,15 +1,17 @@
-import { _decorator, Component, UIOpacity, tween, Node, Prefab, Animation } from 'cc';
 import { getPoolManager } from '@common/manager/PoolManager';
-import { REEL_DATA } from '../types/G5251ReelData';
+import { _decorator, Component, UIOpacity, tween, Node, Prefab, Animation } from 'cc';
+
+import { REEL_DATA } from '@/games/clearance/script/types/G5251ReelData';
 const { ccclass, property } = _decorator;
 
 @ccclass('G5251SlotReady')
 export class G5251SlotReady extends Component {
     @property(Node)
     private readyBlack: Node = null!;//聽牌遮黑
+
     @property(Prefab)
     private slotReadyFx: Prefab = null!;//聽牌特效
-    
+
     protected onLoad() {
         //生成聽牌節點
         for (let i = 0; i < REEL_DATA.reelPosition.length; i++) {
@@ -74,6 +76,6 @@ export class G5251SlotReady extends Component {
      * @returns 是否聽牌
      */
     public testReadyLine(slotLine: number) {
-        return this.node.children[slotLine].active
+        return this.node.children[slotLine].active;
     }
 }

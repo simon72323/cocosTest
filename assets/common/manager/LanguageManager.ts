@@ -32,14 +32,14 @@
  * - 若指定語系資源不存在，將自動使用英文（en）作為預設語系
  * - 使用前必須設置遊戲名稱（gameName）
  */
-import { _decorator, SpriteFrame, assetManager, AudioClip, JsonAsset, AssetManager, Component, Node, director, sp } from 'cc';
-import { urlHelper } from '@common/utils/UrlHelper';
-import { Logger } from '@common/utils/Logger';
-import { LocalizedLabel } from '@common/components/localization/LocalizedLabel';
-import { LocalizedSprite } from '@common/components/localization/LocalizedSprite';
 import { LocalizedAudioSource } from '@common/components/localization/LocalizedAudioSource';
-import { LocalizedSpineSkeleton } from '@common/components/localization/LocalizedSpineSkeleton';
 import { LocalizedButtonSprite } from '@common/components/localization/LocalizedButtonSprite';
+import { LocalizedLabel } from '@common/components/localization/LocalizedLabel';
+import { LocalizedSpineSkeleton } from '@common/components/localization/LocalizedSpineSkeleton';
+import { LocalizedSprite } from '@common/components/localization/LocalizedSprite';
+import { Logger } from '@common/utils/Logger';
+import { urlHelper } from '@common/utils/UrlHelper';
+import { _decorator, SpriteFrame, assetManager, AudioClip, JsonAsset, AssetManager, Component, Node, director, sp } from 'cc';
 
 const { ccclass } = _decorator;
 
@@ -121,6 +121,7 @@ export class LanguageManager extends Component {
             label.setLabel();
         }
     }
+
     /**
      * 釋放資源
      */
@@ -137,7 +138,7 @@ export class LanguageManager extends Component {
      * @returns 語系翻譯資料
      */
     public async getLanguageData(folderName: string): Promise<any> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async resolve => {
             const bundle = await this.getBundle();
             const lang = urlHelper.lang;
             const langPath = `langResources/${folderName}/${lang}/${lang}`;
@@ -158,7 +159,7 @@ export class LanguageManager extends Component {
      * @returns spriteFrame
      */
     public async getSpriteFrame(spriteName: string, folderName: string): Promise<SpriteFrame> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async resolve => {
             const bundle = await this.getBundle();
             const lang = urlHelper.lang;
             const langPath = `langResources/${folderName}/${lang}/texture/${spriteName}/spriteFrame`;
@@ -179,7 +180,7 @@ export class LanguageManager extends Component {
      * @returns audioClip
      */
     public async getAudioClip(audioName: string, folderName: string): Promise<AudioClip> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async resolve => {
             const bundle = await this.getBundle();
             const lang = urlHelper.lang;
             const langPath = `langResources/${folderName}/${lang}/audio/${audioName}`;
@@ -200,7 +201,7 @@ export class LanguageManager extends Component {
      * @returns spineSkeletonData
      */
     public async getSkeletonData(spineName: string, folderName: string): Promise<sp.SkeletonData> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async resolve => {
             const bundle = await this.getBundle();
             const lang = urlHelper.lang;
             const langPath = `langResources/${folderName}/${lang}/spine/${spineName}`;
@@ -228,7 +229,7 @@ export class LanguageManager extends Component {
             return existingBundle;
         }
 
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
             assetManager.loadBundle(this._bundleName, (err, bundle) => {
                 if (err) {
                     Logger.error(`無法獲取${this._bundleName} bundle: ${err}`);
@@ -240,6 +241,4 @@ export class LanguageManager extends Component {
     }
 }
 
-export const getLanguageManager = () => {
-    return LanguageManager.getInstance();
-}
+export const getLanguageManager = () => LanguageManager.getInstance();

@@ -1,14 +1,18 @@
-import { _decorator, Button, Component, Node, tween, UIOpacity } from 'cc';
-import { addButtonClickEvent } from '../tools/G5279Tools';
-import { getEventManager } from '@common/manager/EventManager';
-import { G5279Model } from '../model/G5279Model';
 import { Comm } from '@common/h5GameTools/GTCommEvents';
+import { getEventManager } from '@common/manager/EventManager';
+import { _decorator, Button, Component, Node, tween, UIOpacity } from 'cc';
+
+import { G5279Model } from '@/games/catRaider/script/model/G5279Model';
+
+import { addButtonClickEvent } from '@/games/catRaider/script/tools/G5279Tools';
+
 const { ccclass, property } = _decorator;
 
 @ccclass('G5279SkipController')
 export class G5279SkipController extends Component {
     @property(Node)
     private skipBtn: Node = null!;
+
     @property(Node)
     private blockInput: Node = null!;
 
@@ -65,9 +69,9 @@ export class G5279SkipController extends Component {
         this.skiping = true;
         this.skipBtn.active = false;
         this.model.timeScale = this.skipSpeed;
-        const uiopacity = this.blockInput.getComponent(UIOpacity)!
+        const uiopacity = this.blockInput.getComponent(UIOpacity)!;
         uiopacity.opacity = 0;
-        tween(uiopacity).to(0.2, { opacity: 255 }, { easing: 'linear' }).start()
+        tween(uiopacity).to(0.2, { opacity: 255 }, { easing: 'linear' }).start();
         this.blockInput.active = true;//顯示禁止點擊區域
     }
 }

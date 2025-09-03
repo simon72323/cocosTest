@@ -1,8 +1,9 @@
-import { getEventManager } from '@common/manager/EventManager';
 import { Comm, GTCommEventMap } from '@common/h5GameTools/GTCommEvents';
+import { getEventManager } from '@common/manager/EventManager';
 import { Logger } from '@common/utils/Logger';
 import { _decorator, Component, Node, UITransform, error, Size, view, screen } from 'cc';
-import { GTLoadingCommTool as CommTool } from '../../../loading/script/comm/GTLoadingCommTool';
+
+import { GTLoadingCommTool as CommTool } from '@/loading/script/comm/GTLoadingCommTool';
 
 const { ccclass, property } = _decorator;
 
@@ -81,7 +82,7 @@ export class GTNodeRematchPhoneManager extends Component {
     private fixNode() {
         if (CommTool.checkNeedRefixNode() && CommTool.canAutoFix()) {
             const fixH = CommTool.getFixY();
-            this._applyFix(fixH)
+            this._applyFix(fixH);
         } else {
             this._revertFix();
         }

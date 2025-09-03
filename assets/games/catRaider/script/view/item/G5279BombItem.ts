@@ -1,6 +1,7 @@
-import { _decorator, Animation, Component, Node, Prefab, Vec3 } from 'cc';
 import { getPoolManager } from '@common/manager/PoolManager';
-import { playAnimFinish } from '../../tools/G5279Tools';
+import { _decorator, Animation, Component, Node, Prefab, Vec3 } from 'cc';
+
+import { playAnimFinish } from '@/games/catRaider/script/tools/G5279Tools';
 const { ccclass, property } = _decorator;
 
 @ccclass('G5279BombItem')

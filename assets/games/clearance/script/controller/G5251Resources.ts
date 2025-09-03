@@ -1,6 +1,6 @@
+import { Logger } from '@common/utils/Logger';
 import { _decorator, Component, SpriteFrame } from 'cc';
 
-import { Logger } from '@common/utils/Logger';
 
 const { ccclass, property } = _decorator;
 
@@ -10,12 +10,16 @@ export class G5251Resources extends Component {
     //symbol素材
     @property([SpriteFrame])
     public symbolSF: SpriteFrame[] = []!;//symbol圖
+
     @property([SpriteFrame])
     public symbolBlurSF: SpriteFrame[] = []!;//symbol模糊圖
+
     @property([SpriteFrame])
     public symbolWinBgSF: SpriteFrame[] = []!;//symbol1~16中獎底圖
+
     @property([SpriteFrame])
     public symbolWinNumSF: SpriteFrame[] = []!;//symbol1~16中獎數字圖
+
     @property([SpriteFrame])
     public symbolWinNumBlurSF: SpriteFrame[] = []!;//symbol1~16中獎數字模糊圖   
 

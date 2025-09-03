@@ -3,13 +3,14 @@ import { _decorator, Component, Label, UITransform, ccenum } from 'cc';
 const { ccclass, property, menu } = _decorator;
 
 export enum MarqueeDirection { LEFT, RIGHT }
-ccenum(MarqueeDirection)
+ccenum(MarqueeDirection);
 
 @ccclass('GTMarquee')
 @menu('Generic/GTMarquee')
 export class GTMarquee extends Component {
     @property({ type: Label })
     protected textField: Label = null!;
+
     protected queue: string[] = [];
     private running: boolean = false;
     // public get running(): boolean { return this._running; }
@@ -22,11 +23,12 @@ export class GTMarquee extends Component {
 
     // @property({ type: MarqueeDirection, tooltip: "方向" })
     // public readonly direction: MarqueeDirection = MarqueeDirection.LEFT;
-    
+
     start() {
     }
+
     /** 更新 */
-    update(deltaTime: number) {
+    update() {
         if (this.running) this.moveLeft();
     }
 
@@ -37,6 +39,7 @@ export class GTMarquee extends Component {
     public addText(data: string) {
         this.queue.push(data);
     }
+
     /**
      * 開始跑馬燈
      */
@@ -47,23 +50,27 @@ export class GTMarquee extends Component {
             this.running = true;
         }
     }
+
     /** 停止 */
     public stop() {
         this.running = false;
         this.node.active = false;
     }
+
     /** 暫停 */
     public pause() {
-        this.running = false
+        this.running = false;
     }
+
     /** 暫停:恢復 */
     public resume() {
         this.running = true;
     }
+
     /** 移動 */
     private moveLeft() {
         const { node } = this.textField;
-        const { x, y } = node.position;
+        const { x } = node.position;
         const { width, anchorPoint } = this.getComponent(UITransform)!;
         const textWidth = node.getComponent(UITransform)!.width;
 
@@ -76,6 +83,7 @@ export class GTMarquee extends Component {
             node.setPosition(x - this.speed, node.position.y);
         }
     }
+
     /**
      * 檢查queue
      */
@@ -86,6 +94,7 @@ export class GTMarquee extends Component {
             this.shiftQueue();
         }
     }
+
     /**
      * 移除queue中的第一個元素
      * @returns { boolean }

@@ -1,10 +1,12 @@
-import { _decorator, Component, Node, Label, Sprite, SpriteFrame, Animation } from 'cc';
-import { CGUtils } from '../tools/CGUtils';
-import { CGAudioName } from '../manager/CGAudioName';
-import { RoadMapRate } from '../enum/CGInterface';
-import { ColorID } from '../enum/CGEnum';
-import { Logger } from '@common/utils/Logger';
 import { getAudioManager } from '@common/manager/AudioManager';
+import { Logger } from '@common/utils/Logger';
+import { _decorator, Component, Node, Label, Sprite, SpriteFrame, Animation } from 'cc';
+
+import { ColorID } from '@/games/colorGame/script/enum/CGEnum';
+import { RoadMapRate } from '@/games/colorGame/script/enum/CGInterface';
+
+import { CGAudioName } from '@/games/colorGame/script/manager/CGAudioName';
+import { CGUtils } from '@/games/colorGame/script/tools/CGUtils';
 
 const { ccclass, property } = _decorator;
 
@@ -12,10 +14,13 @@ const { ccclass, property } = _decorator;
 export class CGRoadView extends Component {
     @property(Node)//走勢
     private roadMap!: Node;
+
     @property(Node)//走勢彈窗
     private roadMapPopup!: Node;
+
     @property(Node)//關閉彈窗按鈕
     private btnClose!: Node;
+
     @property([SpriteFrame])//路紙區骰子顏色
     private roadColorSF!: SpriteFrame[];
 
@@ -73,7 +78,7 @@ export class CGRoadView extends Component {
         const popupLastColor = this.roadMapPopup.getChildByName('LastColor')!;
         this.colorMapUpdate(roadMap[0], lastColor);
         lastColor.getComponent(Animation)!.play();//最新路紙更新動態
-        const roadmapLength = Math.min(roadMap.length, 10)
+        const roadmapLength = Math.min(roadMap.length, 10);
         for (let i = 0; i < roadmapLength; i++) {
             if (!popupLastColor.children[i].active)
                 popupLastColor.children[i].active = true;

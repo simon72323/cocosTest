@@ -1,71 +1,88 @@
-import { _decorator, Animation, Component, sp, tween, Vec3 } from 'cc';
+import { Comm } from '@common/h5GameTools/GTCommEvents';
+import { getAudioManager } from '@common/manager/AudioManager';
 import { getEventManager } from '@common/manager/EventManager';
 import { awaitSleep } from '@common/utils/tools';
-import { getAudioManager } from '@common/manager/AudioManager';
+import { _decorator, Animation, Component, sp, tween, Vec3 } from 'cc';
 
-import { floors, lines, SymbolNode } from '../data/G5279Interface';
-import { G5279SymbolIDs } from '../data/G5279Enum';
-import { G5279Config } from '../data/G5279Config';
-import { G5279Event } from '../data/G5279Event';
-import { G5279GameState } from '../data/G5279Enum';
-import { G5279AudioName } from '../data/G5279AudioEnum';
+import { G5279AudioName } from '@/games/catRaider/script/data/G5279AudioEnum';
+import { G5279Config } from '@/games/catRaider/script/data/G5279Config';
 
-import { getG5279Model, G5279Time } from '../model/G5279Model';
+import { G5279GameState } from '@/games/catRaider/script/data/G5279Enum';
+import { G5279SymbolIDs } from '@/games/catRaider/script/data/G5279Enum';
+import { G5279Event } from '@/games/catRaider/script/data/G5279Event';
 
-import { G5279Symbol } from '../view/G5279Symbol';
-import { G5279Chance } from '../view/G5279Chance';
-import { G5279EnergyBallItem } from '../view/item/G5279EnergyBallItem';
-import { G5279ScoreBar } from '../view/G5279ScoreBar';
-import { G5279BombItem } from '../view/item/G5279BombItem';
-import { G5279RoadLine } from '../view/G5279RoadLine';
-import { G5279Floor } from '../view/G5279Floor';
-import { G5279Ground } from '../view/G5279Ground';
-import { G5279LevelUpItem } from '../view/item/G5279LevelUpItem';
-import { G5279BonusItem } from '../view/item/G5279BonusItem';
-import { G5279ZombieParty } from '../view/G5279ZombieParty';
-import { G5279SceneChange } from '../view/G5279SceneChange';
-import { G5279BuyFreeGame } from '../view/G5279BuyFreeGame';
-import { G5279Bonus } from '../view/G5279Bonus';
-import { G5279BigWin } from '../view/G5279BigWin';
-import { G5279SymbolInfo } from '../view/G5279SymbolInfo';
-import { playAnimFinish, playSpineFinish } from '../tools/G5279Tools';
-import { Comm } from '@common/h5GameTools/GTCommEvents';
+import { floors, lines, SymbolNode } from '@/games/catRaider/script/data/G5279Interface';
+import { getG5279Model, G5279Time } from '@/games/catRaider/script/model/G5279Model';
+
+import { playAnimFinish, playSpineFinish } from '@/games/catRaider/script/tools/G5279Tools';
+import { G5279BigWin } from '@/games/catRaider/script/view/G5279BigWin';
+import { G5279Bonus } from '@/games/catRaider/script/view/G5279Bonus';
+import { G5279BuyFreeGame } from '@/games/catRaider/script/view/G5279BuyFreeGame';
+import { G5279Chance } from '@/games/catRaider/script/view/G5279Chance';
+
+import { G5279Floor } from '@/games/catRaider/script/view/G5279Floor';
+import { G5279Ground } from '@/games/catRaider/script/view/G5279Ground';
+import { G5279RoadLine } from '@/games/catRaider/script/view/G5279RoadLine';
+import { G5279SceneChange } from '@/games/catRaider/script/view/G5279SceneChange';
+import { G5279ScoreBar } from '@/games/catRaider/script/view/G5279ScoreBar';
+import { G5279Symbol } from '@/games/catRaider/script/view/G5279Symbol';
+import { G5279SymbolInfo } from '@/games/catRaider/script/view/G5279SymbolInfo';
+import { G5279ZombieParty } from '@/games/catRaider/script/view/G5279ZombieParty';
+import { G5279BombItem } from '@/games/catRaider/script/view/item/G5279BombItem';
+import { G5279BonusItem } from '@/games/catRaider/script/view/item/G5279BonusItem';
+import { G5279EnergyBallItem } from '@/games/catRaider/script/view/item/G5279EnergyBallItem';
+import { G5279LevelUpItem } from '@/games/catRaider/script/view/item/G5279LevelUpItem';
+
+
 const { ccclass, property } = _decorator;
 
 @ccclass('G5279ReelController')
 export class G5279ReelController extends Component {
     @property({ type: G5279Symbol, group: { name: 'View', id: '1' } })
     private symbolView: G5279Symbol = null!;//symbol視圖
+
     @property({ type: G5279Chance, group: { name: 'View', id: '1' } })
     private chanceView: G5279Chance = null!;//機會卡介面
+
     @property({ type: G5279ScoreBar, group: { name: 'View', id: '1' } })
     private scoreBarView: G5279ScoreBar = null!;//分數條介面
+
     @property({ type: G5279RoadLine, group: { name: 'View', id: '1' } })
     private roadLineView: G5279RoadLine = null!;//路線介面
+
     @property({ type: G5279Floor, group: { name: 'View', id: '1' } })
     private floorView: G5279Floor = null!;//地板介面
+
     @property({ type: G5279Ground, group: { name: 'View', id: '1' } })
     private groundView: G5279Ground = null!;//地面介面
 
     @property({ type: G5279BonusItem, group: { name: 'View', id: '1' } })
     private bonusItemView: G5279BonusItem = null!;//bonus介面
+
     @property({ type: G5279EnergyBallItem, group: { name: 'View', id: '1' } })
     private energyBallItemView: G5279EnergyBallItem = null!;//能量球介面
+
     @property({ type: G5279BombItem, group: { name: 'View', id: '1' } })
     private bombItemView: G5279BombItem = null!;//炸彈介面
+
     @property({ type: G5279LevelUpItem, group: { name: 'View', id: '1' } })
     private levelUpItemView: G5279LevelUpItem = null!;//寶石升級介面
 
     @property({ type: G5279ZombieParty, group: { name: 'View', id: '1' } })
     private zombiePartyView: G5279ZombieParty = null!;//僵屍派對介面
+
     @property({ type: G5279SceneChange, group: { name: 'View', id: '1' } })
     private sceneChangeView: G5279SceneChange = null!;//場景切換介面
+
     @property({ type: G5279BuyFreeGame, group: { name: 'View', id: '1' } })
     private buyFreeGameView: G5279BuyFreeGame = null!;//購買免費遊戲介面
+
     @property({ type: G5279Bonus, group: { name: 'View', id: '1' } })
     private bonusView: G5279Bonus = null!;//bonus介面
+
     @property({ type: G5279BigWin, group: { name: 'View', id: '1' } })
     private bigWinView: G5279BigWin = null!;//大獎介面
+
     @property({ type: G5279SymbolInfo, group: { name: 'View', id: '1' } })
     private symbolInfoView: G5279SymbolInfo = null!;//符號資訊介面
 
@@ -295,7 +312,7 @@ export class G5279ReelController extends Component {
         const coinPayoff = await this.floorView.showCoins();
         if (coinPayoff > 0) {
             getAudioManager().playSound(G5279AudioName.runScoreCat);
-            await this.scoreBarView.showWinAddScore(coinPayoff)
+            await this.scoreBarView.showWinAddScore(coinPayoff);
         }
     }
 
@@ -686,7 +703,7 @@ export class G5279ReelController extends Component {
                 anim.play('move');
 
                 // 執行下移動畫
-                const movePromise = new Promise<void>((resolve) => {
+                const movePromise = new Promise<void>(resolve => {
                     tween(symbol)
                         .to(G5279Time.symbolDropTime / 1000, { position: targetPos }, { easing: 'quintOut' })
                         .call(() => {

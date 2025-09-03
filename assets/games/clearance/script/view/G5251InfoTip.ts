@@ -5,7 +5,7 @@ const { ccclass } = _decorator;
 export class G5251TipView extends Component {
     private readonly STOP_TIME = 5;//tip文字小於顯示範圍停留時間
     private readonly WAIT_RUN_TIME = 3;//tip文字大於顯示範圍時，等待移動的時間
-    
+
     private _runTipId = 0;//紀錄執行中的tip編號(0開頭)
     /**
      * 先隱藏所有tip
@@ -41,13 +41,13 @@ export class G5251TipView extends Component {
         this._runTipId++;//下一個執行的編號
         this.runTip();
     }
-    
+
     /**
      * 提示節點顯示與移動
      * @param tipNode 提示節點
      */
     private runningTip(tipNode: Node): Promise<void> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async resolve => {
             const maskHalfWidth = this.node.getComponent(UITransform)!.width / 2;
             const tipHalfWidth = tipNode.getComponent(UITransform)!.width / 2;
             const startXPos = tipHalfWidth - maskHalfWidth + 20;

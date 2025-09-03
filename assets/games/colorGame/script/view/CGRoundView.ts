@@ -1,9 +1,11 @@
-import { _decorator, Component, Label, SpriteFrame, Sprite, Animation, UIOpacity, tween, Node, ParticleSystem } from 'cc';
-import { CGUtils } from '../tools/CGUtils';
-import { CGAudioName } from '../manager/CGAudioName';
-import { ColorID } from '../enum/CGEnum';
-import { urlHelper } from '@common/utils/UrlHelper';
 import { getAudioManager } from '@common/manager/AudioManager';
+import { urlHelper } from '@common/utils/UrlHelper';
+import { _decorator, Component, Label, SpriteFrame, Sprite, Animation, UIOpacity, tween, Node, ParticleSystem } from 'cc';
+
+import { ColorID } from '@/games/colorGame/script/enum/CGEnum';
+
+import { CGAudioName } from '@/games/colorGame/script/manager/CGAudioName';
+import { CGUtils } from '@/games/colorGame/script/tools/CGUtils';
 
 const { ccclass, property } = _decorator;
 
@@ -11,34 +13,49 @@ const { ccclass, property } = _decorator;
 export class CGRoundView extends Component {
     @property(Node)
     private gameUI!: Node;//遊戲全部介面
+
     @property(Node)
     private bgLight!: Node;//背景燈光
+
     @property(Node)
     private betInfo!: Node;//押注區資訊
+
     @property(Node)
     private result!: Node;//結算
+
     @property(Node)
     private stageTitle!: Node;//狀態標題
+
     @property(Node)
     private betWin!: Node;//押注勝利顯示區
+
     @property(Node)
     private betLight!: Node;//押注提示光區
+
     @property(Node)
     private countdown!: Node;//押注倒數時間
+
     @property(Node)
     private localWinFx!: Node;//本地用戶贏分特效
+
     @property(Node)
     private infoWin!: Node;//贏分資訊面板
+
     @property(Node)
     private infoTip!: Node;//提示訊息面板
+
     @property(Node)
     private bigWin!: Node;//大贏節點
+
     @property(Node)
     private winCredit!: Node;//本地贏分節點
+
     @property(Node)
     private coinWinParticle!: Node;//贏分金幣粒子
+
     @property([SpriteFrame])
     private winOddSF: SpriteFrame[] = [];//倍率貼圖
+
     @property([SpriteFrame])
     private resultColorSF: SpriteFrame[] = [];//結算顏色貼圖
 
@@ -69,20 +86,22 @@ export class CGRoundView extends Component {
      * @returns 
      */
     public async setCountdown(countdown: number, betTotalTime: number) {
-        countdown -= 1;//gs最後一秒不能押注，所以秒數-1
-        betTotalTime -= 1;//gs最後一秒不能押注，所以秒數-1
+        let tempCountdown = countdown;
+        let tempBetTotalTime = betTotalTime;
+        tempCountdown -= 1;//gs最後一秒不能押注，所以秒數-1
+        tempBetTotalTime -= 1;//gs最後一秒不能押注，所以秒數-1
         const countdownNode = this.countdown;
         const labelNode = countdownNode.getChildByName('Label')!;
         const comLabel = labelNode.getComponent(Label)!;
-        comLabel.string = countdown.toString();//顯示秒數
+        comLabel.string = tempCountdown.toString();//顯示秒數
         countdownNode.active = true;
-        if (countdown <= 0) {
+        if (tempCountdown <= 0) {
             getAudioManager().playSound(CGAudioName.TimeUp);
             countdownNode.getComponent(Animation)!.play('CountdownLast');
             await CGUtils.Delay(1.5);
             countdownNode.active = false;
         } else {
-            if (countdown <= 5) {
+            if (tempCountdown <= 5) {
                 getAudioManager().playSound(CGAudioName.Countdown);
                 countdownNode.getComponent(Animation)!.play('CountdownRapid');
             }
@@ -91,8 +110,8 @@ export class CGRoundView extends Component {
                 countdownNode.getComponent(Animation)!.play('CountdownNormal');
             }
             const frameSprite = countdownNode.getChildByName('Frame')!.getComponent(Sprite)!;
-            frameSprite.fillRange = countdown / betTotalTime;
-            tween(frameSprite).to(1, { fillRange: (countdown - 1) / betTotalTime }).start();//進度條倒數
+            frameSprite.fillRange = tempCountdown / tempBetTotalTime;
+            tween(frameSprite).to(1, { fillRange: (tempCountdown - 1) / tempBetTotalTime }).start();//進度條倒數
         }
     }
 
@@ -151,7 +170,7 @@ export class CGRoundView extends Component {
                 if (localWinArea.indexOf(i) !== -1) {
                     const winFx = this.localWinFx.children[i];
                     winFx.active = true;
-                    
+
                     //判斷倍率貼圖顯示
                     const winOddSFID = (betOdds[i] > 2 && urlHelper.site === 'XC') ? 3 :
                         (betOdds[i] > 2) ? 2 : betOdds[i] - 1;
@@ -197,7 +216,7 @@ export class CGRoundView extends Component {
      */
     private runBigWin(winCredit: number): Promise<void> {
         this.bigWin.active = true;
-        return new Promise<void>(async (resolve) => {
+        return new Promise<void>(async resolve => {
             this.bigWin.getComponent(UIOpacity)!.opacity = 0;
             this.bigWin.getComponent(Animation)!.play('BigWinShow');
             this.bigWin.getChildByName('CoinWinParticle')!.getComponent(ParticleSystem)!.stop();
@@ -212,7 +231,7 @@ export class CGRoundView extends Component {
             this.scheduleOnce(() => {
                 this.bigWin.active = false;
                 this.bigWin.getChildByName('CoinWinParticle')!.getComponent(ParticleSystem)!.clear();
-            }, 0.2)
+            }, 0.2);
             resolve();
         });
     }

@@ -1,11 +1,11 @@
 
-import { getEventManager } from '@common/manager/EventManager';
 import { Game } from '@common/h5GameTools/GTCommEvents';
+import { getEventManager } from '@common/manager/EventManager';
 import { Logger } from '@common/utils/Logger';
 import { urlHelper } from '@common/utils/UrlHelper';
 import { _decorator, Component, view, Node, UITransform } from 'cc';
-import { GTLoadingCommTool as CommTool } from '../../../loading/script/comm/GTLoadingCommTool';
 
+import { GTLoadingCommTool as CommTool } from '@/loading/script/comm/GTLoadingCommTool';
 
 const { ccclass, property } = _decorator;
 
@@ -17,7 +17,7 @@ export class GTCommManager extends Component {
 
 
     onExitGameBind! : (data: any) => void;
-    
+
     protected onLoad(): void {
         Logger.debugSwitch = CommTool.checkIsTestMode();
         this.onExitGameBind = this._onExitGame.bind(this);
@@ -39,9 +39,6 @@ export class GTCommManager extends Component {
         getEventManager().off(Game.EXIT_GAME,this.onExitGameBind);
     }
 
-    update(deltaTime: number) {
-        
-    }
 
     private _setupEventListener(){
         getEventManager().on(Game.EXIT_GAME, this.onExitGameBind);

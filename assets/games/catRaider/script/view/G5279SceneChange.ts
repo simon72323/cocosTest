@@ -1,7 +1,8 @@
-import { _decorator, Component, tween, Node, Vec3, Animation, SpriteFrame, Sprite, sp, ParticleSystem, UIOpacity } from 'cc';
 import { getEventManager } from '@common/manager/EventManager';
-import { G5279Event } from '../data/G5279Event';
-import { getG5279Model } from '../model/G5279Model';
+import { _decorator, Component, tween, Node, Vec3, Animation, SpriteFrame, Sprite, sp, ParticleSystem, UIOpacity } from 'cc';
+
+import { G5279Event } from '@/games/catRaider/script/data/G5279Event';
+import { getG5279Model } from '@/games/catRaider/script/model/G5279Model';
 const { ccclass, property } = _decorator;
 
 @ccclass('G5279SceneChange')
@@ -9,21 +10,28 @@ export class G5279SceneChange extends Component {
 
     @property(Node)
     private back2D: Node = null!;
+
     @property(Node)
     private top2D: Node = null!;
+
     @property(Node)
     private camera3D: Node = null!;
+
     @property(Node)
     private energyUI: Node = null!;
+
     @property(ParticleSystem)
     private leftParticle: ParticleSystem = null!;
+
     @property(ParticleSystem)
     private dustParticle: ParticleSystem = null!;
 
     @property({ type: [SpriteFrame], group: { name: 'SpriteFrame', id: '1' } })
     private bgTopSF: SpriteFrame[] = [];
+
     @property({ type: [SpriteFrame], group: { name: 'SpriteFrame', id: '1' } })
     private energySF: SpriteFrame[] = [];
+
     @property({ type: [SpriteFrame], group: { name: 'SpriteFrame', id: '1' } })
     private energyMaskSF: SpriteFrame[] = [];
 

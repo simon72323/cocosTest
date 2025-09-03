@@ -1,25 +1,29 @@
-import { _decorator, Camera, CCBoolean, Component, director, find } from 'cc';
-
+import { AutoPlayAnim } from '@common/components/AutoPlayAnim';
 import boot from '@common/h5GameTools/Boot';
 import { commonStore } from '@common/h5GameTools/CommonStore';
-import { Logger } from '@common/utils/Logger';
-
-import { WorkOnBlurManager } from '@common/utils/WorkOnBlurManager';
-import { WorkTimerManager } from '@common/utils/WorkTimerManager';
+import { Comm, Game, GTAlertPram, GTAlertType } from '@common/h5GameTools/GTCommEvents';
+import { GameStatus } from '@common/h5GameTools/State';
+import { getAudioManager } from '@common/manager/AudioManager';
 import { getEventManager } from '@common/manager/EventManager';
 import { LanguageManager } from '@common/manager/LanguageManager';
-
-import { CGController } from './controller/CGController';
-import { CGPathManager } from './manager/CGPathManager';
-import { CGAudioName } from './manager/CGAudioName';
-import { getAudioManager } from '@common/manager/AudioManager';
-import { colorGameConnector } from './connector/CGGameConnector';
-import { SlotGameEvent } from './connector/CGSlotGameEvent';
-import { loadInfo } from './enum/CGInterface';
-import { AutoPlayAnim } from '@common/components/AutoPlayAnim';
-import { GameStatus } from '@common/h5GameTools/State';
-import { Comm, Game, GTAlertPram, GTAlertType } from '@common/h5GameTools/GTCommEvents';
+import { Logger } from '@common/utils/Logger';
 import { urlHelper } from '@common/utils/UrlHelper';
+import { WorkOnBlurManager } from '@common/utils/WorkOnBlurManager';
+import { WorkTimerManager } from '@common/utils/WorkTimerManager';
+import { _decorator, Camera, CCBoolean, Component, director, find } from 'cc';
+
+
+
+import { colorGameConnector } from '@/games/colorGame/script/connector/CGGameConnector';
+import { SlotGameEvent } from '@/games/colorGame/script/connector/CGSlotGameEvent';
+
+import { CGController } from '@/games/colorGame/script/controller/CGController';
+import { loadInfo } from '@/games/colorGame/script/enum/CGInterface';
+
+
+import { CGAudioName } from '@/games/colorGame/script/manager/CGAudioName';
+import { CGPathManager } from '@/games/colorGame/script/manager/CGPathManager';
+
 
 const { ccclass, property } = _decorator;
 @ccclass('CGGameMain')
@@ -41,7 +45,7 @@ export class CGGameMain extends Component {
         //啟用後台運行(針對動畫、tween、schedule、spine等動畫)
         WorkOnBlurManager.getInstance();
         WorkTimerManager.getInstance();
-        LanguageManager.initialize('colorGame');//設置語系資源(遊戲名稱)
+        LanguageManager.loadLanguageBundle('colorGame');//設置語系資源(遊戲名稱)
         await CGPathManager.getInstance().init();//等待路徑加載完成
         commonStore.storeMutation.setData('gameStatus', GameStatus.OnGameInit);//初始化遊戲狀態
         this.setPublicConfig();//配置公版
@@ -206,7 +210,7 @@ export class CGGameMain extends Component {
     /**
      * 收到斷線要做的事
      */
-    private onDisconnect(obj: Object): void {
+    private onDisconnect(_obj: Object): void {
         colorGameConnector.wsIsDisConnect = true;//斷線
         const alert: GTAlertPram = {
             type: GTAlertType.RECONNECT,
@@ -219,7 +223,7 @@ export class CGGameMain extends Component {
             confirmCallback: () => {
                 getEventManager().emit(Game.RESTART_GAME);//呼叫公版重新連線
             }
-        }
+        };
         getEventManager().emit(Comm.SHOW_ALERT, alert);
     }
 
@@ -239,7 +243,7 @@ export class CGGameMain extends Component {
     /**
      * 收到公版通知儲存換分
      */
-    private onCallStoreExRecord(msg: any) {
+    private onCallStoreExRecord(_msg: any) {
         colorGameConnector.callStoreExREcord();
     }
 

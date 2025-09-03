@@ -1,17 +1,20 @@
-import { _decorator, Animation, Button, Component, Label, Node, sp, Toggle } from 'cc';
-import { getEventManager } from '@common/manager/EventManager';
-import { watch } from '@common/utils/Reactivity';
 
-import { getG5279Model } from '../model/G5279Model';
-import { getAudioManager } from '@common/manager/AudioManager';
-import { G5279AudioName } from '../data/G5279AudioEnum';
-import { addButtonClickEvent, addToggleClickEvent, playAnimFinish, playSpineFinish } from '../tools/G5279Tools';
-import { Logger } from '@common/utils/Logger';
-import { G5279BetState } from '../data/G5279Enum';
 import { commonStore } from '@common/h5GameTools/CommonStore';
 import { Comm, Game } from '@common/h5GameTools/GTCommEvents';
 import { gtmEvent } from '@common/h5GameTools/userAnalysis/GTEvent';
+import { getAudioManager } from '@common/manager/AudioManager';
+import { getEventManager } from '@common/manager/EventManager';
+import { Logger } from '@common/utils/Logger';
 import { NumberUtils } from '@common/utils/NumberUtils';
+import { watch } from '@common/utils/Reactivity';
+import { _decorator, Animation, Button, Component, Label, Node, sp, Toggle } from 'cc';
+
+import { G5279AudioName } from '@/games/catRaider/script/data/G5279AudioEnum';
+import { G5279BetState } from '@/games/catRaider/script/data/G5279Enum';
+import { getG5279Model } from '@/games/catRaider/script/model/G5279Model';
+
+import { addButtonClickEvent, addToggleClickEvent, playAnimFinish, playSpineFinish } from '@/games/catRaider/script/tools/G5279Tools';
+
 
 const { ccclass, property } = _decorator;
 
@@ -19,6 +22,7 @@ const { ccclass, property } = _decorator;
 export class G5279BuyFreeGame extends Component {
     @property(Node)
     private buyFreeGameNode: Node = null!;
+
     @property(Button)
     private buyFreeBtn: Button = null!;
 

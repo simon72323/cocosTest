@@ -1,10 +1,10 @@
-import { _decorator, Component, tween, Animation, Label, Node, Sprite, SpriteFrame, sp } from 'cc';
-import { formatNumberRound2 } from '../tools/G5279Tools';
 import { getAudioManager } from '@common/manager/AudioManager';
 import { NumberUtils } from '@common/utils/NumberUtils';
+import { _decorator, Component, tween, Animation, Label, Node, Sprite, SpriteFrame, sp } from 'cc';
 
-import { G5279Config } from '../data/G5279Config';
-import { G5279AudioName } from '../data/G5279AudioEnum';
+import { G5279AudioName } from '@/games/catRaider/script/data/G5279AudioEnum';
+import { G5279Config } from '@/games/catRaider/script/data/G5279Config';
+import { formatNumberRound2 } from '@/games/catRaider/script/tools/G5279Tools';
 
 const { ccclass, property } = _decorator;
 
@@ -22,12 +22,12 @@ export class G5279ScoreBar extends Component {
     public scoreBarMaskSF: SpriteFrame[] = []!;//scoreBar遮罩圖
 
     onLoad() {
-        this.scoreWin = this.node.getChildByName("scoreWin")!;
-        this.infoTip = this.node.getChildByName("infoTip")!;
-        const scoreNode = this.node.getChildByName("scoreWin")!.getChildByName("score")!;
-        this.winTxNode = scoreNode.getChildByName("winTx")!;
-        this.totalTxNode = scoreNode.getChildByName("totalTx")!;
-        this.scoreWinLabel = scoreNode.getChildByName("label")!.getComponent(Label)!;
+        this.scoreWin = this.node.getChildByName('scoreWin')!;
+        this.infoTip = this.node.getChildByName('infoTip')!;
+        const scoreNode = this.node.getChildByName('scoreWin')!.getChildByName('score')!;
+        this.winTxNode = scoreNode.getChildByName('winTx')!;
+        this.totalTxNode = scoreNode.getChildByName('totalTx')!;
+        this.scoreWinLabel = scoreNode.getChildByName('label')!.getComponent(Label)!;
     }
 
     /**
@@ -47,7 +47,7 @@ export class G5279ScoreBar extends Component {
         this.scoreLv = 0;
         this.totalTxNode.active = false;//隱藏總贏得分數
         this.winTxNode.active = true;//顯示贏得分數
-        const skeleton = this.node.getComponent(sp.Skeleton)!
+        const skeleton = this.node.getComponent(sp.Skeleton)!;
         skeleton.setAnimation(0, 'winFrame1_loop', true);
     }
 
@@ -56,7 +56,7 @@ export class G5279ScoreBar extends Component {
      * @param winScore 贏得分數
      */
     public async showWinAddScore(winScore: number): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             const endScore = NumberUtils.accAdd(this._saveScore, winScore);
             if (endScore > 0 && this.infoTip.active) {
                 this.infoTip.active = false;//隱藏遊戲跑馬燈
@@ -65,7 +65,7 @@ export class G5279ScoreBar extends Component {
             const runScore = { score: this._saveScore };//設置起始分
 
             if (endScore > 0 && winScore > 0) {
-                const animName = this._saveScore > 0 ? "scoreWinAdd" : "scoreWin";
+                const animName = this._saveScore > 0 ? 'scoreWinAdd' : 'scoreWin';
                 this.scoreWin.getComponent(Animation)!.play(animName);
                 getAudioManager().playSound(G5279AudioName.addScore);
                 this.playSpineAnim(endScore);//播放贏分動畫
@@ -87,7 +87,7 @@ export class G5279ScoreBar extends Component {
      * 播放贏分動畫
      */
     private async playSpineAnim(totalScore: number) {
-        const skeleton = this.node.getComponent(sp.Skeleton)!
+        const skeleton = this.node.getComponent(sp.Skeleton)!;
         if (totalScore > G5279Config.bigWinRange[1]) {
             if (this.scoreLv === 0) {
                 skeleton.setAnimation(0, 'winFrame1up3', false);
@@ -119,7 +119,7 @@ export class G5279ScoreBar extends Component {
     public showTotalWinScore(totalScore: number) {
         this.totalTxNode.active = true;//顯示總贏得分數
         this.winTxNode.active = false;//隱藏贏得分數
-        this.scoreWin.getComponent(Animation)!.play("scoreWinEnd");
+        this.scoreWin.getComponent(Animation)!.play('scoreWinEnd');
         getAudioManager().playSound(G5279AudioName.totalScore);
         this.playSpineAnim(totalScore);//播放贏分動畫
         this.updateScore(totalScore);//更新分數

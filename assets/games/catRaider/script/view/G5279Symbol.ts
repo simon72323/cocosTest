@@ -1,17 +1,16 @@
-import { _decorator, Animation, Color, Component, Label, Node, Prefab, sp, Sprite, tween, UIOpacity, Vec3 } from 'cc';
-import { getPoolManager } from '@common/manager/PoolManager';
 import { getAudioManager } from '@common/manager/AudioManager';
+import { getPoolManager } from '@common/manager/PoolManager';
 import { awaitSleep } from '@common/utils/tools';
+import { _decorator, Animation, Color, Component, Label, Node, Prefab, sp, Sprite, tween, UIOpacity, Vec3 } from 'cc';
 
-import { G5279Resources } from '../data/G5279Resources';
-import { SymbolNode } from '../data/G5279Interface';
-import { G5279SymbolIDs } from '../data/G5279Enum';
-import { G5279GameState } from '../data/G5279Enum';
-import { G5279AudioName } from '../data/G5279AudioEnum';
-import { G5279Config } from '../data/G5279Config';
-
-import { getG5279Model, G5279Time } from '../model/G5279Model';
-import { playAnimFinish, playSpineFinish } from '../tools/G5279Tools';
+import { G5279AudioName } from '@/games/catRaider/script/data/G5279AudioEnum';
+import { G5279Config } from '@/games/catRaider/script/data/G5279Config';
+import { G5279GameState } from '@/games/catRaider/script/data/G5279Enum';
+import { G5279SymbolIDs } from '@/games/catRaider/script/data/G5279Enum';
+import { SymbolNode } from '@/games/catRaider/script/data/G5279Interface';
+import { G5279Resources } from '@/games/catRaider/script/data/G5279Resources';
+import { getG5279Model, G5279Time } from '@/games/catRaider/script/model/G5279Model';
+import { playAnimFinish, playSpineFinish } from '@/games/catRaider/script/tools/G5279Tools';
 
 const { ccclass, property } = _decorator;
 
@@ -19,23 +18,31 @@ const { ccclass, property } = _decorator;
 export class G5279Symbol extends Component {
     @property(Node)
     private symLayer: Node = null!;//symbol層
+
     @property(Node)
     private symWinLayer: Node = null!;//symbol勝利表演層
+
     @property([Prefab])
     private symChr: Prefab[] = [];
+
     @property(Node)
     private chrScore: Node = null!;//角色分數
+
     @property(Node)
     private ratScore: Node = null!;//盜鼠分數
 
     @property(Prefab)
     private symGem: Prefab = null!;
+
     @property([Prefab])
     private symItem: Prefab[] = [];
+
     @property(Prefab)
     private symRat: Prefab = null!;
+
     @property(Prefab)
     private ratGem: Prefab = null!;
+
     @property(Prefab)
     private symFxReflash: Prefab = null!;
 
@@ -64,7 +71,7 @@ export class G5279Symbol extends Component {
         new Vec3(0, -60, 0),
         new Vec3(0, -65, 0),
         new Vec3(0, -65, 0)
-    ]
+    ];
 
     //寶石八個階段陰影高度
     private symGemShadowScale: Vec3[] = [
@@ -75,7 +82,7 @@ export class G5279Symbol extends Component {
         new Vec3(2.4, 1, 1),
         new Vec3(2.4, 1, 1),
         new Vec3(2.8, 1.2, 1),
-        new Vec3(3, 1.2, 1),
+        new Vec3(3, 1.2, 1)
     ];
 
     async onLoad() {
@@ -188,7 +195,7 @@ export class G5279Symbol extends Component {
             if (!symbol) continue;//如果symbol不存在則跳過
             //如果是下一關，且是角色符號，則執行角色落下
             if (isNextLevel && symbol.symbolID < 5) {
-                this.chrFall(symbol)
+                this.chrFall(symbol);
             } else {
                 this.symbolMoveOut(symbol);
             }
@@ -200,7 +207,7 @@ export class G5279Symbol extends Component {
      * @param symbol 
      */
     private async symbolMoveOut(symbol: SymbolNode): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             const reelPos = getG5279Model().getCurrentReelPos();//獲得盤面等級Reel位置
             const symbolHeight = G5279Config.baseSymbolSize.height;
             const column = Math.sqrt(reelPos.length);
@@ -290,7 +297,7 @@ export class G5279Symbol extends Component {
      * @param winSymID 中獎symbolID
      */
     public async chrMove(chrSymbol: Node, currentPos: Vec3, nextPos: Vec3, winSymID: number): Promise<void> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             const isZombieParty = getG5279Model().gameState === G5279GameState.ON_ZOMBIE_PARTY;
             const chrSym = isZombieParty ? chrSymbol.getChildByName('symZombie')! : chrSymbol.getChildByName('sym')!;
             const skeleton = chrSym.getComponent(sp.Skeleton)!;
@@ -418,7 +425,7 @@ export class G5279Symbol extends Component {
             const sym = ratGem.getChildByName('sym')!;
             const gemPos = this.resources.symArrayID.indexOf(gemID);
             sym.getComponent(Sprite)!.spriteFrame = this.resources.symSF[gemPos];
-            ratGem.setParent(this.symWinLayer)
+            ratGem.setParent(this.symWinLayer);
             const ratPos = ratSymbol.getPosition();
             ratGem.setPosition(ratPos);
             const randomX = Math.random() * 600 - 300;

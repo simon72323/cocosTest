@@ -1,10 +1,14 @@
-import { _decorator, Animation, Component, instantiate, Node, Prefab, ProgressBar, Sprite, SpriteFrame, tween, Vec3 } from 'cc';
-import { SymbolNode } from '../data/G5279Interface';
-import { awaitSleep } from '@common/utils/tools';
-import { G5279AudioName } from '../data/G5279AudioEnum';
 import { getAudioManager } from '@common/manager/AudioManager';
-import { getG5279Model, G5279Time } from '../model/G5279Model';
-import { playAnimFinish } from '../tools/G5279Tools';
+import { awaitSleep } from '@common/utils/tools';
+import { _decorator, Animation, Component, instantiate, Node, Prefab, ProgressBar, Sprite, SpriteFrame, tween, Vec3 } from 'cc';
+
+import { G5279AudioName } from '@/games/catRaider/script/data/G5279AudioEnum';
+
+
+import { SymbolNode } from '@/games/catRaider/script/data/G5279Interface';
+import { getG5279Model, G5279Time } from '@/games/catRaider/script/model/G5279Model';
+import { playAnimFinish } from '@/games/catRaider/script/tools/G5279Tools';
+
 const { ccclass, property } = _decorator;
 
 @ccclass('G5279Chance')
@@ -13,25 +17,29 @@ export class G5279Chance extends Component {
     private chancePos: Vec3[] = [
         new Vec3(-340, 795, 0),
         new Vec3(-210, 795, 0),
-        new Vec3(-80, 795, 0),
+        new Vec3(-80, 795, 0)
     ];
 
     private chanceGetPos: Vec3 = new Vec3(285, 623, 0);//生成起點
 
     @property(Node)
     private chanceRun: Node = null!;
+
     @property(Node)
     private energyBar: Node = null!;
+
     @property(Node)
     private chanceFxWin: Node = null!;
 
     @property([SpriteFrame])
     private chanceSprite: SpriteFrame[] = [];
+
     @property([SpriteFrame])
     private energyBarSprite: SpriteFrame[] = [];
 
     @property(Node)
     private chanceTempLayer: Node = null!;
+
     @property(Node)
     private chanceWinLayer: Node = null!;
 
@@ -121,7 +129,7 @@ export class G5279Chance extends Component {
      * @param num 增加的能量
      */
     public async addEnergy(isFull: boolean = false): Promise<void> {
-        return new Promise<void>(async (resolve) => {
+        return new Promise<void>(async resolve => {
             //如果已集滿3個就不累積
             if (this.chanceTempLayer.children.length >= 3) {
                 resolve();
@@ -137,7 +145,7 @@ export class G5279Chance extends Component {
 
             const progressBar = this.energyBar.children[0]!.getComponent(ProgressBar)!;
             const progress = this.currentEnergy / maxEnergy;
-            tween(progressBar).to(0.2, { progress: progress }).start();
+            tween(progressBar).to(0.2, { progress }).start();
 
             if (this.currentEnergy === maxEnergy) {
                 const anim = this.energyBar.getComponent(Animation)!;

@@ -1,7 +1,9 @@
 import { _decorator, Component, Vec3, Quat, Animation, Node } from 'cc';
-import { CGPathManager } from '../manager/CGPathManager';
-import { ColorID } from '../enum/CGEnum';
-import { CGUtils } from '../tools/CGUtils';
+
+
+import { ColorID } from '@/games/colorGame/script/enum/CGEnum';
+import { CGPathManager } from '@/games/colorGame/script/manager/CGPathManager';
+import { CGUtils } from '@/games/colorGame/script/tools/CGUtils';
 const { ccclass, property } = _decorator;
 
 @ccclass('CGDiceRunView')
@@ -12,6 +14,7 @@ export class CGDiceRunView extends Component {
         new Vec3(0, 4.77, -1.83),
         new Vec3(1.25, 4.77, -1.83)
     ];
+
     //骰子子物件顏色方位校正值
     private readonly CHANGE_EULER = [
         [new Vec3(0, 0, 0), new Vec3(-90, 0, 0), new Vec3(0, 0, 90), new Vec3(0, 0, -90), new Vec3(90, 0, 0), new Vec3(180, 0, 0)],
@@ -34,6 +37,7 @@ export class CGDiceRunView extends Component {
 
     @property([Node])//3顏色骰子
     private dice!: Node[];
+
     @property(Node)//3D開骰節點
     private frame!: Node;
 
@@ -61,11 +65,11 @@ export class CGDiceRunView extends Component {
      * @returns 回傳表演結束
      */
     public async diceStart(pathID: number, winDice: string): Promise<void> {
-        return new Promise<void>(async (resolve) => {
+        return new Promise<void>(async resolve => {
             const dataID = Math.floor(pathID / 100);
             const pathDataID = pathID % 100;
             const pathData = await CGPathManager.getInstance().getPathData(dataID, pathDataID)!;
-            const winColor = winDice.split("-").map(color => ColorID[color as keyof typeof ColorID]);
+            const winColor = winDice.split('-').map(color => ColorID[color as keyof typeof ColorID]);
             const diceEuler = this.diceRotate(winColor, pathData.diceNumber);//起始骰子角度
             // 四元數插值轉換(慢慢校正骰子方向)
             const targetRotations = diceEuler.map(euler => {
@@ -98,7 +102,7 @@ export class CGDiceRunView extends Component {
                 }
             };
             updateFrame();
-        })
+        });
     }
 
     private dicePlay(pathData: any, dataFrame: number, targetRotations: Quat[], currentRotations: Quat[], diceCount: number) {
