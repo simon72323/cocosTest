@@ -543,14 +543,18 @@ export class G5279ReelController extends Component {
     private async gemLevelUp(chrID: number) {
         const levelUpSymbols: SymbolNode[] = [];//要升級的寶石
         for (let i = 0; i < getG5279Model().movedCards.length; i++) {
-            const index = i;//每次循環創建新變數(避免下方await出現閉包問題)
             if (Math.floor(getG5279Model().movedCards[i] / 10) === chrID) {
-                levelUpSymbols.push(this.symbolView.getSymbolByLayer(index)!);
+                levelUpSymbols.push(this.symbolView.getSymbolByLayer(i)!);
             }
         }
-        await Promise.all(
-            levelUpSymbols.map(symbol => this.levelUpItemView.symbolLevelUp(symbol))
-        );
+        if (levelUpSymbols.length > 0) {
+            await Promise.all(
+                levelUpSymbols.map(symbol => this.levelUpItemView.symbolLevelUp(symbol))
+            );
+        } else {
+            //如果沒有寶石升級，就單純等待道具獲得表演時間結束
+            await awaitSleep(G5279Time.itemShowTime);
+        }
     }
 
     /**

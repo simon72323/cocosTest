@@ -212,7 +212,11 @@ export class G5279Floor extends Component {
         const floor = floorParent.children[posID];
 
         this.brokenFloorID.push(posID);//設置地板已破碎狀態
-        floor.getChildByName('smoke')!.getComponent(ParticleSystem2D)!.resetSystem();
+        const smoke = floor.getChildByName('smoke')!;
+        smoke.active = true;
+        const particleSystem = smoke.getComponent(ParticleSystem2D)!;
+        particleSystem.resetSystem(); // 重置并启动粒子系统
+		
         const floor3D = floor.children[0];
         floor3D.getChildByName('shadow')!.active = false;//隱藏影子
         this.updateFloorRectPosID(posID);//更新過關洞與金幣範圍的位置ID分布狀況

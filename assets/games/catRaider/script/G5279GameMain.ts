@@ -96,6 +96,11 @@ export class G5279GameMain extends Component {
         this.setting.hideFakePanel();//隱藏假資料面板
         const mockData: onBeginGame = { event: true, data: testData };
         this.onBeginGame(mockData);
+		
+		// 禁用公版spin按鈕
+        getEventManager().emit(Comm.SET_LOADER_ALL_BUTTON_INTERACTABLE, {
+            interactable: false
+        });
     }
 
     /**
